@@ -1,0 +1,9 @@
+E:\workspace\Falcon\Falcon\bin\Debug\Falcon.exe.config
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.csprojResolveAssemblyReference.cache
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.Properties.Resources.resources
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.csproj.GenerateResource.Cache
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.MainForm.resources
+E:\workspace\Falcon\Falcon\bin\Debug\Falcon.exe
+E:\workspace\Falcon\Falcon\bin\Debug\Falcon.pdb
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.exe
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.pdb

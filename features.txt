@@ -1,0 +1,22 @@
+settings:
+append in new line
+show sent time stamp
+
+RTSP?
+sending ping
+send data in loop
+filter and search
+handle memory when there is a lot of lines
+
+sending data from file
+
+send history
+
+logging to file
+
+command line:
+filter,
+send range
+send file - loop or once
+send bytes
+get ideas from termie
