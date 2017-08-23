@@ -12,7 +12,7 @@ using System.Net.Sockets;
 
 namespace BlueSky.Com
 {
-    class UDPServerCom : ComInterface
+    class UDPServerCom
     {
         private UdpClient udpClient_;
         private IPEndPoint endPoint_;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlueSky.Com
 {
-    public class TCPClientCom : ComInterface
+    public class TCPClientCom
     {
         public const int BUFF_SIZE = 256;
         private TcpClient client_;
@@ -32,6 +32,7 @@ namespace BlueSky.Com
             {
                 // connection success
                 serverStream_ = client_.GetStream();
+                AsyncListen();
                 return true;
             }
             else
@@ -48,7 +49,7 @@ namespace BlueSky.Com
             subsFuncs_.Remove(func);
         }
 
-        public void AsyncListen()
+        private void AsyncListen()
         {
             serverStream_.BeginRead(bytesIn_, 0, bytesIn_.Length, new AsyncCallback(OnReadCB), null);
         }

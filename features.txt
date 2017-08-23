@@ -1,22 +1,24 @@
 settings:
 append in new line
 show sent time stamp
+show index of each byte ???[0]b1, [1]b2 ...
+choose font color - green or white
+encoding - ascii, utf, raw bytes etc...
+logging to file
 
-RTSP?
-sending ping
-send data in loop
-filter and search
+
+
 handle memory when there is a lot of lines
 
-sending data from file
-
-send history
-
-logging to file
 
 command line:
 filter,
 send range
 send file - loop or once
-send bytes
+send raw bytes in packet
 get ideas from termie
+add timestamp for each read
+sending ping
+
+about form
+green marker when connected, red when not

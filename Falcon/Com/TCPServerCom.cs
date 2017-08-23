@@ -11,73 +11,94 @@ using System.Collections;
 
 namespace BlueSky.Com
 { 
-    class TCPServerCom : ComInterface
+    class TCPServerCom
     {
         public const int BUFF_SIZE = 256;
-        Task listen_to_cons_task_ = new Task(() => { });
         TcpListener server_;
-        int clientsCounter = 0;
-        List<TcpClient> clientsList_ = new List<TcpClient>();
+        uint clientsCounter_ = 0;
+        List<TcpClientWrapper> clientsList_ = new List<TcpClientWrapper>();
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
+        List<Action<uint>> notifyList_ = new List<Action<uint>>();
         byte [] bytes_ = new byte[BUFF_SIZE];
 
         public bool Connect(int port)
         {
-            clientsCounter = 0;
+            clientsCounter_ = 0;
             server_ = new TcpListener(IPAddress.Any, port);
             server_.Start();
+            AsyncListen();
             return true;
         }
 
         private void AsyncListen()
         {
-            server_.BeginAcceptTcpClient(OnIncomingBytes, null);
+            server_.BeginAcceptTcpClient(OnIncomingClients, null);
+        }
+
+        private void OnIncomingClients(IAsyncResult res)
+        {
+            if (server_ == null)
+                return;
+            TcpClient new_client = server_.EndAcceptTcpClient(res);
+            var clientWrapper = new TcpClientWrapper(new_client);
+            clientWrapper.Subscribe(PublishMsg);
+            clientsList_.Add(clientWrapper);
+            clientsCounter_++;
+            NotifyOnNewClient();
+            AsyncListen(); //keep listening
         }
 
         public bool Send(byte[] bytes)
         {
             if (server_ != null)
             {
-                foreach (var client in clientsList_)
-                    client.GetStream().Write(bytes, 0, bytes.Length);
+                foreach (var clientWrapper in clientsList_)
+                    clientWrapper.Client.GetStream().Write(bytes, 0, bytes.Length);
                 return true;
             }
             return false;
         }
 
-        public void Subscribe(Action<byte[]> func)
+        public void SubscribeToMsgs(Action<byte[]> func)
         {
             subsList_.Add(func);
         }
 
-        public void Unsubscribe(Action<byte[]> func)
+        public void UnsubscribeToMsgs(Action<byte[]> func)
         {
             subsList_.Remove(func);
         }
 
-
-        private void OnIncomingClients(IAsyncResult res)
+        public void NotifyOnNewClient(Action<uint> func)
         {
-            if (server_ == null)
-                return;
-            var new_client = server_.EndAcceptTcpClient(res);
-
-            new_client.GetStream().BeginRead(bytes_, 0, bytes_.Length, OnIncomingBytes, null); //TODO: EACH CLIENT SHOULD BE ON ITS OWN CLASS AND LISTEN TO BYTES
-            
-            clientsList_.Add(new_client);
-            clientsCounter++;
-            AsyncListen(); //keep listening
+            notifyList_.Add(func);
         }
 
-        private void OnIncomingBytes(IAsyncResult res)
+        public void UnNotifyOnNewClient(Action<uint> func)
         {
-            
+            notifyList_.Remove(func);
+        }
+
+        private void PublishMsg(byte[] bytes)
+        {
+            foreach (var func in subsList_)
+            {
+                func(bytes);
+            }
+        }
+
+        private void NotifyOnNewClient()
+        {
+            foreach (var func in notifyList_)
+            {
+                func(clientsCounter_);
+            }
         }
 
         public void Close()
         {
-            foreach (var client in clientsList_) 
-                client.Close();
+            foreach (var clientWrapper in clientsList_) 
+               clientWrapper.Client.Close();
                 
             server_.Stop(); 
         }

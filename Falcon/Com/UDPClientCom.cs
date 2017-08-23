@@ -9,7 +9,7 @@ using System.Net;
 
 namespace BlueSky.Com
 {
-    public class UDPClientCom : ComInterface
+    public class UDPClientCom
     {
         //TODO: CLIENT CALL BACK OF INCOMING BYTES???
         private UdpClient udpClient_;

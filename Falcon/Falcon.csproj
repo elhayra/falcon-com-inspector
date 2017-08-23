@@ -44,11 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Com\ComInterface.cs" />
+    <Compile Include="Com\Connection.cs" />
     <Compile Include="Com\NetworkAdderss.cs" />
     <Compile Include="Com\SerialCom.cs" />
     <Compile Include="Com\TCPClientCom.cs" />
     <Compile Include="Com\TCPServerCom.cs" />
+    <Compile Include="Com\TCPSmartClient.cs" />
     <Compile Include="Com\UDPServerCom.cs" />
     <Compile Include="Com\UDPClientCom.cs" />
     <Compile Include="Forms\MainForm.cs">

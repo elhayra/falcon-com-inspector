@@ -7,7 +7,7 @@ using System.IO.Ports;
 
 namespace BlueSky.Com
 {
-    public class SerialCom : ComInterface
+    public class SerialCom
     {
         private SerialPort port_;
         private bool connected_ = false;
