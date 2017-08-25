@@ -24,6 +24,11 @@ namespace Falcon.Utils
             counter_ += amount;
         }
 
+        public void Reset()
+        {
+            counter_ = 0;
+        }
+
         public double CounterKB()
         {
             return counter_ / 1000.0;

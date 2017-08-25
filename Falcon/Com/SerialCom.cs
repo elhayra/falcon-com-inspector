@@ -57,8 +57,8 @@ namespace BlueSky.Com
         {
             if (connected_)
             {
-                Dispose();
                 connected_ = false;
+                Dispose();
             }
         }
 
@@ -79,10 +79,13 @@ namespace BlueSky.Com
 
         private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string incoming = ReadExisting();
-            foreach (var func in subsList_)
+            if (connected_)
             {
-                func(Encoding.ASCII.GetBytes(incoming));
+                string incoming = ReadExisting();
+                foreach (var func in subsList_)
+                {
+                    func(Encoding.ASCII.GetBytes(incoming));
+                }
             }
         }
 

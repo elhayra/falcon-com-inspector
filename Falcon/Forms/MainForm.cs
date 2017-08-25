@@ -191,7 +191,7 @@ namespace Falcon
             var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
             textToSendCmBx.Items.Add(textToSendCmBx.Text);
             textToSendCmBx.Text = "";
-
+    
             if (connections_.IsTcpServerInitiated())
                 connections_.TCPServer.Send(bytes);
 
@@ -211,11 +211,16 @@ namespace Falcon
             {
                 bytesOutCounter_.Add((uint)bytes.Length);
                 BytesCounter.MeasureUnit mUnit = bytesOutCounter_.RecomendedMeasureUnit();
-                int processedCounter = (int)bytesOutCounter_.GetProcessedCounter(mUnit);
+                var format = "{0:0}";
+                if (mUnit != BytesCounter.MeasureUnit.B)
+                    format = "{0:0.00}";
+                var processedCounter = String.Format(format, bytesOutCounter_.GetProcessedCounter(mUnit));
 
                 bytesOutLbl.BackColor = Color.LimeGreen;
+                bytesInTimer.Stop();
+                bytesInTimer.Start();
                 bytesOutTimer.Enabled = true;
-                bytesOutLbl.Text = processedCounter.ToString() + " " + BytesCounter.MeasureUnitToString(mUnit);
+                bytesOutLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
             }
         }
 
@@ -224,6 +229,8 @@ namespace Falcon
             dataInScreenTxt.Clear();
             bytesInLbl.Text = "0 B";
             bytesOutLbl.Text = "0 B";
+            bytesInCounter_.Reset();
+            bytesOutCounter_.Reset();
         }
 
         private void clearInHistoryBtn_Click(object sender, EventArgs e)
@@ -257,7 +264,11 @@ namespace Falcon
 
         private void serialDisconnectBtn_Click(object sender, EventArgs e)
         {
-            connections_.Serial.CloseMe();
+            var t = Task.Run(delegate
+            {
+                connections_.Serial.CloseMe();
+            });
+           
             serialDisconnectBtn.Enabled = false;
             serialConnectBtn.Enabled = true;
             serialConnectionStateLbl.Text = "Disconnected";
@@ -284,13 +295,19 @@ namespace Falcon
         {
             bytesInCounter_.Add((uint)bytes.Length);
             BytesCounter.MeasureUnit mUnit = bytesInCounter_.RecomendedMeasureUnit();
-            int processedCounter = (int)bytesInCounter_.GetProcessedCounter(mUnit);
+            var format = "{0:0}";
+            if (mUnit != BytesCounter.MeasureUnit.B)
+                format = "{0:0.00}";
+            var processedCounter = String.Format(format, bytesInCounter_.GetProcessedCounter(mUnit));
 
             Invoke((MethodInvoker)delegate
             {
                 bytesInLbl.BackColor = Color.LimeGreen;
+                bytesInTimer.Stop();
+                bytesInTimer.Start();
                 bytesInTimer.Enabled = true;
-                bytesInLbl.Text = processedCounter.ToString() + " " + BytesCounter.MeasureUnitToString(mUnit);
+                
+                bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
                 var encodedString = System.Text.Encoding.UTF8.GetString(bytes);
                 if (autoScrollChkBx.Checked)

@@ -32,7 +32,7 @@ namespace BlueSky.Com
         {
             try 
             {
-                if (ConnectAsync(srvrAddr.IP.ToString(), srvrAddr.Port).Wait(500))
+                if (ConnectAsync(srvrAddr.IP.ToString(), srvrAddr.Port).Wait(100))
                 {
                     isDead_ = false;
                     serverStream_ = GetStream();
@@ -43,7 +43,7 @@ namespace BlueSky.Com
             {
                 //wrong address
             }
-            return isDead_;
+            return !isDead_;
         }
 
         public void Subscribe(Action<byte[]> func)

@@ -97,6 +97,7 @@
             this.tcpIndicatorLbl = new System.Windows.Forms.Label();
             this.bytesInTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
+            this.infoTxt = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -667,7 +668,7 @@
             // 
             this.clearScreenBtn.Location = new System.Drawing.Point(145, 453);
             this.clearScreenBtn.Name = "clearScreenBtn";
-            this.clearScreenBtn.Size = new System.Drawing.Size(68, 22);
+            this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
             this.clearScreenBtn.Text = "Clear";
             this.clearScreenBtn.UseVisualStyleBackColor = true;
@@ -730,7 +731,7 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(505, 457);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(508, 456);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
@@ -816,11 +817,25 @@
             this.bytesOutTimer.Interval = 500;
             this.bytesOutTimer.Tick += new System.EventHandler(this.bytesOutTimer_Tick);
             // 
+            // infoTxt
+            // 
+            this.infoTxt.AutoSize = true;
+            this.infoTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.infoTxt.Location = new System.Drawing.Point(202, 454);
+            this.infoTxt.MaximumSize = new System.Drawing.Size(300, 20);
+            this.infoTxt.MinimumSize = new System.Drawing.Size(300, 20);
+            this.infoTxt.Name = "infoTxt";
+            this.infoTxt.Size = new System.Drawing.Size(300, 20);
+            this.infoTxt.TabIndex = 41;
+            this.infoTxt.Text = "N/A";
+            this.infoTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 512);
+            this.Controls.Add(this.infoTxt);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
             this.Controls.Add(this.sendBtn);
@@ -931,6 +946,7 @@
         private System.Windows.Forms.Label udpIndicatorLbl;
         private System.Windows.Forms.Timer bytesInTimer;
         private System.Windows.Forms.Timer bytesOutTimer;
+        private System.Windows.Forms.Label infoTxt;
     }
 }
 

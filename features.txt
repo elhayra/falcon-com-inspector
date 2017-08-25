@@ -20,6 +20,8 @@ send raw bytes in packet
 get ideas from termie
 add timestamp for each read
 sending ping
+check range - insert start and end number, and the window will print arrow if some bytes are missing in the range (jumps of 1)
+auto baud rate finder - if more than 50 percent is "?" than its wrong baud rate (if suppose to be strings println)
 
 about form
 green marker when connected, red when not
@@ -54,5 +56,7 @@ zoom in or out from graph
 
 
 next things:
-save connections setup configs
-test all connections, and protect them (try catch)
+Serial tested --OK
+reset bytes counter when number is too big
+
+return connection failed if it failed
