@@ -5,7 +5,8 @@ show index of each byte ???[0]b1, [1]b2 ...
 choose font color - green or white
 encoding - ascii, utf, raw bytes etc...
 logging to file
-
+send trainling <nl - new line> for each message sent
+command line character, i.e $, #, !
 
 
 handle memory when there is a lot of lines
@@ -22,3 +23,36 @@ sending ping
 
 about form
 green marker when connected, red when not
+
+enter key needs to be the same as hitting send button
+limit bytes lables by size
+turn B unit to KB and MB and so on when a lot of bytes incoming
+
+
+tests:
+server closes comm first
+client closes comm first
+trying to connect disconnect then connect again
+entering invalid values
+pressing buttons in the wrong order
+
+
+bytes out lable not yet working
+when sending or recving bytes, bytes out and in light up in green for 1 second and then turn back off
+
+tcp,udp,ser indications not yet working
+
+when client disconnect from tcp - how to recognize it?
+
+save all connection settings after each session
+
+commands that are sent out are added to console with red/yellow color
+
+graph indicator can display amount of incoming data rate, or connected to number that im getting in, and display values of this number, and setpoint
+zoom in or out from graph
+
+
+
+next things:
+save connections setup configs
+test all connections, and protect them (try catch)

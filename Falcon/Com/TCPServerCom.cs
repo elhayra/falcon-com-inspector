@@ -11,38 +11,40 @@ using System.Collections;
 
 namespace BlueSky.Com
 { 
-    class TCPServerCom
+    public class TCPServerCom : TcpListener
     {
-        public const int BUFF_SIZE = 256;
-        TcpListener server_;
         uint clientsCounter_ = 0;
-        List<TcpClientWrapper> clientsList_ = new List<TcpClientWrapper>();
+        List<TcpSmartClient> clientsList_ = new List<TcpSmartClient>();
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
         List<Action<uint>> notifyList_ = new List<Action<uint>>();
-        byte [] bytes_ = new byte[BUFF_SIZE];
+        bool isDead_ = true;
 
-        public bool Connect(int port)
+        public bool IsDead { get { return isDead_; } }
+
+        public TCPServerCom(int port) : base(IPAddress.Any, port) {}
+
+        public bool Connect()
         {
             clientsCounter_ = 0;
-            server_ = new TcpListener(IPAddress.Any, port);
-            server_.Start();
+            Start();
             AsyncListen();
+            isDead_ = false;
             return true;
         }
 
         private void AsyncListen()
         {
-            server_.BeginAcceptTcpClient(OnIncomingClients, null);
+            BeginAcceptTcpClient(OnIncomingClients, null);
         }
 
         private void OnIncomingClients(IAsyncResult res)
         {
-            if (server_ == null)
+            if (IsDead)
                 return;
-            TcpClient new_client = server_.EndAcceptTcpClient(res);
-            var clientWrapper = new TcpClientWrapper(new_client);
-            clientWrapper.Subscribe(PublishMsg);
-            clientsList_.Add(clientWrapper);
+            TcpClient newClient = EndAcceptTcpClient(res);
+            var newSmartClient = new TcpSmartClient(newClient);
+            newSmartClient.Subscribe(PublishMsg);
+            clientsList_.Add(newSmartClient);
             clientsCounter_++;
             NotifyOnNewClient();
             AsyncListen(); //keep listening
@@ -50,10 +52,10 @@ namespace BlueSky.Com
 
         public bool Send(byte[] bytes)
         {
-            if (server_ != null)
+            if (!IsDead)
             {
-                foreach (var clientWrapper in clientsList_)
-                    clientWrapper.Client.GetStream().Write(bytes, 0, bytes.Length);
+                foreach (var smartClient in clientsList_)
+                    smartClient.Client.GetStream().Write(bytes, 0, bytes.Length);
                 return true;
             }
             return false;
@@ -97,10 +99,10 @@ namespace BlueSky.Com
 
         public void Close()
         {
+            isDead_ = true;
             foreach (var clientWrapper in clientsList_) 
                clientWrapper.Client.Close();
-                
-            server_.Stop(); 
+            Stop();
         }
 
     }

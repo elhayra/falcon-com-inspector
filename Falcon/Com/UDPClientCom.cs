@@ -9,45 +9,71 @@ using System.Net;
 
 namespace BlueSky.Com
 {
-    public class UDPClientCom
+    public class UDPClientCom : UdpClient
     {
-        //TODO: CLIENT CALL BACK OF INCOMING BYTES???
-        private UdpClient udpClient_;
+        List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
+        IPEndPoint endpoint_;
+        bool isDead_ = true;
 
-        public void Connect(string ip, int port)
+        public bool IsDead { get { return isDead_; } }
+
+
+        public bool ConnectTo(string ip, int port)
         {
-            udpClient_ = new UdpClient();
-            udpClient_.Connect(ip, port);
+            isDead_ = false;
+            Connect(ip, port);
+            var netAddr = new NetworkAdderss(ip, port);
+            endpoint_ = new IPEndPoint(netAddr.IP, netAddr.Port);
+            AsyncListen();
+            return true; /// TODO: RETURN CORRECT VALUE
         }
 
-        public bool Publish(byte[] bytes)
+        private void AsyncListen()
         {
-            if (udpClient_ != null)
-            {
-                udpClient_.Send(bytes, bytes.Length);
-                return true;
-            }
-            return false;
+            if (!IsDead)
+                BeginReceive(new AsyncCallback(OnIncomingBytes), null);
         }
 
-        public void Close()
+        private void OnIncomingBytes(IAsyncResult res)
         {
-            udpClient_.Close();
-            udpClient_ = null;
+            if (IsDead)
+                return;
+            byte[] bytes = EndReceive(res, ref endpoint_);
+
+            Publish(bytes);
+
+            AsyncListen(); //keep listening
         }
 
-        public void Subscribe(Action<byte[]> bytes)
+        public void Publish(byte[] bytes)
         {
-
+            foreach (var func in subsFuncs_)
+                func(bytes);
         }
 
-        public void Unsubscribe(Action<byte[]> bytes)
+        public void Kill()
         {
+            isDead_ = true;
+            Close();
+        }
 
+        public void Subscribe(Action<byte[]> func)
+        {
+            subsFuncs_.Add(func);
+        }
+
+        public void Unsubscribe(Action<byte[]> func)
+        {
+            subsFuncs_.Remove(func);
         }
 
         public bool Send(byte[] bytes)
         {
+            if (!IsDead)
+            {
+                Send(bytes, bytes.Length);
+                return true;
+            }
             return false;
         }
     }

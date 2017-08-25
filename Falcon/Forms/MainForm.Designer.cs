@@ -28,21 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tcpConnectionStateLbl = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tcpConnectedClientsLbl = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tcpDisconnectBtn = new System.Windows.Forms.Button();
             this.tcpConnectBtn = new System.Windows.Forms.Button();
-            this.tcpIpTxt = new System.Windows.Forms.TextBox();
-            this.tcpPortTxt = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tcpServerIpLbl = new System.Windows.Forms.Label();
-            this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
+            this.tcpConnectionStateLbl = new System.Windows.Forms.Label();
+            this.tcpDisconnectBtn = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
+            this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
+            this.tcpServerIpLbl = new System.Windows.Forms.Label();
+            this.tcpIpTxt = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tcpPortTxt = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.udpConnectBtn = new System.Windows.Forms.Button();
+            this.udpConnectionStateLbl = new System.Windows.Forms.Label();
+            this.udpDisconnectBtn = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.udpServerRdBtn = new System.Windows.Forms.RadioButton();
+            this.udpClientRdBtn = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.udpIpTxt = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.udpPortTxt = new System.Windows.Forms.NumericUpDown();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.serialConnectBtn = new System.Windows.Forms.Button();
@@ -70,7 +84,7 @@
             this.sendBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,19 +92,26 @@
             this.dataInScreenTxt = new System.Windows.Forms.TextBox();
             this.textToSendCmBx = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.serialIndicatorLbl = new System.Windows.Forms.Label();
+            this.udpIndicatorLbl = new System.Windows.Forms.Label();
+            this.tcpIndicatorLbl = new System.Windows.Forms.Label();
+            this.bytesInTimer = new System.Windows.Forms.Timer(this.components);
+            this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortTxt)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udpPortTxt)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serialDataBitsTxt)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -116,14 +137,19 @@
             this.tabPage1.Text = "TCP";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tcpConnectionStateLbl
+            // groupBox5
             // 
-            this.tcpConnectionStateLbl.AutoSize = true;
-            this.tcpConnectionStateLbl.Location = new System.Drawing.Point(7, 77);
-            this.tcpConnectionStateLbl.Name = "tcpConnectionStateLbl";
-            this.tcpConnectionStateLbl.Size = new System.Drawing.Size(79, 13);
-            this.tcpConnectionStateLbl.TabIndex = 18;
-            this.tcpConnectionStateLbl.Text = "Not Connected";
+            this.groupBox5.Controls.Add(this.tcpConnectedClientsLbl);
+            this.groupBox5.Controls.Add(this.tcpConnectBtn);
+            this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
+            this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Location = new System.Drawing.Point(6, 163);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(110, 127);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Connection";
             // 
             // tcpConnectedClientsLbl
             // 
@@ -134,14 +160,24 @@
             this.tcpConnectedClientsLbl.TabIndex = 17;
             this.tcpConnectedClientsLbl.Text = "0";
             // 
-            // label5
+            // tcpConnectBtn
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 106);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Clients:";
+            this.tcpConnectBtn.Location = new System.Drawing.Point(6, 19);
+            this.tcpConnectBtn.Name = "tcpConnectBtn";
+            this.tcpConnectBtn.Size = new System.Drawing.Size(85, 23);
+            this.tcpConnectBtn.TabIndex = 14;
+            this.tcpConnectBtn.Text = "Connect";
+            this.tcpConnectBtn.UseVisualStyleBackColor = true;
+            this.tcpConnectBtn.Click += new System.EventHandler(this.tcpConnectBtn_Click);
+            // 
+            // tcpConnectionStateLbl
+            // 
+            this.tcpConnectionStateLbl.AutoSize = true;
+            this.tcpConnectionStateLbl.Location = new System.Drawing.Point(7, 77);
+            this.tcpConnectionStateLbl.Name = "tcpConnectionStateLbl";
+            this.tcpConnectionStateLbl.Size = new System.Drawing.Size(79, 13);
+            this.tcpConnectionStateLbl.TabIndex = 18;
+            this.tcpConnectionStateLbl.Text = "Not Connected";
             // 
             // tcpDisconnectBtn
             // 
@@ -154,63 +190,29 @@
             this.tcpDisconnectBtn.UseVisualStyleBackColor = true;
             this.tcpDisconnectBtn.Click += new System.EventHandler(this.tcpDisconnectBtn_Click);
             // 
-            // tcpConnectBtn
+            // label5
             // 
-            this.tcpConnectBtn.Location = new System.Drawing.Point(6, 19);
-            this.tcpConnectBtn.Name = "tcpConnectBtn";
-            this.tcpConnectBtn.Size = new System.Drawing.Size(85, 23);
-            this.tcpConnectBtn.TabIndex = 14;
-            this.tcpConnectBtn.Text = "Connect";
-            this.tcpConnectBtn.UseVisualStyleBackColor = true;
-            this.tcpConnectBtn.Click += new System.EventHandler(this.tcpConnectBtn_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 106);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Clients:";
             // 
-            // tcpIpTxt
+            // groupBox3
             // 
-            this.tcpIpTxt.Enabled = false;
-            this.tcpIpTxt.Location = new System.Drawing.Point(6, 85);
-            this.tcpIpTxt.Name = "tcpIpTxt";
-            this.tcpIpTxt.Size = new System.Drawing.Size(85, 20);
-            this.tcpIpTxt.TabIndex = 13;
-            // 
-            // tcpPortTxt
-            // 
-            this.tcpPortTxt.Location = new System.Drawing.Point(6, 124);
-            this.tcpPortTxt.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.tcpPortTxt.Name = "tcpPortTxt";
-            this.tcpPortTxt.Size = new System.Drawing.Size(85, 20);
-            this.tcpPortTxt.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 108);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Server Port:";
-            // 
-            // tcpServerIpLbl
-            // 
-            this.tcpServerIpLbl.AutoSize = true;
-            this.tcpServerIpLbl.Location = new System.Drawing.Point(4, 69);
-            this.tcpServerIpLbl.Name = "tcpServerIpLbl";
-            this.tcpServerIpLbl.Size = new System.Drawing.Size(54, 13);
-            this.tcpServerIpLbl.TabIndex = 10;
-            this.tcpServerIpLbl.Text = "Server IP:";
-            // 
-            // tcpClientRdBtn
-            // 
-            this.tcpClientRdBtn.AutoSize = true;
-            this.tcpClientRdBtn.Location = new System.Drawing.Point(6, 42);
-            this.tcpClientRdBtn.Name = "tcpClientRdBtn";
-            this.tcpClientRdBtn.Size = new System.Drawing.Size(51, 17);
-            this.tcpClientRdBtn.TabIndex = 9;
-            this.tcpClientRdBtn.Text = "Client";
-            this.tcpClientRdBtn.UseVisualStyleBackColor = true;
+            this.groupBox3.Controls.Add(this.tcpServerRdBtn);
+            this.groupBox3.Controls.Add(this.tcpClientRdBtn);
+            this.groupBox3.Controls.Add(this.tcpServerIpLbl);
+            this.groupBox3.Controls.Add(this.tcpIpTxt);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.tcpPortTxt);
+            this.groupBox3.Location = new System.Drawing.Point(6, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(110, 153);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Settings";
             // 
             // tcpServerRdBtn
             // 
@@ -225,8 +227,58 @@
             this.tcpServerRdBtn.UseVisualStyleBackColor = true;
             this.tcpServerRdBtn.CheckedChanged += new System.EventHandler(this.tcpServerRdBtn_CheckedChanged);
             // 
+            // tcpClientRdBtn
+            // 
+            this.tcpClientRdBtn.AutoSize = true;
+            this.tcpClientRdBtn.Location = new System.Drawing.Point(6, 42);
+            this.tcpClientRdBtn.Name = "tcpClientRdBtn";
+            this.tcpClientRdBtn.Size = new System.Drawing.Size(51, 17);
+            this.tcpClientRdBtn.TabIndex = 9;
+            this.tcpClientRdBtn.Text = "Client";
+            this.tcpClientRdBtn.UseVisualStyleBackColor = true;
+            // 
+            // tcpServerIpLbl
+            // 
+            this.tcpServerIpLbl.AutoSize = true;
+            this.tcpServerIpLbl.Location = new System.Drawing.Point(4, 69);
+            this.tcpServerIpLbl.Name = "tcpServerIpLbl";
+            this.tcpServerIpLbl.Size = new System.Drawing.Size(54, 13);
+            this.tcpServerIpLbl.TabIndex = 10;
+            this.tcpServerIpLbl.Text = "Server IP:";
+            // 
+            // tcpIpTxt
+            // 
+            this.tcpIpTxt.Enabled = false;
+            this.tcpIpTxt.Location = new System.Drawing.Point(6, 85);
+            this.tcpIpTxt.Name = "tcpIpTxt";
+            this.tcpIpTxt.Size = new System.Drawing.Size(85, 20);
+            this.tcpIpTxt.TabIndex = 13;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 108);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Server Port:";
+            // 
+            // tcpPortTxt
+            // 
+            this.tcpPortTxt.Location = new System.Drawing.Point(6, 124);
+            this.tcpPortTxt.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.tcpPortTxt.Name = "tcpPortTxt";
+            this.tcpPortTxt.Size = new System.Drawing.Size(85, 20);
+            this.tcpPortTxt.TabIndex = 12;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.groupBox7);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -234,6 +286,124 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UDP";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.udpConnectBtn);
+            this.groupBox6.Controls.Add(this.udpConnectionStateLbl);
+            this.groupBox6.Controls.Add(this.udpDisconnectBtn);
+            this.groupBox6.Location = new System.Drawing.Point(6, 163);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(110, 127);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Connection";
+            // 
+            // udpConnectBtn
+            // 
+            this.udpConnectBtn.Location = new System.Drawing.Point(6, 19);
+            this.udpConnectBtn.Name = "udpConnectBtn";
+            this.udpConnectBtn.Size = new System.Drawing.Size(85, 23);
+            this.udpConnectBtn.TabIndex = 14;
+            this.udpConnectBtn.Text = "Connect";
+            this.udpConnectBtn.UseVisualStyleBackColor = true;
+            this.udpConnectBtn.Click += new System.EventHandler(this.udpConnectBtn_Click);
+            // 
+            // udpConnectionStateLbl
+            // 
+            this.udpConnectionStateLbl.AutoSize = true;
+            this.udpConnectionStateLbl.Location = new System.Drawing.Point(7, 77);
+            this.udpConnectionStateLbl.Name = "udpConnectionStateLbl";
+            this.udpConnectionStateLbl.Size = new System.Drawing.Size(79, 13);
+            this.udpConnectionStateLbl.TabIndex = 18;
+            this.udpConnectionStateLbl.Text = "Not Connected";
+            // 
+            // udpDisconnectBtn
+            // 
+            this.udpDisconnectBtn.Enabled = false;
+            this.udpDisconnectBtn.Location = new System.Drawing.Point(6, 48);
+            this.udpDisconnectBtn.Name = "udpDisconnectBtn";
+            this.udpDisconnectBtn.Size = new System.Drawing.Size(85, 23);
+            this.udpDisconnectBtn.TabIndex = 15;
+            this.udpDisconnectBtn.Text = "Disconnect";
+            this.udpDisconnectBtn.UseVisualStyleBackColor = true;
+            this.udpDisconnectBtn.Click += new System.EventHandler(this.udpDisconnectBtn_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.udpServerRdBtn);
+            this.groupBox7.Controls.Add(this.udpClientRdBtn);
+            this.groupBox7.Controls.Add(this.label12);
+            this.groupBox7.Controls.Add(this.udpIpTxt);
+            this.groupBox7.Controls.Add(this.label13);
+            this.groupBox7.Controls.Add(this.udpPortTxt);
+            this.groupBox7.Location = new System.Drawing.Point(6, 3);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(110, 153);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Settings";
+            // 
+            // udpServerRdBtn
+            // 
+            this.udpServerRdBtn.AutoSize = true;
+            this.udpServerRdBtn.Checked = true;
+            this.udpServerRdBtn.Location = new System.Drawing.Point(6, 19);
+            this.udpServerRdBtn.Name = "udpServerRdBtn";
+            this.udpServerRdBtn.Size = new System.Drawing.Size(56, 17);
+            this.udpServerRdBtn.TabIndex = 8;
+            this.udpServerRdBtn.TabStop = true;
+            this.udpServerRdBtn.Text = "Server";
+            this.udpServerRdBtn.UseVisualStyleBackColor = true;
+            this.udpServerRdBtn.CheckedChanged += new System.EventHandler(this.udpServerRdBtn_CheckedChanged);
+            // 
+            // udpClientRdBtn
+            // 
+            this.udpClientRdBtn.AutoSize = true;
+            this.udpClientRdBtn.Location = new System.Drawing.Point(6, 42);
+            this.udpClientRdBtn.Name = "udpClientRdBtn";
+            this.udpClientRdBtn.Size = new System.Drawing.Size(51, 17);
+            this.udpClientRdBtn.TabIndex = 9;
+            this.udpClientRdBtn.Text = "Client";
+            this.udpClientRdBtn.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(4, 69);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Server IP:";
+            // 
+            // udpIpTxt
+            // 
+            this.udpIpTxt.Enabled = false;
+            this.udpIpTxt.Location = new System.Drawing.Point(6, 85);
+            this.udpIpTxt.Name = "udpIpTxt";
+            this.udpIpTxt.Size = new System.Drawing.Size(85, 20);
+            this.udpIpTxt.TabIndex = 13;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 108);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(63, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Server Port:";
+            // 
+            // udpPortTxt
+            // 
+            this.udpPortTxt.Location = new System.Drawing.Point(6, 124);
+            this.udpPortTxt.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.udpPortTxt.Name = "udpPortTxt";
+            this.udpPortTxt.Size = new System.Drawing.Size(85, 20);
+            this.udpPortTxt.TabIndex = 12;
             // 
             // tabPage3
             // 
@@ -253,7 +423,7 @@
             this.groupBox2.Controls.Add(this.serialConnectBtn);
             this.groupBox2.Controls.Add(this.serialDisconnectBtn);
             this.groupBox2.Controls.Add(this.serialConnectionStateLbl);
-            this.groupBox2.Location = new System.Drawing.Point(4, 265);
+            this.groupBox2.Location = new System.Drawing.Point(6, 264);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(111, 97);
             this.groupBox2.TabIndex = 19;
@@ -303,7 +473,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.serialComCmBx);
-            this.groupBox1.Location = new System.Drawing.Point(4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(6, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(111, 254);
             this.groupBox1.TabIndex = 18;
@@ -442,7 +612,7 @@
             // receivingRateLbl
             // 
             this.receivingRateLbl.AutoSize = true;
-            this.receivingRateLbl.Location = new System.Drawing.Point(248, 8);
+            this.receivingRateLbl.Location = new System.Drawing.Point(238, 8);
             this.receivingRateLbl.Name = "receivingRateLbl";
             this.receivingRateLbl.Size = new System.Drawing.Size(33, 13);
             this.receivingRateLbl.TabIndex = 41;
@@ -451,7 +621,7 @@
             // bytesOutLbl
             // 
             this.bytesOutLbl.AutoSize = true;
-            this.bytesOutLbl.Location = new System.Drawing.Point(127, 8);
+            this.bytesOutLbl.Location = new System.Drawing.Point(122, 8);
             this.bytesOutLbl.Name = "bytesOutLbl";
             this.bytesOutLbl.Size = new System.Drawing.Size(23, 13);
             this.bytesOutLbl.TabIndex = 40;
@@ -469,7 +639,7 @@
             // labll
             // 
             this.labll.AutoSize = true;
-            this.labll.Location = new System.Drawing.Point(198, 8);
+            this.labll.Location = new System.Drawing.Point(188, 8);
             this.labll.Name = "labll";
             this.labll.Size = new System.Drawing.Size(49, 13);
             this.labll.TabIndex = 38;
@@ -487,7 +657,7 @@
             // lbl
             // 
             this.lbl.AutoSize = true;
-            this.lbl.Location = new System.Drawing.Point(99, 8);
+            this.lbl.Location = new System.Drawing.Point(94, 8);
             this.lbl.Name = "lbl";
             this.lbl.Size = new System.Drawing.Size(27, 13);
             this.lbl.TabIndex = 17;
@@ -517,7 +687,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.preferencesToolStripMenuItem1,
-            this.aboutToolStripMenuItem});
+            this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(591, 24);
@@ -530,11 +700,12 @@
             this.preferencesToolStripMenuItem1.Size = new System.Drawing.Size(80, 20);
             this.preferencesToolStripMenuItem1.Text = "Preferences";
             // 
-            // aboutToolStripMenuItem
+            // aboutBtn
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutBtn.Name = "aboutBtn";
+            this.aboutBtn.Size = new System.Drawing.Size(52, 20);
+            this.aboutBtn.Text = "About";
+            this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
             // 
             // preferencesToolStripMenuItem
             // 
@@ -586,9 +757,13 @@
             this.textToSendCmBx.Name = "textToSendCmBx";
             this.textToSendCmBx.Size = new System.Drawing.Size(376, 21);
             this.textToSendCmBx.TabIndex = 37;
+            this.textToSendCmBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textToSendCmBx_KeyPress);
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.serialIndicatorLbl);
+            this.groupBox4.Controls.Add(this.udpIndicatorLbl);
+            this.groupBox4.Controls.Add(this.tcpIndicatorLbl);
             this.groupBox4.Controls.Add(this.receivingRateLbl);
             this.groupBox4.Controls.Add(this.bytesInLbl);
             this.groupBox4.Controls.Add(this.labll);
@@ -601,34 +776,45 @@
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
-            // groupBox3
+            // serialIndicatorLbl
             // 
-            this.groupBox3.Controls.Add(this.tcpServerRdBtn);
-            this.groupBox3.Controls.Add(this.tcpClientRdBtn);
-            this.groupBox3.Controls.Add(this.tcpServerIpLbl);
-            this.groupBox3.Controls.Add(this.tcpIpTxt);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.tcpPortTxt);
-            this.groupBox3.Location = new System.Drawing.Point(6, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(110, 153);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Settings";
+            this.serialIndicatorLbl.AutoSize = true;
+            this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(401, 8);
+            this.serialIndicatorLbl.Name = "serialIndicatorLbl";
+            this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
+            this.serialIndicatorLbl.TabIndex = 44;
+            this.serialIndicatorLbl.Text = "SER";
             // 
-            // groupBox5
+            // udpIndicatorLbl
             // 
-            this.groupBox5.Controls.Add(this.tcpConnectedClientsLbl);
-            this.groupBox5.Controls.Add(this.tcpConnectBtn);
-            this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
-            this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
-            this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Location = new System.Drawing.Point(6, 163);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(110, 127);
-            this.groupBox5.TabIndex = 1;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Connection";
+            this.udpIndicatorLbl.AutoSize = true;
+            this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(361, 8);
+            this.udpIndicatorLbl.Name = "udpIndicatorLbl";
+            this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
+            this.udpIndicatorLbl.TabIndex = 43;
+            this.udpIndicatorLbl.Text = "UDP";
+            // 
+            // tcpIndicatorLbl
+            // 
+            this.tcpIndicatorLbl.AutoSize = true;
+            this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(323, 8);
+            this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
+            this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
+            this.tcpIndicatorLbl.TabIndex = 42;
+            this.tcpIndicatorLbl.Text = "TCP";
+            // 
+            // bytesInTimer
+            // 
+            this.bytesInTimer.Interval = 500;
+            this.bytesInTimer.Tick += new System.EventHandler(this.bytesInTimer_Tick);
+            // 
+            // bytesOutTimer
+            // 
+            this.bytesOutTimer.Interval = 500;
+            this.bytesOutTimer.Tick += new System.EventHandler(this.bytesOutTimer_Tick);
             // 
             // MainForm
             // 
@@ -646,11 +832,21 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Falcon Com Inspector";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortTxt)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udpPortTxt)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -661,10 +857,6 @@
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -720,9 +912,25 @@
         private System.Windows.Forms.Label bytesInLbl;
         private System.Windows.Forms.Label labll;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutBtn;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button udpConnectBtn;
+        private System.Windows.Forms.Label udpConnectionStateLbl;
+        private System.Windows.Forms.Button udpDisconnectBtn;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.RadioButton udpServerRdBtn;
+        private System.Windows.Forms.RadioButton udpClientRdBtn;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox udpIpTxt;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown udpPortTxt;
+        private System.Windows.Forms.Label tcpIndicatorLbl;
+        private System.Windows.Forms.Label serialIndicatorLbl;
+        private System.Windows.Forms.Label udpIndicatorLbl;
+        private System.Windows.Forms.Timer bytesInTimer;
+        private System.Windows.Forms.Timer bytesOutTimer;
     }
 }
 

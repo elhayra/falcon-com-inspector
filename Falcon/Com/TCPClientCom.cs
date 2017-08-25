@@ -7,36 +7,43 @@ using System.Threading.Tasks;
 
 namespace BlueSky.Com
 {
-    public class TCPClientCom
+    public class TCPClientCom : TcpClient
     {
-        public const int BUFF_SIZE = 256;
-        private TcpClient client_;
+        public const int BUFF_SIZE = 1;
         NetworkStream serverStream_;
         byte[] bytesIn_;
         List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
+
+        bool isDead_ = true;
+
+        public bool IsDead { get { return isDead_; } }
 
         public TCPClientCom()
         {
             bytesIn_ = new byte[BUFF_SIZE];
         }
 
-        public bool Connect(string ip, int port)
+        public bool ConnectTo(string ip, int port)
         {
             return Connect(new NetworkAdderss(ip, port));
         }
 
         public bool Connect(NetworkAdderss srvrAddr)
         {
-            client_ = new TcpClient();
-            if (client_.ConnectAsync(srvrAddr.IP.ToString(), srvrAddr.Port).Wait(1000))
+            try 
             {
-                // connection success
-                serverStream_ = client_.GetStream();
-                AsyncListen();
-                return true;
+                if (ConnectAsync(srvrAddr.IP.ToString(), srvrAddr.Port).Wait(500))
+                {
+                    isDead_ = false;
+                    serverStream_ = GetStream();
+                    AsyncListen();
+                }
             }
-            else
-                return false;
+            catch (SocketException exp)
+            {
+                //wrong address
+            }
+            return isDead_;
         }
 
         public void Subscribe(Action<byte[]> func)
@@ -56,30 +63,20 @@ namespace BlueSky.Com
 
         private void OnReadCB(IAsyncResult ar)
         {
+            if (IsDead)
+                return;
             int numberOfBytesRead = serverStream_.EndRead(ar);
-
             if (numberOfBytesRead == 0)
                 return;
-
-            var bytes = new byte[numberOfBytesRead];
-            for (int i = 0; i < numberOfBytesRead; i++)
-                bytes[i] = bytesIn_[i];
-
-            bytesIn_ = new byte[BUFF_SIZE];
-
             foreach (var func in subsFuncs_)
-            {
-                func(bytes);
-            }
-
+                func(bytesIn_);
+            bytesIn_ = new byte[BUFF_SIZE];
             AsyncListen();
         }
 
-
-
         public bool Send(byte[] bytes)
         {
-            if (client_ != null)
+            if (!IsDead)
             {
                 serverStream_.Write(bytes, 0, bytes.Length);
                 return true;
@@ -87,10 +84,11 @@ namespace BlueSky.Com
             return false;
         }
 
-        public void Close()
+        public void Kill()
         {
+            isDead_ = true;
             serverStream_.Close();
-            client_.Close();
+            Close();
         }
     }
 }

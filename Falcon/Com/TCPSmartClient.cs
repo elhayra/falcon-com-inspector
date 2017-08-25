@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace BlueSky.Com
 {
-    public class TcpClientWrapper
+    public class TcpSmartClient
     {
-        public const int BUFF_SIZE = 256;
+        public const int BUFF_SIZE = 1;
         NetworkStream stream_;
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
         byte[] container_;
         TcpClient tcpClient_;
         public TcpClient Client { get { return tcpClient_; } }
+        bool isDead_ = false;
 
-        public TcpClientWrapper(TcpClient tcpClient)
+        public TcpSmartClient(TcpClient tcpClient)
         {
             tcpClient_ = tcpClient;
             stream_ = tcpClient_.GetStream();
@@ -31,13 +32,15 @@ namespace BlueSky.Com
 
         private void OnIncomingBytes(IAsyncResult res)
         {
-            stream_.EndRead(res);
-            Publish();
-            AsyncListen();
+            if (!isDead_)
+            {
+                stream_.EndRead(res);
+                Publish();
+                AsyncListen();
+            }
         }
 
-
-        public void Subscribe(Action<byte []> func)
+        public void Subscribe(Action<byte[]> func)
         {
             subsList_.Add(func);
         }
@@ -53,6 +56,12 @@ namespace BlueSky.Com
             {
                 funcion(container_);
             }
+        }
+
+        public void Close()
+        {
+            isDead_ = true;
+            Client.Close();
         }
     }
 }

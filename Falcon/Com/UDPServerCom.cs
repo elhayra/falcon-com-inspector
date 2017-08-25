@@ -12,56 +12,49 @@ using System.Net.Sockets;
 
 namespace BlueSky.Com
 {
-    class UDPServerCom
+    public class UDPServerCom : UdpClient
     {
-        private UdpClient udpClient_;
-        private IPEndPoint endPoint_;
+        private IPEndPoint endpoint_;
         List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
+        bool isDead_ = true;
 
-        public bool Connect(int port)
+        public bool IsDead { get { return isDead_; } }
+
+        public UDPServerCom(int port) : base(port)
         {
-            bool success = true;
-            try
-            {
-                udpClient_ = new UdpClient(new IPEndPoint(IPAddress.Any, port));
-                AsyncListen();
-            }
-            catch(SocketException exp)
-            {
-                success = false;
-            }
-            return success;
+            endpoint_ = new IPEndPoint(IPAddress.Any, port);
+            AsyncListen();
         }
 
         private void AsyncListen()
         {
-            if (udpClient_ != null)
-                udpClient_.BeginReceive(new AsyncCallback(OnIncomingBytes), null);
+            if (!IsDead)
+                BeginReceive(new AsyncCallback(OnIncomingBytes), null);
         }
     
 
         private void OnIncomingBytes(IAsyncResult res)
         {
-            if (udpClient_ == null)
+            if (IsDead)
                 return;
-            byte[] bytes = udpClient_.EndReceive(res, ref endPoint_);
+            byte[] bytes = EndReceive(res, ref endpoint_);
 
             Publish(bytes);
   
             AsyncListen(); //keep listening
         }
 
-        public void Close()
+        public void Kill()
         {
-            udpClient_.Close();
-            udpClient_ = null;
+            isDead_ = true;
+            Close();
         }
 
-        public bool Send(byte[] bytes, IPEndPoint endpoint)
+        public bool Send(byte[] bytes)
         {
-            if (udpClient_ != null)
+            if (!IsDead)
             {
-                udpClient_.Send(bytes, bytes.Length, endpoint);
+                Send(bytes, bytes.Length, endpoint_);
                 return true;
             }
             return false;

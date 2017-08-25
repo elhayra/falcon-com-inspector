@@ -7,28 +7,32 @@ using System.IO.Ports;
 
 namespace BlueSky.Com
 {
-    public class SerialCom
+    public class SerialCom : SerialPort
     {
-        private SerialPort port_;
         private bool connected_ = false;
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
-
-
+   
         public bool Connect(string port, int baudRate)
         {
             return Connect(port, baudRate, Parity.None, 8, StopBits.One);
         }
+
         public bool Connect(string port, 
                             int baudRate, 
                             Parity parity, 
                             int dataBits, 
                             StopBits stopBits)
         {
+            BaudRate = baudRate;
+            PortName = port;
+            Parity = parity;
+            DataBits = dataBits;
+            StopBits = stopBits;
+
             try
             {
-                port_ = new SerialPort(port, baudRate, parity, dataBits, stopBits);
-                port_.DataReceived += new SerialDataReceivedEventHandler(OnDataReceived);
-                port_.Open();
+                DataReceived += new SerialDataReceivedEventHandler(OnDataReceived);
+                Open();
                 connected_ = true;
             }
             catch (Exception e)
@@ -43,17 +47,17 @@ namespace BlueSky.Com
         {
             if (connected_)
             {
-                port_.Write(bytes, 0, bytes.Length);
+                Write(bytes, 0, bytes.Length);
                 return true;
             }
             return false;
         }
 
-        public void Close()
+        public void CloseMe()
         {
             if (connected_)
             {
-                port_.Dispose();
+                Dispose();
                 connected_ = false;
             }
         }
@@ -75,7 +79,7 @@ namespace BlueSky.Com
 
         private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string incoming = port_.ReadExisting();
+            string incoming = ReadExisting();
             foreach (var func in subsList_)
             {
                 func(Encoding.ASCII.GetBytes(incoming));
