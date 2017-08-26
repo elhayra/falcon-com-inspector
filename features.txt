@@ -26,7 +26,6 @@ auto baud rate finder - if more than 50 percent is "?" than its wrong baud rate 
 about form
 green marker when connected, red when not
 
-enter key needs to be the same as hitting send button
 limit bytes lables by size
 turn B unit to KB and MB and so on when a lot of bytes incoming
 
@@ -38,25 +37,16 @@ trying to connect disconnect then connect again
 entering invalid values
 pressing buttons in the wrong order
 
-
-bytes out lable not yet working
-when sending or recving bytes, bytes out and in light up in green for 1 second and then turn back off
-
-tcp,udp,ser indications not yet working
-
 when client disconnect from tcp - how to recognize it?
-
-save all connection settings after each session
-
-commands that are sent out are added to console with red/yellow color
 
 graph indicator can display amount of incoming data rate, or connected to number that im getting in, and display values of this number, and setpoint
 zoom in or out from graph
 
-
-
-next things:
-Serial tested --OK
-reset bytes counter when number is too big
-
 return connection failed if it failed
+
+When working with connections, you need a quick and easy way of monitoring and testing them. \n Falcom allows you to do exactly that
+
+enter on port or ip window = connect button
+when sending fails dont count bytes
+handle connetcions excepotions
+handle trying connect to serial with no port selected

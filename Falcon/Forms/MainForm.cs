@@ -59,6 +59,11 @@ namespace Falcon
 
         private void tcpConnectBtn_Click(object sender, EventArgs e)
         {
+            ConnectTcp();
+        }
+
+        private void ConnectTcp()
+        {
             SaveTcpSettings();
             bool connected = false;
             if (tcpServerRdBtn.Checked)
@@ -245,7 +250,9 @@ namespace Falcon
         private void serialConnectBtn_Click(object sender, EventArgs e)
         {
             SaveSerialSettings();
-            string port = serialComCmBx.SelectedItem.ToString();
+            string port = serialComCmBx.Text;
+            if (port == "")
+                return;
             int baud = int.Parse(serialBaudCmBx.SelectedItem.ToString());
             StopBits stopBits = SerialCom.StringToStopBits(serialStopBitsCmBx.SelectedItem.ToString());
             int dataBits = (int)serialDataBitsTxt.Value;
@@ -327,7 +334,6 @@ namespace Falcon
                 tcpIpTxt.Enabled = false;
         }
 
-
         private void textToSendCmBx_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -335,6 +341,11 @@ namespace Falcon
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
+        {
+            ConnectUdp();
+        }
+
+        private void ConnectUdp()
         {
             SaveUdpSettings();
             bool connected = false;
@@ -420,6 +431,31 @@ namespace Falcon
             bytesOutLbl.BackColor = SystemColors.Control;
             bytesOutTimer.Enabled = false;
         }
+
+        private void udpIpTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                ConnectUdp();
+        }
+
+        private void udpPortTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                ConnectUdp();
+        }
+
+        private void tcpIpTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                ConnectTcp();
+        }
+
+        private void tcpPortTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                ConnectTcp();
+        }
+
 
 
 

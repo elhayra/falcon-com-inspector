@@ -36,13 +36,20 @@ namespace BlueSky.Com
 
         private void OnIncomingBytes(IAsyncResult res)
         {
-            if (IsDead)
-                return;
-            byte[] bytes = EndReceive(res, ref endpoint_);
-
-            Publish(bytes);
-
-            AsyncListen(); //keep listening
+            try
+            {
+                byte[] bytes = EndReceive(res, ref endpoint_);
+                Publish(bytes);
+                AsyncListen(); //keep listening
+            }
+            catch (SocketException exp)
+            {
+                //other side disconnected
+            }
+            catch (System.ObjectDisposedException exp)
+            {
+                //disconnect
+            }
         }
 
         public void Publish(byte[] bytes)

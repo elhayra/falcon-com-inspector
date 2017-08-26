@@ -20,9 +20,10 @@ namespace BlueSky.Com
 
         public bool IsDead { get { return isDead_; } }
 
-        public UDPServerCom(int port) : base(port)
+        public UDPServerCom(int port) : base(new IPEndPoint(IPAddress.Any, port))
         {
             endpoint_ = new IPEndPoint(IPAddress.Any, port);
+            isDead_ = false;
             AsyncListen();
         }
 
@@ -35,13 +36,20 @@ namespace BlueSky.Com
 
         private void OnIncomingBytes(IAsyncResult res)
         {
-            if (IsDead)
-                return;
-            byte[] bytes = EndReceive(res, ref endpoint_);
-
-            Publish(bytes);
-  
-            AsyncListen(); //keep listening
+            try
+            {
+                byte[] bytes = EndReceive(res, ref endpoint_);
+                Publish(bytes);
+                AsyncListen(); //keep listening
+            }
+            catch (System.ObjectDisposedException exp)
+            {
+                isDead_ = true;
+            }
+            catch (SocketException exp)
+            {
+                //other side disconnected
+            }
         }
 
         public void Kill()
@@ -54,8 +62,16 @@ namespace BlueSky.Com
         {
             if (!IsDead)
             {
-                Send(bytes, bytes.Length, endpoint_);
-                return true;
+                try
+                {
+                    Send(bytes, bytes.Length, endpoint_);
+                    return true;
+                }
+                catch (System.Net.Sockets.SocketException exp)
+                {
+                    //server must first recieve bytes so it knows the client address to send bytes to.
+                    //If trying to send before any bytes recieved, this exception will be raised
+                }
             }
             return false;
         }

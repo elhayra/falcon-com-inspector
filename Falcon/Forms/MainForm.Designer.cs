@@ -254,6 +254,7 @@
             this.tcpIpTxt.Name = "tcpIpTxt";
             this.tcpIpTxt.Size = new System.Drawing.Size(85, 20);
             this.tcpIpTxt.TabIndex = 13;
+            this.tcpIpTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tcpIpTxt_KeyPress);
             // 
             // label2
             // 
@@ -275,6 +276,7 @@
             this.tcpPortTxt.Name = "tcpPortTxt";
             this.tcpPortTxt.Size = new System.Drawing.Size(85, 20);
             this.tcpPortTxt.TabIndex = 12;
+            this.tcpPortTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tcpPortTxt_KeyPress);
             // 
             // tabPage2
             // 
@@ -384,6 +386,7 @@
             this.udpIpTxt.Name = "udpIpTxt";
             this.udpIpTxt.Size = new System.Drawing.Size(85, 20);
             this.udpIpTxt.TabIndex = 13;
+            this.udpIpTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.udpIpTxt_KeyPress);
             // 
             // label13
             // 
@@ -405,6 +408,7 @@
             this.udpPortTxt.Name = "udpPortTxt";
             this.udpPortTxt.Size = new System.Drawing.Size(85, 20);
             this.udpPortTxt.TabIndex = 12;
+            this.udpPortTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.udpPortTxt_KeyPress);
             // 
             // tabPage3
             // 
@@ -771,7 +775,7 @@
             this.groupBox4.Controls.Add(this.bytesOutLbl);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.lbl);
-            this.groupBox4.Location = new System.Drawing.Point(146, 27);
+            this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(436, 25);
             this.groupBox4.TabIndex = 40;
@@ -834,7 +838,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 512);
+            this.ClientSize = new System.Drawing.Size(607, 551);
             this.Controls.Add(this.infoTxt);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
@@ -844,8 +848,13 @@
             this.Controls.Add(this.clearScreenBtn);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(607, 551);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(607, 551);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Falcon Com Inspector";
