@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BlueSky.Com;
+using Falcon.Com;
 using System.IO.Ports;
 using Falcon.Forms;
 using Falcon.Utils;
 using Falcon.Com;
+using System.Threading;
 
 
 namespace Falcon
@@ -23,10 +24,12 @@ namespace Falcon
 
 
         private AboutForm aboutForm_;
+        private GraphForm graphFrom_;
 
         private BytesCounter bytesInCounter_ = new BytesCounter();
         private BytesCounter bytesOutCounter_ = new BytesCounter();
-        private ConnectionsManager connections_ = new ConnectionsManager(); 
+        private BytesCounter bytesRateCounter_ = new BytesCounter();
+        ulong prevBytesCount_ = 0;
 
 
         public MainForm()
@@ -50,9 +53,9 @@ namespace Falcon
 
         private void UpdateSerialPorts()
         {
-            var availablePorts = SerialCom.GetAvailPorts();
-            foreach (var port in availablePorts)
-                serialComCmBx.Items.Add(port);
+            serialComCmBx.Items.Clear();
+            var availablePorts = SerialCom.GetConnectedPorts();
+            serialComCmBx.Items.AddRange(availablePorts);
             if (serialComCmBx.Items.Count > 0)
                 serialComCmBx.SelectedIndex = 0;
         }
@@ -68,23 +71,27 @@ namespace Falcon
             bool connected = false;
             if (tcpServerRdBtn.Checked)
             {
-                connections_.InitTcpServer((int)tcpPortTxt.Value);
-                if (connections_.TCPServer.Connect())
+                ConnectionsManager.Inst.InitTcpServer((int)tcpPortTxt.Value);
+                if (ConnectionsManager.Inst.TCPServer.Connect())
                 {
-                    connections_.TCPServer.SubscribeToMsgs(OnTcpByteIn);
-                    connections_.TCPServer.NotifyOnNewClient(OnNewTcpClient);
+                    ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
+                    ConnectionsManager.Inst.TCPServer.NotifyOnNewClient(OnNewTcpClient);
                     tcpClientRdBtn.Enabled = false;
                     connected = true;
                 }
             }
             else
             {
-                connections_.InitTcpClient();
-                if (connections_.TCPClient.ConnectTo(tcpIpTxt.Text, (int)tcpPortTxt.Value))
+                ConnectionsManager.Inst.InitTcpClient();
+                if (ConnectionsManager.Inst.TCPClient.ConnectTo(tcpIpTxt.Text, (int)tcpPortTxt.Value))
                 {
-                    connections_.TCPClient.Subscribe(OnTcpByteIn);
+                    ConnectionsManager.Inst.TCPClient.Subscribe(OnTcpByteIn);
                     tcpServerRdBtn.Enabled = false;
                     connected = true;
+                }
+                else
+                {
+                    MsgBox.WarningMsg("TCP Connection Failed", "Wrong IP or port address");
                 }
             }
             if (connected)
@@ -92,7 +99,13 @@ namespace Falcon
                 tcpConnectBtn.Enabled = false;
                 tcpDisconnectBtn.Enabled = true;
                 tcpConnectionStateLbl.Text = "Connected";
+                tcpConnectionStateLbl.BackColor = Color.LimeGreen;
                 tcpIndicatorLbl.BackColor = Color.LimeGreen;
+            }
+            else
+            {
+                tcpConnectionStateLbl.Text = "Failed";
+                tcpConnectionStateLbl.BackColor = Color.DarkOrange;
             }
         }
 
@@ -170,18 +183,19 @@ namespace Falcon
         {
             if (tcpServerRdBtn.Checked)
             {
-                connections_.TCPServer.Close();
+                ConnectionsManager.Inst.TCPServer.Close();
                 tcpClientRdBtn.Enabled = true;
             }
             else
             {
-                connections_.TCPClient.Kill();
+                ConnectionsManager.Inst.TCPClient.Kill();
                 tcpServerRdBtn.Enabled = true;
             }
 
             tcpIndicatorLbl.BackColor = SystemColors.Control;
             tcpConnectBtn.Enabled = true;
             tcpConnectionStateLbl.Text = "Disconnected";
+            tcpConnectionStateLbl.BackColor = SystemColors.Control; 
         }
 
 
@@ -197,22 +211,22 @@ namespace Falcon
             textToSendCmBx.Items.Add(textToSendCmBx.Text);
             textToSendCmBx.Text = "";
     
-            if (connections_.IsTcpServerInitiated())
-                connections_.TCPServer.Send(bytes);
+            if (ConnectionsManager.Inst.IsTcpServerInitiated())
+                ConnectionsManager.Inst.TCPServer.Send(bytes);
 
-            if (connections_.IsTcpClientInitiated())
-                connections_.TCPClient.Send(bytes);
+            if (ConnectionsManager.Inst.IsTcpClientInitiated())
+                ConnectionsManager.Inst.TCPClient.Send(bytes);
 
-            if (connections_.IsUdpServerInitiated())
-                connections_.UDPServer.Send(bytes);
+            if (ConnectionsManager.Inst.IsUdpServerInitiated())
+                ConnectionsManager.Inst.UDPServer.Send(bytes);
 
-            if (connections_.IsUdpClientInitiated())
-                connections_.UDPClient.Send(bytes);
+            if (ConnectionsManager.Inst.IsUdpClientInitiated())
+                ConnectionsManager.Inst.UDPClient.Send(bytes);
 
-            if (connections_.IsSerialInitiated())
-                connections_.Serial.Send(bytes);
+            if (ConnectionsManager.Inst.IsSerialInitiated())
+                ConnectionsManager.Inst.Serial.Send(bytes);
 
-            if (connections_.IsSomeConnectionInitiated())
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
                 bytesOutCounter_.Add((uint)bytes.Length);
                 BytesCounter.MeasureUnit mUnit = bytesOutCounter_.RecomendedMeasureUnit();
@@ -236,6 +250,7 @@ namespace Falcon
             bytesOutLbl.Text = "0 B";
             bytesInCounter_.Reset();
             bytesOutCounter_.Reset();
+            prevBytesCount_ = 0;
         }
 
         private void clearInHistoryBtn_Click(object sender, EventArgs e)
@@ -252,20 +267,26 @@ namespace Falcon
             SaveSerialSettings();
             string port = serialComCmBx.Text;
             if (port == "")
+            {
+                MsgBox.WarningMsg("Serial Connection Failed", "No port was selected");
+                serialConnectionStateLbl.Text = "Failed";
+                serialConnectionStateLbl.BackColor = Color.Tomato;
                 return;
+            }
             int baud = int.Parse(serialBaudCmBx.SelectedItem.ToString());
             StopBits stopBits = SerialCom.StringToStopBits(serialStopBitsCmBx.SelectedItem.ToString());
             int dataBits = (int)serialDataBitsTxt.Value;
             Parity parity = SerialCom.StringToParity(serialParityCmBx.SelectedItem.ToString());
 
-            connections_.InitSerial();
-            if (connections_.Serial.Connect(port, baud, parity, dataBits, stopBits))
+            ConnectionsManager.Inst.InitSerial();
+            if (ConnectionsManager.Inst.Serial.Connect(port, baud, parity, dataBits, stopBits))
             {
                 serialConnectionStateLbl.Text = "Connected";
+                serialConnectionStateLbl.BackColor = Color.LimeGreen;
                 serialIndicatorLbl.BackColor = Color.LimeGreen;
                 serialDisconnectBtn.Enabled = true;
                 serialConnectBtn.Enabled = false;
-                connections_.Serial.Subscribe(OnSerialByteIn);
+                ConnectionsManager.Inst.Serial.Subscribe(OnSerialByteIn);
             }
         }
 
@@ -273,12 +294,15 @@ namespace Falcon
         {
             var t = Task.Run(delegate
             {
-                connections_.Serial.CloseMe();
+                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+                ConnectionsManager.Inst.Serial.CloseMe();
+                Thread.CurrentThread.Priority = ThreadPriority.Normal;
             });
            
             serialDisconnectBtn.Enabled = false;
             serialConnectBtn.Enabled = true;
             serialConnectionStateLbl.Text = "Disconnected";
+            serialConnectionStateLbl.BackColor = SystemColors.Control;
             serialIndicatorLbl.BackColor = SystemColors.Control;
         }
 
@@ -351,19 +375,23 @@ namespace Falcon
             bool connected = false;
             if (udpServerRdBtn.Checked)
             {
-                connections_.InitUdpServer((int)udpPortTxt.Value);
-                connections_.UDPServer.Subscribe(OnUdpByteIn);
+                ConnectionsManager.Inst.InitUdpServer((int)udpPortTxt.Value);
+                ConnectionsManager.Inst.UDPServer.Subscribe(OnUdpByteIn);
                 udpClientRdBtn.Enabled = false;
                 connected = true;
             }
             else
             {
-                connections_.InitUdpClient();
-                if (connections_.UDPClient.ConnectTo(udpIpTxt.Text, (int)udpPortTxt.Value))
+                ConnectionsManager.Inst.InitUdpClient();
+                if (ConnectionsManager.Inst.UDPClient.ConnectTo(udpIpTxt.Text, (int)udpPortTxt.Value))
                 {
-                    connections_.UDPClient.Subscribe(OnUdpByteIn);
+                    ConnectionsManager.Inst.UDPClient.Subscribe(OnUdpByteIn);
                     udpServerRdBtn.Enabled = false;
                     connected = true;
+                }
+                else
+                {
+                    MsgBox.WarningMsg("UDP Connection Failed", "Wrong IP or port address");
                 }
             }
             if (connected)
@@ -371,7 +399,13 @@ namespace Falcon
                 udpConnectBtn.Enabled = false;
                 udpDisconnectBtn.Enabled = true;
                 udpConnectionStateLbl.Text = "Connected";
+                udpConnectionStateLbl.BackColor = Color.LimeGreen;
                 udpIndicatorLbl.BackColor = Color.LimeGreen;
+            }
+            else
+            {
+                udpConnectionStateLbl.Text = "Failed";
+                udpConnectionStateLbl.BackColor = Color.DarkOrange;
             }
         }
 
@@ -406,12 +440,12 @@ namespace Falcon
         {
             if (udpServerRdBtn.Checked)
             {
-                connections_.UDPServer.Close();
+                ConnectionsManager.Inst.UDPServer.Close();
                 udpClientRdBtn.Enabled = true;
             }
             else
             {
-                connections_.UDPClient.Kill();
+                ConnectionsManager.Inst.UDPClient.Kill();
                 udpServerRdBtn.Enabled = true;
             }
 
@@ -454,6 +488,42 @@ namespace Falcon
         {
             if (e.KeyChar == (char)Keys.Enter)
                 ConnectTcp();
+        }
+
+        private void graphToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (graphFrom_ == null || graphFrom_.IsDisposed)
+            {
+                graphFrom_ = new GraphForm();
+                graphFrom_.Show();
+            }
+            else
+            {
+                graphFrom_.Show();
+                graphFrom_.Focus();
+            }
+        }
+
+        private void bytesRateTimer_Tick(object sender, EventArgs e)
+        {
+            ulong newBytesCount = bytesInCounter_.GetRawCounter();
+            bytesRateCounter_.SetCounter(newBytesCount - prevBytesCount_);
+            prevBytesCount_ = newBytesCount;
+
+            BytesCounter.MeasureUnit mUnit = bytesRateCounter_.RecomendedMeasureUnit();
+            var format = "{0:0}";
+            if (mUnit != BytesCounter.MeasureUnit.B)
+                format = "{0:0.00}";
+            var processedCounter = String.Format(format, bytesRateCounter_.GetProcessedCounter(mUnit));
+            Invoke((MethodInvoker)delegate
+            {
+                receivingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
+            });
+        }
+
+        private void serialComRefreshBtn_Click(object sender, EventArgs e)
+        {
+            UpdateSerialPorts();
         }
 
 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class UDPServerCom : UdpClient
     {

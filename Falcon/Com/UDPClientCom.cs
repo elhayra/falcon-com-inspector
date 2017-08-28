@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class UDPClientCom : UdpClient
     {
@@ -21,11 +21,18 @@ namespace BlueSky.Com
         public bool ConnectTo(string ip, int port)
         {
             isDead_ = false;
-            Connect(ip, port);
+            try
+            {
+                Connect(ip, port);
+            }
+            catch (SocketException exp)
+            {
+                isDead_ = true;
+            }
             var netAddr = new NetworkAdderss(ip, port);
             endpoint_ = new IPEndPoint(netAddr.IP, netAddr.Port);
             AsyncListen();
-            return true; /// TODO: RETURN CORRECT VALUE
+            return !isDead_;
         }
 
         private void AsyncListen()

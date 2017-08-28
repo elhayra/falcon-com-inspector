@@ -19,7 +19,12 @@ namespace Falcon.Utils
             TB
         }
 
-        public void Add(uint amount)
+        public void SetCounter(ulong count)
+        {
+            counter_ = count;
+        }
+
+        public void Add(ulong amount)
         {
             counter_ += amount;
         }

@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class TcpSmartClient
     {

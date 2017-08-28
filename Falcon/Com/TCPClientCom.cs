@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class TCPClientCom : TcpClient
     {
@@ -32,6 +32,8 @@ namespace BlueSky.Com
         {
             try 
             {
+                if (!srvrAddr.IsIpValid() || !srvrAddr.IsPortValid())
+                    return false;
                 if (ConnectAsync(srvrAddr.IP.ToString(), srvrAddr.Port).Wait(100))
                 {
                     isDead_ = false;

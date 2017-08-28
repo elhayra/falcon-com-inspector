@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlueSky.Com;
+using Falcon.Com;
 
 namespace Falcon.Com
 {
@@ -20,6 +20,28 @@ namespace Falcon.Com
         public UDPClientCom UDPClient { get { return udpClient_; } }
         public UDPServerCom UDPServer { get { return udpServer_; } }
         public SerialCom Serial { get { return serialCom_; } }
+        protected static readonly object padlock = new object();
+        private static ConnectionsManager instance = null;
+
+
+        ConnectionsManager()
+        {
+        }
+
+        public static ConnectionsManager Inst
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ConnectionsManager();
+                    }
+                    return instance;
+                }
+            }
+        }
 
         public bool IsSomeConnectionInitiated()
         {

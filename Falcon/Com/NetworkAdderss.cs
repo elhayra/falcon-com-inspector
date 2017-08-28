@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class NetworkAdderss
     {
@@ -43,7 +43,9 @@ namespace BlueSky.Com
             get { return port_; }
             set { port_ = value; }
         }
-       
+
+        
+
         public IPEndPoint EndPoint()
         {
             return new IPEndPoint(IP, Port);
@@ -71,7 +73,7 @@ namespace BlueSky.Com
                 }
                 catch (System.Net.Sockets.SocketException e)
                 { 
-                    return "";
+                    return null;
                 }
             }
         }
@@ -98,6 +100,9 @@ namespace BlueSky.Com
                 return true;
             return false;
         }
+
+        public bool IsIpValid() { return IP == null; }
+        public bool IsPortValid() { return IsPortValid(Port); }
 
     }
 }

@@ -26,10 +26,6 @@ auto baud rate finder - if more than 50 percent is "?" than its wrong baud rate 
 about form
 green marker when connected, red when not
 
-limit bytes lables by size
-turn B unit to KB and MB and so on when a lot of bytes incoming
-
-
 tests:
 server closes comm first
 client closes comm first
@@ -44,9 +40,6 @@ zoom in or out from graph
 
 return connection failed if it failed
 
-When working with connections, you need a quick and easy way of monitoring and testing them. \n Falcom allows you to do exactly that
-
-enter on port or ip window = connect button
 when sending fails dont count bytes
 handle connetcions excepotions
 handle trying connect to serial with no port selected

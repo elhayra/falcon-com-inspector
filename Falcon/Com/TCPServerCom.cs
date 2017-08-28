@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using System.Collections;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 { 
     public class TCPServerCom : TcpListener
     {

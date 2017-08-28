@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 
-namespace BlueSky.Com
+namespace Falcon.Com
 {
     public class SerialCom : SerialPort
     {
@@ -89,7 +89,7 @@ namespace BlueSky.Com
             }
         }
 
-        public static string[] GetAvailPorts()
+        public static string[] GetConnectedPorts()
         {
             return SerialPort.GetPortNames();
         }
