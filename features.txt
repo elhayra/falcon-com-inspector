@@ -43,3 +43,6 @@ return connection failed if it failed
 when sending fails dont count bytes
 handle connetcions excepotions
 handle trying connect to serial with no port selected
+
+adding up to 10 axes in graph, up to 10 setpoints. enable connecting them together with incoming data. for example, if incoming is 1, 20, 30
+than index 0 that equal 1 can be any axis and so on

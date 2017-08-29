@@ -494,7 +494,7 @@ namespace Falcon
         {
             if (graphFrom_ == null || graphFrom_.IsDisposed)
             {
-                graphFrom_ = new GraphForm();
+                graphFrom_ = new GraphForm(ref bytesRateCounter_);
                 graphFrom_.Show();
             }
             else
