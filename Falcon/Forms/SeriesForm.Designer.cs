@@ -28,82 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tailSizeCmBx = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dataSourceCmBx = new System.Windows.Forms.ComboBox();
-            this.sdf = new System.Windows.Forms.Label();
+            this.dataIndexLbl = new System.Windows.Forms.Label();
             this.setpointTxt = new System.Windows.Forms.NumericUpDown();
             this.seriesLstBx = new System.Windows.Forms.ListBox();
             this.addBtn = new System.Windows.Forms.Button();
             this.removeAllBtn = new System.Windows.Forms.Button();
             this.removeBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.nameLbl = new System.Windows.Forms.Label();
             this.nameTxt = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.setpointLbl = new System.Windows.Forms.Label();
             this.seriesTypeCmBx = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.dataIndexTxt = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.setpointTxt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataIndexTxt)).BeginInit();
             this.SuspendLayout();
             // 
-            // tailSizeCmBx
+            // dataIndexLbl
             // 
-            this.tailSizeCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.tailSizeCmBx.FormattingEnabled = true;
-            this.tailSizeCmBx.Items.AddRange(new object[] {
-            "10",
-            "20",
-            "50",
-            "100",
-            "300",
-            "500"});
-            this.tailSizeCmBx.Location = new System.Drawing.Point(82, 85);
-            this.tailSizeCmBx.Name = "tailSizeCmBx";
-            this.tailSizeCmBx.Size = new System.Drawing.Size(94, 21);
-            this.tailSizeCmBx.TabIndex = 14;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Tail Size:";
-            // 
-            // dataSourceCmBx
-            // 
-            this.dataSourceCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dataSourceCmBx.FormattingEnabled = true;
-            this.dataSourceCmBx.Items.AddRange(new object[] {
-            "Bytes Rate",
-            "Index 0",
-            "Index 1",
-            "Index 2",
-            "Index 3",
-            "Index 4",
-            "Index 5",
-            "Index 6",
-            "Index 7",
-            "Index 8",
-            "Index 9"});
-            this.dataSourceCmBx.Location = new System.Drawing.Point(82, 59);
-            this.dataSourceCmBx.Name = "dataSourceCmBx";
-            this.dataSourceCmBx.Size = new System.Drawing.Size(94, 21);
-            this.dataSourceCmBx.TabIndex = 12;
-            // 
-            // sdf
-            // 
-            this.sdf.AutoSize = true;
-            this.sdf.Location = new System.Drawing.Point(8, 62);
-            this.sdf.Name = "sdf";
-            this.sdf.Size = new System.Drawing.Size(70, 13);
-            this.sdf.TabIndex = 11;
-            this.sdf.Text = "Data Source:";
+            this.dataIndexLbl.AutoSize = true;
+            this.dataIndexLbl.Location = new System.Drawing.Point(8, 62);
+            this.dataIndexLbl.Name = "dataIndexLbl";
+            this.dataIndexLbl.Size = new System.Drawing.Size(62, 13);
+            this.dataIndexLbl.TabIndex = 11;
+            this.dataIndexLbl.Text = "Data Index:";
             // 
             // setpointTxt
             // 
-            this.setpointTxt.Enabled = false;
-            this.setpointTxt.Location = new System.Drawing.Point(82, 112);
+            this.setpointTxt.Location = new System.Drawing.Point(83, 86);
             this.setpointTxt.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -123,13 +75,13 @@
             this.seriesLstBx.FormattingEnabled = true;
             this.seriesLstBx.Location = new System.Drawing.Point(183, 6);
             this.seriesLstBx.Name = "seriesLstBx";
-            this.seriesLstBx.Size = new System.Drawing.Size(140, 186);
+            this.seriesLstBx.Size = new System.Drawing.Size(140, 160);
             this.seriesLstBx.TabIndex = 16;
             this.seriesLstBx.SelectedIndexChanged += new System.EventHandler(this.seriesLstBx_SelectedIndexChanged);
             // 
             // addBtn
             // 
-            this.addBtn.Location = new System.Drawing.Point(12, 144);
+            this.addBtn.Location = new System.Drawing.Point(11, 117);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(66, 23);
             this.addBtn.TabIndex = 19;
@@ -139,7 +91,7 @@
             // 
             // removeAllBtn
             // 
-            this.removeAllBtn.Location = new System.Drawing.Point(12, 170);
+            this.removeAllBtn.Location = new System.Drawing.Point(11, 144);
             this.removeAllBtn.Name = "removeAllBtn";
             this.removeAllBtn.Size = new System.Drawing.Size(165, 23);
             this.removeAllBtn.TabIndex = 18;
@@ -149,7 +101,7 @@
             // 
             // removeBtn
             // 
-            this.removeBtn.Location = new System.Drawing.Point(111, 144);
+            this.removeBtn.Location = new System.Drawing.Point(110, 117);
             this.removeBtn.Name = "removeBtn";
             this.removeBtn.Size = new System.Drawing.Size(66, 23);
             this.removeBtn.TabIndex = 17;
@@ -157,14 +109,14 @@
             this.removeBtn.UseVisualStyleBackColor = true;
             this.removeBtn.Click += new System.EventHandler(this.removeBtn_Click);
             // 
-            // label2
+            // nameLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Name ID:";
+            this.nameLbl.AutoSize = true;
+            this.nameLbl.Location = new System.Drawing.Point(8, 36);
+            this.nameLbl.Name = "nameLbl";
+            this.nameLbl.Size = new System.Drawing.Size(52, 13);
+            this.nameLbl.TabIndex = 20;
+            this.nameLbl.Text = "Name ID:";
             // 
             // nameTxt
             // 
@@ -173,22 +125,23 @@
             this.nameTxt.Size = new System.Drawing.Size(94, 20);
             this.nameTxt.TabIndex = 21;
             // 
-            // label3
+            // setpointLbl
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 114);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Setpoint:";
+            this.setpointLbl.AutoSize = true;
+            this.setpointLbl.Location = new System.Drawing.Point(9, 88);
+            this.setpointLbl.Name = "setpointLbl";
+            this.setpointLbl.Size = new System.Drawing.Size(49, 13);
+            this.setpointLbl.TabIndex = 22;
+            this.setpointLbl.Text = "Setpoint:";
             // 
             // seriesTypeCmBx
             // 
             this.seriesTypeCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.seriesTypeCmBx.FormattingEnabled = true;
             this.seriesTypeCmBx.Items.AddRange(new object[] {
-            "Regular",
-            "Setpoint"});
+            "Data",
+            "Setpoint",
+            "Bytes Rate"});
             this.seriesTypeCmBx.Location = new System.Drawing.Point(82, 6);
             this.seriesTypeCmBx.Name = "seriesTypeCmBx";
             this.seriesTypeCmBx.Size = new System.Drawing.Size(94, 21);
@@ -204,51 +157,59 @@
             this.label4.TabIndex = 23;
             this.label4.Text = "Series Type:";
             // 
+            // dataIndexTxt
+            // 
+            this.dataIndexTxt.Location = new System.Drawing.Point(82, 59);
+            this.dataIndexTxt.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.dataIndexTxt.Name = "dataIndexTxt";
+            this.dataIndexTxt.Size = new System.Drawing.Size(94, 20);
+            this.dataIndexTxt.TabIndex = 25;
+            // 
             // SeriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 203);
+            this.ClientSize = new System.Drawing.Size(332, 175);
+            this.Controls.Add(this.dataIndexTxt);
             this.Controls.Add(this.seriesTypeCmBx);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.setpointLbl);
             this.Controls.Add(this.setpointTxt);
             this.Controls.Add(this.nameTxt);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.nameLbl);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.removeAllBtn);
             this.Controls.Add(this.removeBtn);
             this.Controls.Add(this.seriesLstBx);
-            this.Controls.Add(this.tailSizeCmBx);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataSourceCmBx);
-            this.Controls.Add(this.sdf);
+            this.Controls.Add(this.dataIndexLbl);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SeriesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SeriesForm";
             ((System.ComponentModel.ISupportInitialize)(this.setpointTxt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataIndexTxt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox tailSizeCmBx;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox dataSourceCmBx;
-        private System.Windows.Forms.Label sdf;
+        private System.Windows.Forms.Label dataIndexLbl;
         private System.Windows.Forms.NumericUpDown setpointTxt;
         private System.Windows.Forms.ListBox seriesLstBx;
         private System.Windows.Forms.Button addBtn;
         private System.Windows.Forms.Button removeAllBtn;
         private System.Windows.Forms.Button removeBtn;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label nameLbl;
         private System.Windows.Forms.TextBox nameTxt;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label setpointLbl;
         private System.Windows.Forms.ComboBox seriesTypeCmBx;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown dataIndexTxt;
     }
 }

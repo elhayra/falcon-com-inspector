@@ -17,14 +17,14 @@ namespace Falcon.Forms
     public partial class GraphForm : Form
     {
         BytesCounter bytesRateCounter_;
+        string lastIncomingDataRow_;
         SeriesForm seriesFrom_;
         
-        int tailSize_ = 10;
-
-        public GraphForm(ref BytesCounter bytesRateCounter)
+        public GraphForm(ref BytesCounter bytesRateCounter, ref string lastIncomingDataRow)
         {
             InitializeComponent();
             bytesRateCounter_ = bytesRateCounter;
+            lastIncomingDataRow_ = lastIncomingDataRow;
             ChartManager.Inst.Init(ref chart);
             chart.MouseWheel += chData_MouseWheel;
         }
@@ -77,17 +77,52 @@ namespace Falcon.Forms
 
         private void graphTimer_Tick(object sender, EventArgs e)
         {
-            /*ChartManager.Inst.SecondsCounter++;
-            
-            chart.Series["Bytes Rate"].Points.AddXY(ChartManager.Inst.SecondsCounter, bytesRateCounter_.GetRawCounter());
-            if (chart.Series["Bytes Rate"].Points.Count == tailSize_)
+            ChartManager.Inst.SecondsCounter++;
+
+            foreach (var series in ChartManager.Inst.GetSeriesManagersList())
             {
-                DataPoint firstElement = chart.Series["Bytes Rate"].Points.First<DataPoint>();
-                chart.Series["Bytes Rate"].Points.Remove(firstElement);
+                if (series.DataType == SeriesManager.Type.BYTES_RATE)
+                    addPointToSeries("Bytes Rate", bytesRateCounter_.GetRawCounter());
+
+                //add setpoint horizontal line
+                else if (series.DataType == SeriesManager.Type.SETPOINT)
+                    addPointToSeries(series.NameId, series.Setpoint);
+                    
+                else
+                {
+                    //add spline according to incoming data
+                    bool validData = true;
+                    double data = 0;
+                    try
+                    {
+                        data = extractDataSrcFromCsvRow(series.DataIndex);
+                    }
+                    catch (NullReferenceException exp)
+                    {
+                        validData = false;
+                    }
+                    if (validData)
+                        addPointToSeries(series.NameId, data);
+                }
                 chart.ResetAutoValues();
                 chart.Update();
-            }*/
-            
+            }
+        }
+
+        private double extractDataSrcFromCsvRow(int index)
+        {
+            string[] dataArr = lastIncomingDataRow_.Split(',');
+            return Convert.ToDouble(dataArr[index]);
+        }
+
+        private void addPointToSeries(string seriesName, double y)
+        {
+            chart.Series[seriesName].Points.AddXY(ChartManager.Inst.SecondsCounter, y);
+            if (chart.Series[seriesName].Points.Count == ChartManager.Inst.TailLength) //trim line tail
+            {
+                DataPoint firstElement = chart.Series[seriesName].Points.First<DataPoint>();
+                chart.Series[seriesName].Points.Remove(firstElement);
+            }
         }
 
         private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
@@ -131,6 +166,20 @@ namespace Falcon.Forms
         private void GraphForm_Activated(object sender, EventArgs e)
         {
             chart.Enabled = true;
+        }
+
+
+
+        private void sampleRateCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string hzStr = sampleRateCmBx.SelectedItem.ToString().Split(' ')[0]; //extract hz value
+            int hz = int.Parse(hzStr);
+            graphTimer.Interval = 1000 / hz;
+        }
+
+        private void tailCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChartManager.Inst.TailLength = Convert.ToByte(tailCmBx.SelectedItem);
         }
     }
 }

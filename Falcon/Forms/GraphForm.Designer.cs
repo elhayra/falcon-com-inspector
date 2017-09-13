@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.graphManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sampleRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.sampleRateitem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sampleRateCmBx = new System.Windows.Forms.ToolStripComboBox();
+            this.tailLengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tailCmBx = new System.Windows.Forms.ToolStripComboBox();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addRemoveBtn = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -50,58 +51,47 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart.BackColor = System.Drawing.Color.Black;
-            chartArea8.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea8.AxisX.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX.Title = "Time (seconds)";
-            chartArea8.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea8.AxisX.TitleForeColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisX2.TitleForeColor = System.Drawing.Color.White;
-            chartArea8.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea8.AxisY.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY.Title = "Bytes Per Second";
-            chartArea8.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea8.AxisY.TitleForeColor = System.Drawing.Color.White;
-            chartArea8.AxisY2.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea8.AxisY2.TitleForeColor = System.Drawing.Color.White;
-            chartArea8.BackColor = System.Drawing.Color.Black;
-            chartArea8.Name = "ChartArea";
-            this.chart.ChartAreas.Add(chartArea8);
-            legend8.BackColor = System.Drawing.Color.Black;
-            legend8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            legend8.IsTextAutoFit = false;
-            legend8.Name = "Legend";
-            this.chart.Legends.Add(legend8);
+            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.Title = "Time (seconds)";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.Title = "Bytes Per Second";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.BackColor = System.Drawing.Color.Black;
+            chartArea1.Name = "ChartArea";
+            this.chart.ChartAreas.Add(chartArea1);
+            legend1.BackColor = System.Drawing.Color.Black;
+            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            legend1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend";
+            this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(0, 27);
             this.chart.Name = "chart";
             this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series8.BorderWidth = 4;
-            series8.ChartArea = "ChartArea";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            series8.LabelBackColor = System.Drawing.Color.Black;
-            series8.LabelForeColor = System.Drawing.Color.Wheat;
-            series8.Legend = "Legend";
-            series8.MarkerColor = System.Drawing.Color.White;
-            series8.Name = "Bytes Rate";
-            this.chart.Series.Add(series8);
             this.chart.Size = new System.Drawing.Size(879, 463);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart";
@@ -127,31 +117,55 @@
             // graphManagerToolStripMenuItem
             // 
             this.graphManagerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sampleRateToolStripMenuItem,
+            this.sampleRateitem,
+            this.tailLengthToolStripMenuItem,
             this.resetToolStripMenuItem,
             this.addRemoveBtn});
             this.graphManagerToolStripMenuItem.Name = "graphManagerToolStripMenuItem";
             this.graphManagerToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.graphManagerToolStripMenuItem.Text = "Graph";
             // 
-            // sampleRateToolStripMenuItem
+            // sampleRateitem
             // 
-            this.sampleRateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox1});
-            this.sampleRateToolStripMenuItem.Name = "sampleRateToolStripMenuItem";
-            this.sampleRateToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.sampleRateToolStripMenuItem.Text = "Sample Rate";
+            this.sampleRateitem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sampleRateCmBx});
+            this.sampleRateitem.Name = "sampleRateitem";
+            this.sampleRateitem.Size = new System.Drawing.Size(177, 22);
+            this.sampleRateitem.Text = "Sample Rate";
             // 
-            // toolStripComboBox1
+            // sampleRateCmBx
             // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
+            this.sampleRateCmBx.Items.AddRange(new object[] {
             "1 Hz",
             "2 Hz",
             "10 Hz",
             "20 Hz",
             "50 Hz"});
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.sampleRateCmBx.Name = "sampleRateCmBx";
+            this.sampleRateCmBx.Size = new System.Drawing.Size(121, 23);
+            this.sampleRateCmBx.Text = "1 Hz";
+            this.sampleRateCmBx.SelectedIndexChanged += new System.EventHandler(this.sampleRateCmBx_SelectedIndexChanged);
+            // 
+            // tailLengthToolStripMenuItem
+            // 
+            this.tailLengthToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tailCmBx});
+            this.tailLengthToolStripMenuItem.Name = "tailLengthToolStripMenuItem";
+            this.tailLengthToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.tailLengthToolStripMenuItem.Text = "Tail Length";
+            // 
+            // tailCmBx
+            // 
+            this.tailCmBx.Items.AddRange(new object[] {
+            "10",
+            "50",
+            "100",
+            "200",
+            "500"});
+            this.tailCmBx.Name = "tailCmBx";
+            this.tailCmBx.Size = new System.Drawing.Size(121, 23);
+            this.tailCmBx.Text = "10";
+            this.tailCmBx.SelectedIndexChanged += new System.EventHandler(this.tailCmBx_SelectedIndexChanged);
             // 
             // resetToolStripMenuItem
             // 
@@ -192,9 +206,11 @@
         private System.Windows.Forms.Timer graphTimer;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem graphManagerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sampleRateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStripMenuItem sampleRateitem;
+        private System.Windows.Forms.ToolStripComboBox sampleRateCmBx;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addRemoveBtn;
+        private System.Windows.Forms.ToolStripMenuItem tailLengthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox tailCmBx;
     }
 }

@@ -13,20 +13,34 @@ namespace Falcon.Graph
     /// </summary>
     
 
-    class SeriesManager
+    public class SeriesManager
     {
-        public int TailSize;
         public string NameId;
-        public int DataSourceIndex;
-        public double Setpoint;
-        public bool IsSetpoint;
 
-        public SeriesManager(string nameId, int tailSize, int dataSourceIndex, bool isSetpoint, double setpoint)
+        /// <summary>
+        /// number b/w 0-9
+        /// </summary>
+        public byte DataIndex;
+
+        /// <summary>
+        /// setpoint value should only be used if 
+        /// DataType == SETPOINT
+        /// </summary>
+        public double Setpoint;
+        public Type DataType;
+
+        public enum Type
+        {
+            NONE,
+            BYTES_RATE,
+            SETPOINT,
+            INCOMING_DATA
+        }
+
+        public SeriesManager(string nameId, byte dataIndex, double setpoint)
         {
             NameId = nameId;
-            TailSize = tailSize;
-            DataSourceIndex = dataSourceIndex;
-            IsSetpoint = isSetpoint;
+            DataIndex = dataIndex;
             Setpoint = setpoint;
         }
 

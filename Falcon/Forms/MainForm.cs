@@ -31,6 +31,8 @@ namespace Falcon
         private BytesCounter bytesRateCounter_ = new BytesCounter();
         ulong prevBytesCount_ = 0;
 
+        string lastIncomingDataRow_;
+
 
         public MainForm()
         {
@@ -324,6 +326,7 @@ namespace Falcon
 
         private void AppendBytesToScreens(byte[] bytes)
         {
+            lastIncomingDataRow_ = bytes.ToString();
             bytesInCounter_.Add((uint)bytes.Length);
             BytesCounter.MeasureUnit mUnit = bytesInCounter_.RecomendedMeasureUnit();
             var format = "{0:0}";
@@ -494,7 +497,7 @@ namespace Falcon
         {
             if (graphFrom_ == null || graphFrom_.IsDisposed)
             {
-                graphFrom_ = new GraphForm(ref bytesRateCounter_);
+                graphFrom_ = new GraphForm(ref bytesRateCounter_, ref lastIncomingDataRow_);
                 graphFrom_.Show();
             }
             else

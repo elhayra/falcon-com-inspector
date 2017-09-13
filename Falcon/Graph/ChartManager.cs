@@ -12,6 +12,7 @@ namespace Falcon.Graph
     {
         public const int MAX_SERIESES = 10;
         public ulong SecondsCounter = 0;
+        public byte TailLength = 10;
 
         //using this list allows also keep track after the tail
         List<SeriesManager> seriesManagersList_ = new List<SeriesManager>();
@@ -67,23 +68,26 @@ namespace Falcon.Graph
             return false;
         }
 
-        public bool AddSeries(string nameId, int tailSize, int dataSourceIndex, bool isSetpoint, double setpoint)
+        public bool AddSeries(string nameId, 
+                              byte dataIndex, 
+                              SeriesManager.Type type, 
+                              double setpoint)
         {
             if (IsFull())
                 return false;
-            var newSeriesManager = new SeriesManager(nameId, tailSize, dataSourceIndex, isSetpoint, setpoint);
+            var newSeriesManager = new SeriesManager(nameId, dataIndex, setpoint);
             seriesManagersList_.Add(newSeriesManager);
 
             var newSeries = new Series(nameId);
-            if (isSetpoint)
+            if (type == SeriesManager.Type.SETPOINT)
                 newSeries.ChartType = SeriesChartType.Line;
-            else
+            else if (type == SeriesManager.Type.INCOMING_DATA || type == SeriesManager.Type.BYTES_RATE)
                 newSeries.ChartType = SeriesChartType.Spline;
             chart_.Series.Add(newSeries);
             return true;
         }
 
-        public void RemoveSeries(string nameId)
+        public void RemoveSeriesByName(string nameId)
         {
             seriesManagersList_.Remove(FindSeriesManager(nameId));
             chart_.Series.Remove(FindSeries(nameId));
@@ -92,9 +96,7 @@ namespace Falcon.Graph
         public void RemoveAllSeries()
         {
             foreach (var series in chart_.Series)
-            {
-                RemoveSeries(series.Name);
-            }
+                chart_.Series.Remove(series);
         }
 
         private Series FindSeries(string nameId)
@@ -136,7 +138,7 @@ namespace Falcon.Graph
         {
             var seriesManager = FindSeriesManager(nameId);
 
-            if (chart_.Series[nameId].Points.Count == seriesManager.TailSize)
+            if (chart_.Series[nameId].Points.Count == TailLength)
             {
                 DataPoint firstElement = chart_.Series[nameId].Points.First<DataPoint>();
                 chart_.Series[nameId].Points.Remove(firstElement);

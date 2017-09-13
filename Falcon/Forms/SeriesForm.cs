@@ -22,9 +22,21 @@ namespace Falcon.Forms
             List<SeriesManager> seriesManagersList = ChartManager.Inst.GetSeriesManagersList();
             foreach (var seriesManager in seriesManagersList)
                 seriesLstBx.Items.Add(seriesManager.NameId);
-            dataSourceCmBx.Text = "Bytes Rate";
-            tailSizeCmBx.Text = "10";
-            seriesTypeCmBx.Text = "Regular";
+            seriesTypeCmBx.Text = "Data";
+        }
+
+        private SeriesManager.Type seriesCmBxToType()
+        {
+            switch (seriesTypeCmBx.SelectedItem.ToString())
+            {
+                case "Data":
+                    return SeriesManager.Type.INCOMING_DATA;
+                case "Setpoint":
+                    return SeriesManager.Type.SETPOINT;
+                case "Bytes Rate":
+                    return SeriesManager.Type.BYTES_RATE;
+            }
+            return SeriesManager.Type.NONE;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -39,67 +51,15 @@ namespace Falcon.Forms
                 MsgBox.ErrorMsg("Adding Series Failed", "This name already exist. Please choose a unique name");
                 return;
             }
-            bool isSetpoint = true;
-            if (seriesTypeCmBx.Text == "Regular")
-                isSetpoint = false;
 
+            byte dataIndex = Convert.ToByte(dataIndexTxt.Text);
+            if (dataIndex == 255) //error
+                return;
             ChartManager.Inst.AddSeries(nameTxt.Text,
-                                        tailSizeToInt(tailSizeCmBx.Text),
-                                        dataSourceToInt(dataSourceCmBx.Text),
-                                        isSetpoint,
+                                        dataIndex,
+                                        seriesCmBxToType(),
                                         (double)setpointTxt.Value);
             seriesLstBx.Items.Add(nameTxt.Text);
-
-        }
-
-        public int dataSourceToInt(string dataSource)
-        {
-            switch (dataSource)
-            {
-                case "Bytes Rate":
-                    return -1;
-                case "Index 0":
-                    return 0;
-                case "Index 1":
-                    return 1;
-                case "Index 2":
-                    return 2;
-                case "Index 3":
-                    return 3;
-                case "Index 4":
-                    return 4;
-                case "Index 5":
-                    return 5;
-                case "Index 6":
-                    return 6;
-                case "Index 7":
-                    return 7;
-                case "Index 8":
-                    return 8;
-                case "Index 9":
-                    return 9;
-            }
-            return -2;
-        }
-
-        public int tailSizeToInt(string tailSize)
-        {
-            switch (tailSize)
-            {
-                case "10":
-                    return 10;
-                case "Index 20":
-                    return 20;
-                case "Index 50":
-                    return 50;
-                case "Index 100":
-                    return 100;
-                case "Index 300":
-                    return 300;
-                case "Index 500":
-                    return 500;
-            }
-            return -1;
         }
 
         private void removeBtn_Click(object sender, EventArgs e)
@@ -110,7 +70,7 @@ namespace Falcon.Forms
                 return;
             }
             string seriesId = seriesLstBx.SelectedItem.ToString();
-            ChartManager.Inst.RemoveSeries(seriesId);
+            ChartManager.Inst.RemoveSeriesByName(seriesId);
             seriesLstBx.Items.Remove(seriesId);
         }
 
@@ -120,33 +80,61 @@ namespace Falcon.Forms
             seriesLstBx.Items.Clear();
         }
 
+        /// <summary>
+        /// fill fields with series saved data
+        /// </summary>
         private void seriesLstBx_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (seriesLstBx.SelectedItem == null)
                 return;
             string selectedSeries = seriesLstBx.SelectedItem.ToString();
             SeriesManager seriesManager = ChartManager.Inst.GetSeries(selectedSeries);
-            if (seriesManager.IsSetpoint)
+            if (seriesManager.DataType == SeriesManager.Type.SETPOINT)
             {
                 seriesTypeCmBx.Text = "Setpoint";
                 setpointTxt.Value = (decimal)seriesManager.Setpoint;
             }
-            else
-                seriesTypeCmBx.Text = "Regular";
+            else if (seriesManager.DataType == SeriesManager.Type.INCOMING_DATA)
+                seriesTypeCmBx.Text = "Data";
+            else if (seriesManager.DataType == SeriesManager.Type.BYTES_RATE)
+                seriesTypeCmBx.Text = "Bytes Rate";
+
             nameTxt.Text = seriesManager.NameId;
-            if (seriesManager.DataSourceIndex == -1)
-                dataSourceCmBx.Text = "Bytes Rate";
-            else
-                dataSourceCmBx.Text = "Index " + seriesManager.DataSourceIndex.ToString();
-            tailSizeCmBx.Text = seriesManager.TailSize.ToString();
+            dataIndexTxt.Value = seriesManager.DataIndex;
         }
 
         private void seriesTypeCmBx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (seriesTypeCmBx.Text == "Regular")
-                setpointTxt.Enabled = false;
-            else
-                setpointTxt.Enabled = true;
+            if (seriesTypeCmBx.Text == "Data")
+            {
+                nameTxt.Visible = true;
+                nameLbl.Visible = true;
+                nameTxt.Text = "";
+                dataIndexTxt.Visible = true;
+                dataIndexLbl.Visible = true;
+                setpointTxt.Visible = false;
+                setpointLbl.Visible = false;
+            }
+            else if (seriesTypeCmBx.Text == "Setpoint")
+            {
+                nameTxt.Visible = true;
+                nameLbl.Visible = true;
+                nameTxt.Text = "";
+                dataIndexTxt.Visible = false;
+                dataIndexLbl.Visible = false;
+                setpointTxt.Visible = true;
+                setpointLbl.Visible = true;
+            }
+            else if (seriesTypeCmBx.Text == "Bytes Rate")
+            {
+                nameTxt.Text = "Bytes Rate";
+                nameTxt.Visible = false;
+                nameLbl.Visible = false;
+                dataIndexTxt.Visible = false;
+                dataIndexLbl.Visible = false;
+                setpointTxt.Visible = false;
+                setpointLbl.Visible = false;
+            }
         }
     }
 
