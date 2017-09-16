@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Falcon.Com;
+using Falcon.Utils;
 
 namespace Falcon.Com
 {
@@ -23,6 +24,11 @@ namespace Falcon.Com
         protected static readonly object padlock = new object();
         private static ConnectionsManager instance = null;
 
+        public BytesCounter BytesCounter = new BytesCounter();
+        public BytesCounter BytesOutCounter = new BytesCounter();
+        public BytesCounter BytesInCounter = new BytesCounter();
+        public BytesCounter BytesRateCounter = new BytesCounter();
+        public ulong PrevBytesCount;
 
         ConnectionsManager()
         {

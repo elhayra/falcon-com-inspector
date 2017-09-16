@@ -14,25 +14,12 @@ using Falcon.Utils;
 using Falcon.Com;
 using System.Threading;
 
-
 namespace Falcon
 {
     public partial class MainForm : Form
     {
-
-
-
-
         private AboutForm aboutForm_;
         private GraphForm graphFrom_;
-
-        private BytesCounter bytesInCounter_ = new BytesCounter();
-        private BytesCounter bytesOutCounter_ = new BytesCounter();
-        private BytesCounter bytesRateCounter_ = new BytesCounter();
-        ulong prevBytesCount_ = 0;
-
-        string lastIncomingDataRow_;
-
 
         public MainForm()
         {
@@ -230,12 +217,12 @@ namespace Falcon
 
             if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                bytesOutCounter_.Add((uint)bytes.Length);
-                BytesCounter.MeasureUnit mUnit = bytesOutCounter_.RecomendedMeasureUnit();
+                ConnectionsManager.Inst.BytesOutCounter.Add((uint)bytes.Length);
+                BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutCounter.RecomendedMeasureUnit();
                 var format = "{0:0}";
                 if (mUnit != BytesCounter.MeasureUnit.B)
                     format = "{0:0.00}";
-                var processedCounter = String.Format(format, bytesOutCounter_.GetProcessedCounter(mUnit));
+                var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesOutCounter.GetProcessedCounter(mUnit));
 
                 bytesOutLbl.BackColor = Color.LimeGreen;
                 bytesInTimer.Stop();
@@ -250,9 +237,9 @@ namespace Falcon
             dataInScreenTxt.Clear();
             bytesInLbl.Text = "0 B";
             bytesOutLbl.Text = "0 B";
-            bytesInCounter_.Reset();
-            bytesOutCounter_.Reset();
-            prevBytesCount_ = 0;
+            ConnectionsManager.Inst.BytesInCounter.Reset();
+            ConnectionsManager.Inst.BytesOutCounter.Reset();
+            ConnectionsManager.Inst.PrevBytesCount = 0;
         }
 
         private void clearInHistoryBtn_Click(object sender, EventArgs e)
@@ -326,13 +313,13 @@ namespace Falcon
 
         private void AppendBytesToScreens(byte[] bytes)
         {
-            lastIncomingDataRow_ = bytes.ToString();
-            bytesInCounter_.Add((uint)bytes.Length);
-            BytesCounter.MeasureUnit mUnit = bytesInCounter_.RecomendedMeasureUnit();
+
+            ConnectionsManager.Inst.BytesInCounter.Add((uint)bytes.Length);
+            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, bytesInCounter_.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesInCounter.GetProcessedCounter(mUnit));
 
             Invoke((MethodInvoker)delegate
             {
@@ -343,11 +330,11 @@ namespace Falcon
                 
                 bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
-                var encodedString = System.Text.Encoding.UTF8.GetString(bytes);
+                string bytesString = System.Text.Encoding.UTF8.GetString(bytes);
                 if (autoScrollChkBx.Checked)
-                    dataInScreenTxt.AppendText(encodedString);
+                    dataInScreenTxt.AppendText(bytesString);
                 else
-                    dataInScreenTxt.Text += encodedString;
+                    dataInScreenTxt.Text += bytesString;
             });
         }
 
@@ -497,7 +484,7 @@ namespace Falcon
         {
             if (graphFrom_ == null || graphFrom_.IsDisposed)
             {
-                graphFrom_ = new GraphForm(ref bytesRateCounter_, ref lastIncomingDataRow_);
+                graphFrom_ = new GraphForm(ref dataInScreenTxt);
                 graphFrom_.Show();
             }
             else
@@ -509,15 +496,15 @@ namespace Falcon
 
         private void bytesRateTimer_Tick(object sender, EventArgs e)
         {
-            ulong newBytesCount = bytesInCounter_.GetRawCounter();
-            bytesRateCounter_.SetCounter(newBytesCount - prevBytesCount_);
-            prevBytesCount_ = newBytesCount;
+            ulong newBytesCount = ConnectionsManager.Inst.BytesInCounter.GetRawCounter();
+            ConnectionsManager.Inst.BytesRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesCount);
+            ConnectionsManager.Inst.PrevBytesCount = newBytesCount;
 
-            BytesCounter.MeasureUnit mUnit = bytesRateCounter_.RecomendedMeasureUnit();
+            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, bytesRateCounter_.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
             {
                 receivingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";

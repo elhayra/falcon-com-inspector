@@ -11,22 +11,21 @@ using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using Falcon.Utils;
 using Falcon.Graph;
+using Falcon.Com;
 
 namespace Falcon.Forms
 {
     public partial class GraphForm : Form
     {
-        BytesCounter bytesRateCounter_;
-        string lastIncomingDataRow_;
         SeriesForm seriesFrom_;
+        TextBox dataTxBx_;
         
-        public GraphForm(ref BytesCounter bytesRateCounter, ref string lastIncomingDataRow)
+        public GraphForm(ref TextBox dataInScreenTxt)
         {
             InitializeComponent();
-            bytesRateCounter_ = bytesRateCounter;
-            lastIncomingDataRow_ = lastIncomingDataRow;
             ChartManager.Inst.Init(ref chart);
             chart.MouseWheel += chData_MouseWheel;
+            dataTxBx_ = dataInScreenTxt;
         }
 
         private void chData_MouseWheel(object sender, MouseEventArgs e)
@@ -81,38 +80,53 @@ namespace Falcon.Forms
 
             foreach (var series in ChartManager.Inst.GetSeriesManagersList())
             {
-                if (series.DataType == SeriesManager.Type.BYTES_RATE)
-                    addPointToSeries("Bytes Rate", bytesRateCounter_.GetRawCounter());
-
-                //add setpoint horizontal line
-                else if (series.DataType == SeriesManager.Type.SETPOINT)
-                    addPointToSeries(series.NameId, series.Setpoint);
-                    
-                else
+                switch (series.DataType)
                 {
-                    //add spline according to incoming data
-                    bool validData = true;
-                    double data = 0;
-                    try
-                    {
-                        data = extractDataSrcFromCsvRow(series.DataIndex);
-                    }
-                    catch (NullReferenceException exp)
-                    {
-                        validData = false;
-                    }
-                    if (validData)
-                        addPointToSeries(series.NameId, data);
+                    case SeriesManager.Type.BYTES_RATE:
+                        addPointToSeries("Bytes Rate", ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
+                        break;
+
+                    case SeriesManager.Type.SETPOINT:
+                        addPointToSeries(series.NameId, series.Setpoint);
+                        break;
+
+                    case SeriesManager.Type.INCOMING_DATA:
+                        //add spline according to incoming data
+                        double result = 0;
+                        bool validData = extractDataSrcFromCsvRow(series.DataIndex, ref result);
+                  
+                        if (validData)
+                            addPointToSeries(series.NameId, result);
+                        break;
                 }
-                chart.ResetAutoValues();
-                chart.Update();
             }
         }
 
-        private double extractDataSrcFromCsvRow(int index)
+        private bool extractDataSrcFromCsvRow(int index, ref double result)
         {
-            string[] dataArr = lastIncomingDataRow_.Split(',');
-            return Convert.ToDouble(dataArr[index]);
+            //find opening break character
+            string lastLine = "";
+            if (dataTxBx_.Lines.Any())
+                lastLine = dataTxBx_.Lines[dataTxBx_.Lines.Length - 2];
+
+            int breakIndex = lastLine.IndexOf('|');
+            if (breakIndex < 0)
+                return false;
+
+           // result = 1; //delete after test
+          //  return true;
+
+            string trimmedRow = lastLine.Substring(breakIndex+1);
+
+            //find closing break character
+            breakIndex = trimmedRow.IndexOf('|');
+            if (breakIndex < 0)
+                return false;
+            trimmedRow = trimmedRow.Substring(0, breakIndex);
+
+            string[] dataArr = trimmedRow.Split(',');
+            result = Convert.ToDouble(dataArr[index]);
+            return true;
         }
 
         private void addPointToSeries(string seriesName, double y)
@@ -123,6 +137,8 @@ namespace Falcon.Forms
                 DataPoint firstElement = chart.Series[seriesName].Points.First<DataPoint>();
                 chart.Series[seriesName].Points.Remove(firstElement);
             }
+            chart.ResetAutoValues();
+            chart.Update();
         }
 
         private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
