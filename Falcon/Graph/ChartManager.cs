@@ -68,17 +68,18 @@ namespace Falcon.Graph
             return false;
         }
 
-        public bool AddSeries(string nameId, 
+        public bool AddSeries(string nameId,
+                              SeriesManager.Type type,
                               byte dataIndex, 
-                              SeriesManager.Type type, 
                               double setpoint)
         {
             if (IsFull())
                 return false;
-            var newSeriesManager = new SeriesManager(nameId, dataIndex, setpoint);
+            var newSeriesManager = new SeriesManager(nameId, type, dataIndex, setpoint);
             seriesManagersList_.Add(newSeriesManager);
 
             var newSeries = new Series(nameId);
+            newSeries.BorderWidth = 4;
             if (type == SeriesManager.Type.SETPOINT)
                 newSeries.ChartType = SeriesChartType.Line;
             else if (type == SeriesManager.Type.INCOMING_DATA || type == SeriesManager.Type.BYTES_RATE)
@@ -95,8 +96,10 @@ namespace Falcon.Graph
 
         public void RemoveAllSeries()
         {
-            foreach (var series in chart_.Series)
+            foreach (var series in chart_.Series.ToList())
                 chart_.Series.Remove(series);
+
+            
         }
 
         private Series FindSeries(string nameId)

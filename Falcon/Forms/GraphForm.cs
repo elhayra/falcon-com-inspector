@@ -142,18 +142,7 @@ namespace Falcon.Forms
 
         private void addRemoveBtn_Click(object sender, EventArgs e)
         {
-            
-            if (seriesFrom_ == null || seriesFrom_.IsDisposed)
-            {
-                seriesFrom_ = new SeriesForm();
-                seriesFrom_.Show();
-                seriesFrom_.Focus();
-            }
-            else
-            {
-                seriesFrom_.Show();
-                seriesFrom_.Focus();
-            }
+       
         }
 
 
@@ -180,6 +169,31 @@ namespace Falcon.Forms
         private void tailCmBx_SelectedIndexChanged(object sender, EventArgs e)
         {
             ChartManager.Inst.TailLength = Convert.ToByte(tailCmBx.SelectedItem);
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addRmSeriesBtn_Click(object sender, EventArgs e)
+        {
+
+            if (seriesFrom_ == null || seriesFrom_.IsDisposed)
+            {
+                seriesFrom_ = new SeriesForm();
+                seriesFrom_.Show();
+                seriesFrom_.Focus();
+            }
+            else
+            {
+                seriesFrom_.Show();
+                seriesFrom_.Focus();
+            }
+        }
+
+        private void resetGraphBtn_Click(object sender, EventArgs e)
+        {
         }
     }
 }

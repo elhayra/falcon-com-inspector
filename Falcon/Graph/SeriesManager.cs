@@ -37,9 +37,10 @@ namespace Falcon.Graph
             INCOMING_DATA
         }
 
-        public SeriesManager(string nameId, byte dataIndex, double setpoint)
+        public SeriesManager(string nameId, Type dataType, byte dataIndex, double setpoint)
         {
             NameId = nameId;
+            DataType = dataType;
             DataIndex = dataIndex;
             Setpoint = setpoint;
         }

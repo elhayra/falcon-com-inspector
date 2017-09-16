@@ -39,8 +39,9 @@
             this.sampleRateCmBx = new System.Windows.Forms.ToolStripComboBox();
             this.tailLengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tailCmBx = new System.Windows.Forms.ToolStripComboBox();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addRemoveBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addRmSeriesBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetGraphBtn = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -107,6 +108,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
             this.graphManagerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -118,19 +120,17 @@
             // 
             this.graphManagerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleRateitem,
-            this.tailLengthToolStripMenuItem,
-            this.resetToolStripMenuItem,
-            this.addRemoveBtn});
+            this.tailLengthToolStripMenuItem});
             this.graphManagerToolStripMenuItem.Name = "graphManagerToolStripMenuItem";
-            this.graphManagerToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.graphManagerToolStripMenuItem.Text = "Graph";
+            this.graphManagerToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.graphManagerToolStripMenuItem.Text = "Settings";
             // 
             // sampleRateitem
             // 
             this.sampleRateitem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleRateCmBx});
             this.sampleRateitem.Name = "sampleRateitem";
-            this.sampleRateitem.Size = new System.Drawing.Size(177, 22);
+            this.sampleRateitem.Size = new System.Drawing.Size(152, 22);
             this.sampleRateitem.Text = "Sample Rate";
             // 
             // sampleRateCmBx
@@ -151,7 +151,7 @@
             this.tailLengthToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tailCmBx});
             this.tailLengthToolStripMenuItem.Name = "tailLengthToolStripMenuItem";
-            this.tailLengthToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.tailLengthToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tailLengthToolStripMenuItem.Text = "Tail Length";
             // 
             // tailCmBx
@@ -167,18 +167,28 @@
             this.tailCmBx.Text = "10";
             this.tailCmBx.SelectedIndexChanged += new System.EventHandler(this.tailCmBx_SelectedIndexChanged);
             // 
-            // resetToolStripMenuItem
+            // settingsToolStripMenuItem
             // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRmSeriesBtn,
+            this.resetGraphBtn});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.settingsToolStripMenuItem.Text = "Graph";
             // 
-            // addRemoveBtn
+            // addRmSeriesBtn
             // 
-            this.addRemoveBtn.Name = "addRemoveBtn";
-            this.addRemoveBtn.Size = new System.Drawing.Size(177, 22);
-            this.addRemoveBtn.Text = "Add/Remove Series";
-            this.addRemoveBtn.Click += new System.EventHandler(this.addRemoveBtn_Click);
+            this.addRmSeriesBtn.Name = "addRmSeriesBtn";
+            this.addRmSeriesBtn.Size = new System.Drawing.Size(183, 22);
+            this.addRmSeriesBtn.Text = "Add / Remove Series";
+            this.addRmSeriesBtn.Click += new System.EventHandler(this.addRmSeriesBtn_Click);
+            // 
+            // resetGraphBtn
+            // 
+            this.resetGraphBtn.Name = "resetGraphBtn";
+            this.resetGraphBtn.Size = new System.Drawing.Size(183, 22);
+            this.resetGraphBtn.Text = "Reset";
+            this.resetGraphBtn.Click += new System.EventHandler(this.resetGraphBtn_Click);
             // 
             // GraphForm
             // 
@@ -208,9 +218,10 @@
         private System.Windows.Forms.ToolStripMenuItem graphManagerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sampleRateitem;
         private System.Windows.Forms.ToolStripComboBox sampleRateCmBx;
-        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addRemoveBtn;
         private System.Windows.Forms.ToolStripMenuItem tailLengthToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox tailCmBx;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRmSeriesBtn;
+        private System.Windows.Forms.ToolStripMenuItem resetGraphBtn;
     }
 }

@@ -56,8 +56,8 @@ namespace Falcon.Forms
             if (dataIndex == 255) //error
                 return;
             ChartManager.Inst.AddSeries(nameTxt.Text,
-                                        dataIndex,
                                         seriesCmBxToType(),
+                                        dataIndex,
                                         (double)setpointTxt.Value);
             seriesLstBx.Items.Add(nameTxt.Text);
         }
@@ -89,52 +89,82 @@ namespace Falcon.Forms
                 return;
             string selectedSeries = seriesLstBx.SelectedItem.ToString();
             SeriesManager seriesManager = ChartManager.Inst.GetSeries(selectedSeries);
-            if (seriesManager.DataType == SeriesManager.Type.SETPOINT)
+            EnableOnlyTypeFields(seriesManager.DataType);
+            switch (seriesManager.DataType)
             {
-                seriesTypeCmBx.Text = "Setpoint";
-                setpointTxt.Value = (decimal)seriesManager.Setpoint;
-            }
-            else if (seriesManager.DataType == SeriesManager.Type.INCOMING_DATA)
-                seriesTypeCmBx.Text = "Data";
-            else if (seriesManager.DataType == SeriesManager.Type.BYTES_RATE)
-                seriesTypeCmBx.Text = "Bytes Rate";
+                case SeriesManager.Type.INCOMING_DATA:
+                    seriesTypeCmBx.Text = "Data";
+                    nameTxt.Text = seriesManager.NameId;
+                    dataIndexTxt.Text = seriesManager.DataIndex.ToString();
+                    break;
 
-            nameTxt.Text = seriesManager.NameId;
-            dataIndexTxt.Value = seriesManager.DataIndex;
+                case SeriesManager.Type.SETPOINT:
+                    seriesTypeCmBx.Text = "Setpoint";
+                    nameTxt.Text = seriesManager.NameId;
+                    dataIndexTxt.Text = seriesManager.DataIndex.ToString();
+                    setpointTxt.Text = seriesManager.Setpoint.ToString();
+                    break;
+
+                case SeriesManager.Type.BYTES_RATE:
+                    seriesTypeCmBx.Text = "Bytes Rate";
+                    dataIndexTxt.Text = seriesManager.DataIndex.ToString();
+                    break;
+            }
         }
 
         private void seriesTypeCmBx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (seriesTypeCmBx.Text == "Data")
+            switch (seriesTypeCmBx.Text)
             {
-                nameTxt.Visible = true;
-                nameLbl.Visible = true;
-                nameTxt.Text = "";
-                dataIndexTxt.Visible = true;
-                dataIndexLbl.Visible = true;
-                setpointTxt.Visible = false;
-                setpointLbl.Visible = false;
+                case "Data":
+                    EnableOnlyTypeFields(SeriesManager.Type.INCOMING_DATA);
+                    break;
+
+                case "Setpoint":
+                    EnableOnlyTypeFields(SeriesManager.Type.SETPOINT);
+                    break;
+
+                case "Bytes Rate":
+                    EnableOnlyTypeFields(SeriesManager.Type.BYTES_RATE);
+                    break;
             }
-            else if (seriesTypeCmBx.Text == "Setpoint")
+        }
+
+        private void EnableOnlyTypeFields(SeriesManager.Type type)
+        {
+            switch (type)
             {
-                nameTxt.Visible = true;
-                nameLbl.Visible = true;
-                nameTxt.Text = "";
-                dataIndexTxt.Visible = false;
-                dataIndexLbl.Visible = false;
-                setpointTxt.Visible = true;
-                setpointLbl.Visible = true;
+                case SeriesManager.Type.INCOMING_DATA:
+                    nameTxt.Visible = true;
+                    nameLbl.Visible = true;
+                    nameTxt.Text = "";
+                    dataIndexTxt.Visible = true;
+                    dataIndexLbl.Visible = true;
+                    setpointTxt.Visible = false;
+                    setpointLbl.Visible = false;
+                    break;
+
+                case SeriesManager.Type.SETPOINT:
+                    nameTxt.Visible = true;
+                    nameLbl.Visible = true;
+                    nameTxt.Text = "";
+                    dataIndexTxt.Visible = false;
+                    dataIndexLbl.Visible = false;
+                    setpointTxt.Visible = true;
+                    setpointLbl.Visible = true;
+                    break;
+
+                case SeriesManager.Type.BYTES_RATE:
+                    nameTxt.Text = "Bytes Rate";
+                    nameTxt.Visible = false; //name is default for bytes rate
+                    nameLbl.Visible = false;
+                    dataIndexTxt.Visible = false;
+                    dataIndexLbl.Visible = false;
+                    setpointTxt.Visible = false;
+                    setpointLbl.Visible = false;
+                    break;
             }
-            else if (seriesTypeCmBx.Text == "Bytes Rate")
-            {
-                nameTxt.Text = "Bytes Rate";
-                nameTxt.Visible = false;
-                nameLbl.Visible = false;
-                dataIndexTxt.Visible = false;
-                dataIndexLbl.Visible = false;
-                setpointTxt.Visible = false;
-                setpointLbl.Visible = false;
-            }
+
         }
     }
 
