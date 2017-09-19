@@ -26,6 +26,9 @@ namespace Falcon.Forms
             ChartManager.Inst.Init(ref chart);
             chart.MouseWheel += chData_MouseWheel;
             dataTxBx_ = dataInScreenTxt;
+
+            //treeView.Nodes[0].Nodes[0].Text = "123";
+            
         }
 
         private void chData_MouseWheel(object sender, MouseEventArgs e)
@@ -57,52 +60,41 @@ namespace Falcon.Forms
             catch { }
         }
 
-        public void Monitor()
-        {
-           /* for (int i = 0; i < 100; i++ )
-            {
-                chart.Series["Data"].Points.AddXY(i, i*i);
-                if (chart.Series["Data"].Points.Count > 10)
-                    chart.Series["Data"].Points.RemoveAt(chart.Series["Data"].Points.Count - 11);
-                
-                Thread.Sleep(800);
-            }*/
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-           // Monitor();
-        }
 
         private void graphTimer_Tick(object sender, EventArgs e)
         {
             ChartManager.Inst.SecondsCounter++;
             double[] resultCsv = null;
             resultCsv = extractCsvFromRow();
-            foreach (var series in ChartManager.Inst.GetSeriesManagersList())
+            if (resultCsv != null && resultCsv.Length > 0)
             {
-                switch (series.DataType)
+                TreeNode root = treeView.Nodes[0];
+                foreach (var series in ChartManager.Inst.GetSeriesManagersList())
                 {
-                    case SeriesManager.Type.BYTES_RATE:
-                        addPointToSeries("Bytes Rate", ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
-                        break;
+                    switch (series.DataType)
+                    {
+                        case SeriesManager.Type.BYTES_RATE:
+                            addPointToSeries("Bytes Rate", ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
+                            break;
 
-                    case SeriesManager.Type.SETPOINT:
-                        addPointToSeries(series.NameId, series.Setpoint);
-                        break;
+                        case SeriesManager.Type.SETPOINT:
+                            addPointToSeries(series.NameId, series.Setpoint);
+                            break;
 
-                    case SeriesManager.Type.INCOMING_DATA:
-                        if (resultCsv != null)
-                        {
-                            //if (series.DataIndex)
-                            //{
+                        case SeriesManager.Type.INCOMING_DATA:
+                            if (resultCsv != null)
+                            {
+                                /* fill tree view node with series name and data value */
+                                root.Nodes[series.DataIndex].Nodes[0].Text = series.NameId;
+                                root.Nodes[series.DataIndex].Nodes[0].Nodes[0].Text = resultCsv[series.DataIndex].ToString();
 
-                           // }
-                            addPointToSeries(series.NameId, resultCsv[series.DataIndex]);
-                        }
-                        break;
+                                addPointToSeries(series.NameId, resultCsv[series.DataIndex]);
+                            }
+                            break;
+                    }
                 }
             }
+           
         }
 
         private double [] extractCsvFromRow()
