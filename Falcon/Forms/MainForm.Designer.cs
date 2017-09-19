@@ -39,6 +39,7 @@
             this.tcpDisconnectBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpServerIpLbl = new System.Windows.Forms.Label();
@@ -119,6 +120,8 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -142,12 +145,14 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.tcpConnectedClientsLbl);
             this.groupBox5.Controls.Add(this.tcpConnectBtn);
             this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
             this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
             this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Location = new System.Drawing.Point(6, 163);
+            this.groupBox5.Location = new System.Drawing.Point(6, 186);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(110, 124);
             this.groupBox5.TabIndex = 1;
@@ -208,6 +213,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.radioButton1);
             this.groupBox3.Controls.Add(this.tcpServerRdBtn);
             this.groupBox3.Controls.Add(this.tcpClientRdBtn);
             this.groupBox3.Controls.Add(this.tcpServerIpLbl);
@@ -216,10 +222,20 @@
             this.groupBox3.Controls.Add(this.tcpPortTxt);
             this.groupBox3.Location = new System.Drawing.Point(6, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(110, 153);
+            this.groupBox3.Size = new System.Drawing.Size(110, 177);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Settings";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 65);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 17);
+            this.radioButton1.TabIndex = 14;
+            this.radioButton1.Text = "SSH";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // tcpServerRdBtn
             // 
@@ -247,7 +263,7 @@
             // tcpServerIpLbl
             // 
             this.tcpServerIpLbl.AutoSize = true;
-            this.tcpServerIpLbl.Location = new System.Drawing.Point(4, 69);
+            this.tcpServerIpLbl.Location = new System.Drawing.Point(4, 90);
             this.tcpServerIpLbl.Name = "tcpServerIpLbl";
             this.tcpServerIpLbl.Size = new System.Drawing.Size(54, 13);
             this.tcpServerIpLbl.TabIndex = 10;
@@ -256,7 +272,7 @@
             // tcpIpTxt
             // 
             this.tcpIpTxt.Enabled = false;
-            this.tcpIpTxt.Location = new System.Drawing.Point(6, 85);
+            this.tcpIpTxt.Location = new System.Drawing.Point(6, 106);
             this.tcpIpTxt.Name = "tcpIpTxt";
             this.tcpIpTxt.Size = new System.Drawing.Size(98, 20);
             this.tcpIpTxt.TabIndex = 13;
@@ -265,7 +281,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 108);
+            this.label2.Location = new System.Drawing.Point(3, 129);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 11;
@@ -273,7 +289,7 @@
             // 
             // tcpPortTxt
             // 
-            this.tcpPortTxt.Location = new System.Drawing.Point(6, 124);
+            this.tcpPortTxt.Location = new System.Drawing.Point(6, 145);
             this.tcpPortTxt.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -298,6 +314,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox6.Controls.Add(this.udpConnectBtn);
             this.groupBox6.Controls.Add(this.udpConnectionStateLbl);
             this.groupBox6.Controls.Add(this.udpDisconnectBtn);
@@ -435,6 +453,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.serialConnectBtn);
             this.groupBox2.Controls.Add(this.serialDisconnectBtn);
             this.groupBox2.Controls.Add(this.serialConnectionStateLbl);
@@ -641,7 +661,7 @@
             // bytesOutLbl
             // 
             this.bytesOutLbl.AutoSize = true;
-            this.bytesOutLbl.Location = new System.Drawing.Point(122, 8);
+            this.bytesOutLbl.Location = new System.Drawing.Point(119, 8);
             this.bytesOutLbl.Name = "bytesOutLbl";
             this.bytesOutLbl.Size = new System.Drawing.Size(23, 13);
             this.bytesOutLbl.TabIndex = 40;
@@ -650,7 +670,7 @@
             // bytesInLbl
             // 
             this.bytesInLbl.AutoSize = true;
-            this.bytesInLbl.Location = new System.Drawing.Point(27, 8);
+            this.bytesInLbl.Location = new System.Drawing.Point(30, 8);
             this.bytesInLbl.Name = "bytesInLbl";
             this.bytesInLbl.Size = new System.Drawing.Size(23, 13);
             this.bytesInLbl.TabIndex = 39;
@@ -670,21 +690,22 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 8);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 13);
+            this.label3.Size = new System.Drawing.Size(23, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "In:";
+            this.label3.Text = "Rx:";
             // 
             // lbl
             // 
             this.lbl.AutoSize = true;
             this.lbl.Location = new System.Drawing.Point(94, 8);
             this.lbl.Name = "lbl";
-            this.lbl.Size = new System.Drawing.Size(27, 13);
+            this.lbl.Size = new System.Drawing.Size(22, 13);
             this.lbl.TabIndex = 17;
-            this.lbl.Text = "Out:";
+            this.lbl.Text = "Tx:";
             // 
             // clearScreenBtn
             // 
+            this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.clearScreenBtn.Location = new System.Drawing.Point(145, 453);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
@@ -695,6 +716,7 @@
             // 
             // sendBtn
             // 
+            this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.sendBtn.Location = new System.Drawing.Point(528, 480);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
@@ -755,6 +777,7 @@
             // 
             // autoScrollChkBx
             // 
+            this.autoScrollChkBx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -767,6 +790,9 @@
             // 
             // dataInScreenTxt
             // 
+            this.dataInScreenTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataInScreenTxt.BackColor = System.Drawing.Color.Black;
             this.dataInScreenTxt.Font = new System.Drawing.Font("Miriam Fixed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataInScreenTxt.ForeColor = System.Drawing.Color.LimeGreen;
@@ -780,6 +806,8 @@
             // 
             // textToSendCmBx
             // 
+            this.textToSendCmBx.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textToSendCmBx.FormattingEnabled = true;
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 481);
             this.textToSendCmBx.Name = "textToSendCmBx";
@@ -789,6 +817,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.serialIndicatorLbl);
             this.groupBox4.Controls.Add(this.udpIndicatorLbl);
             this.groupBox4.Controls.Add(this.tcpIndicatorLbl);
@@ -806,6 +836,8 @@
             // 
             // serialIndicatorLbl
             // 
+            this.serialIndicatorLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.serialIndicatorLbl.Location = new System.Drawing.Point(401, 8);
@@ -816,6 +848,8 @@
             // 
             // udpIndicatorLbl
             // 
+            this.udpIndicatorLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.udpIndicatorLbl.Location = new System.Drawing.Point(361, 8);
@@ -826,6 +860,8 @@
             // 
             // tcpIndicatorLbl
             // 
+            this.tcpIndicatorLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tcpIndicatorLbl.Location = new System.Drawing.Point(323, 8);
@@ -846,10 +882,11 @@
             // 
             // infoTxt
             // 
+            this.infoTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.infoTxt.AutoSize = true;
             this.infoTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.infoTxt.Location = new System.Drawing.Point(202, 454);
-            this.infoTxt.MaximumSize = new System.Drawing.Size(300, 20);
             this.infoTxt.MinimumSize = new System.Drawing.Size(300, 20);
             this.infoTxt.Name = "infoTxt";
             this.infoTxt.Size = new System.Drawing.Size(300, 20);
@@ -880,10 +917,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(607, 551);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(607, 551);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Falcon Com Inspector";
@@ -987,6 +1020,7 @@
         private System.Windows.Forms.Label infoTxt;
         private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
         private System.Windows.Forms.Timer bytesRateTimer;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 

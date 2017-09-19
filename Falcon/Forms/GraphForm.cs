@@ -77,7 +77,8 @@ namespace Falcon.Forms
         private void graphTimer_Tick(object sender, EventArgs e)
         {
             ChartManager.Inst.SecondsCounter++;
-
+            double[] resultCsv = null;
+            resultCsv = extractCsvFromRow();
             foreach (var series in ChartManager.Inst.GetSeriesManagersList())
             {
                 switch (series.DataType)
@@ -91,47 +92,50 @@ namespace Falcon.Forms
                         break;
 
                     case SeriesManager.Type.INCOMING_DATA:
-                        //add spline according to incoming data
-                        double result = 0;
-                        bool validData = extractDataSrcFromCsvRow(series.DataIndex, ref result);
-                  
-                        if (validData)
-                            addPointToSeries(series.NameId, result);
+                        if (resultCsv != null)
+                        {
+                            //if (series.DataIndex)
+                            //{
+
+                           // }
+                            addPointToSeries(series.NameId, resultCsv[series.DataIndex]);
+                        }
                         break;
                 }
             }
         }
 
-        private bool extractDataSrcFromCsvRow(int index, ref double result)
+        private double [] extractCsvFromRow()
         {
-            //find opening break character
+            /* find data opening character */
             string lastLine = "";
-            if (dataTxBx_.Lines.Any())
+            if (dataTxBx_.Lines.Any() && dataTxBx_.Lines.Length >= 2)
                 lastLine = dataTxBx_.Lines[dataTxBx_.Lines.Length - 2];
 
-            int breakIndex = lastLine.IndexOf('|');
+            int breakIndex = lastLine.IndexOf(SeriesManager.DATA_OPEN_CHAR);
             if (breakIndex < 0)
-                return false;
+                return null;
 
-           // result = 1; //delete after test
-          //  return true;
+            string trimmedRow = lastLine.Substring(breakIndex + 1);
 
-            string trimmedRow = lastLine.Substring(breakIndex+1);
-
-            //find closing break character
-            breakIndex = trimmedRow.IndexOf('|');
+            /* find data closing character */
+            breakIndex = trimmedRow.IndexOf(SeriesManager.DATA_CLOSE_CHAR);
             if (breakIndex < 0)
-                return false;
+                return null;
             trimmedRow = trimmedRow.Substring(0, breakIndex);
-
             string[] dataArr = trimmedRow.Split(',');
-            result = Convert.ToDouble(dataArr[index]);
-            return true;
+            var csv = new double[dataArr.Length];
+            for(int indx=0; indx < dataArr.Length; indx++)
+            {
+                csv[indx] = Convert.ToDouble(dataArr[indx]);
+            }
+            return csv;
         }
 
         private void addPointToSeries(string seriesName, double y)
         {
             chart.Series[seriesName].Points.AddXY(ChartManager.Inst.SecondsCounter, y);
+ 
             if (chart.Series[seriesName].Points.Count == ChartManager.Inst.TailLength) //trim line tail
             {
                 DataPoint firstElement = chart.Series[seriesName].Points.First<DataPoint>();
@@ -139,11 +143,6 @@ namespace Falcon.Forms
             }
             chart.ResetAutoValues();
             chart.Update();
-        }
-
-        private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
-        {
-
         }
 
         private void chart_MouseLeave(object sender, EventArgs e)
@@ -156,13 +155,6 @@ namespace Falcon.Forms
             if (!chart.Focused) chart.Focus();
         }
 
-        private void addRemoveBtn_Click(object sender, EventArgs e)
-        {
-       
-        }
-
-
-
         private void GraphForm_Deactivate(object sender, EventArgs e)
         {
             chart.Enabled = false;
@@ -173,26 +165,7 @@ namespace Falcon.Forms
             chart.Enabled = true;
         }
 
-
-
-        private void sampleRateCmBx_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string hzStr = sampleRateCmBx.SelectedItem.ToString().Split(' ')[0]; //extract hz value
-            int hz = int.Parse(hzStr);
-            graphTimer.Interval = 1000 / hz;
-        }
-
-        private void tailCmBx_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ChartManager.Inst.TailLength = Convert.ToByte(tailCmBx.SelectedItem);
-        }
-
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void addRmSeriesBtn_Click(object sender, EventArgs e)
+        private void addRmBtn_Click(object sender, EventArgs e)
         {
 
             if (seriesFrom_ == null || seriesFrom_.IsDisposed)
@@ -208,8 +181,24 @@ namespace Falcon.Forms
             }
         }
 
-        private void resetGraphBtn_Click(object sender, EventArgs e)
+        private void sampleRateTxt_ValueChanged(object sender, EventArgs e)
         {
+            sampleRateTxt.BackColor = Color.White;
         }
+
+        private void tailTxt_ValueChanged(object sender, EventArgs e)
+        {
+            tailTxt.BackColor = Color.White;
+        }
+
+        private void applyBtn_Click(object sender, EventArgs e)
+        {
+            tailTxt.BackColor = Color.LightGreen;
+            sampleRateTxt.BackColor = Color.LightGreen;
+            ChartManager.Inst.TailLength = (int)tailTxt.Value;
+            graphTimer.Interval = (int)(1000 / sampleRateTxt.Value);
+            //TODO: UPDATE TIME AXIS ACCORDINGLY
+        }
+
     }
 }

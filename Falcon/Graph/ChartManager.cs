@@ -12,7 +12,7 @@ namespace Falcon.Graph
     {
         public const int MAX_SERIESES = 10;
         public ulong SecondsCounter = 0;
-        public byte TailLength = 10;
+        public int TailLength = 10;
 
         //using this list allows also keep track after the tail
         List<SeriesManager> seriesManagersList_ = new List<SeriesManager>();
@@ -97,9 +97,7 @@ namespace Falcon.Graph
         public void RemoveAllSeries()
         {
             foreach (var series in chart_.Series.ToList())
-                chart_.Series.Remove(series);
-
-            
+                RemoveSeriesByName(series.Name);
         }
 
         private Series FindSeries(string nameId)
