@@ -39,12 +39,11 @@
             this.tcpDisconnectBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
-            this.tcpServerIpLbl = new System.Windows.Forms.Label();
+            this.tcpIpLbl = new System.Windows.Forms.Label();
             this.tcpIpTxt = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.tcpServerPortLbl = new System.Windows.Forms.Label();
             this.tcpPortTxt = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -84,7 +83,7 @@
             this.clearScreenBtn = new System.Windows.Forms.Button();
             this.sendBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.preferencesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,8 +98,15 @@
             this.tcpIndicatorLbl = new System.Windows.Forms.Label();
             this.bytesInTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
-            this.infoTxt = new System.Windows.Forms.Label();
             this.bytesRateTimer = new System.Windows.Forms.Timer(this.components);
+            this.infoTxt = new System.Windows.Forms.Label();
+            this.resetBtn = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.userNameTxt = new System.Windows.Forms.TextBox();
+            this.passwordTxt = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -133,6 +139,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -152,7 +159,7 @@
             this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
             this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
             this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Location = new System.Drawing.Point(6, 186);
+            this.groupBox5.Location = new System.Drawing.Point(6, 266);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(110, 124);
             this.groupBox5.TabIndex = 1;
@@ -214,28 +221,22 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.radioButton1);
+            this.groupBox3.Controls.Add(this.passwordTxt);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.userNameTxt);
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.tcpServerRdBtn);
             this.groupBox3.Controls.Add(this.tcpClientRdBtn);
-            this.groupBox3.Controls.Add(this.tcpServerIpLbl);
+            this.groupBox3.Controls.Add(this.tcpIpLbl);
             this.groupBox3.Controls.Add(this.tcpIpTxt);
-            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.tcpServerPortLbl);
             this.groupBox3.Controls.Add(this.tcpPortTxt);
             this.groupBox3.Location = new System.Drawing.Point(6, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(110, 177);
+            this.groupBox3.Size = new System.Drawing.Size(110, 257);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Settings";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 65);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 17);
-            this.radioButton1.TabIndex = 14;
-            this.radioButton1.Text = "SSH";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // tcpServerRdBtn
             // 
@@ -260,36 +261,37 @@
             this.tcpClientRdBtn.Text = "Client";
             this.tcpClientRdBtn.UseVisualStyleBackColor = true;
             // 
-            // tcpServerIpLbl
+            // tcpIpLbl
             // 
-            this.tcpServerIpLbl.AutoSize = true;
-            this.tcpServerIpLbl.Location = new System.Drawing.Point(4, 90);
-            this.tcpServerIpLbl.Name = "tcpServerIpLbl";
-            this.tcpServerIpLbl.Size = new System.Drawing.Size(54, 13);
-            this.tcpServerIpLbl.TabIndex = 10;
-            this.tcpServerIpLbl.Text = "Server IP:";
+            this.tcpIpLbl.AutoSize = true;
+            this.tcpIpLbl.Enabled = false;
+            this.tcpIpLbl.Location = new System.Drawing.Point(4, 91);
+            this.tcpIpLbl.Name = "tcpIpLbl";
+            this.tcpIpLbl.Size = new System.Drawing.Size(54, 13);
+            this.tcpIpLbl.TabIndex = 10;
+            this.tcpIpLbl.Text = "Server IP:";
             // 
             // tcpIpTxt
             // 
             this.tcpIpTxt.Enabled = false;
-            this.tcpIpTxt.Location = new System.Drawing.Point(6, 106);
+            this.tcpIpTxt.Location = new System.Drawing.Point(6, 107);
             this.tcpIpTxt.Name = "tcpIpTxt";
             this.tcpIpTxt.Size = new System.Drawing.Size(98, 20);
             this.tcpIpTxt.TabIndex = 13;
             this.tcpIpTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tcpIpTxt_KeyPress);
             // 
-            // label2
+            // tcpServerPortLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 129);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Server Port:";
+            this.tcpServerPortLbl.AutoSize = true;
+            this.tcpServerPortLbl.Location = new System.Drawing.Point(3, 130);
+            this.tcpServerPortLbl.Name = "tcpServerPortLbl";
+            this.tcpServerPortLbl.Size = new System.Drawing.Size(63, 13);
+            this.tcpServerPortLbl.TabIndex = 11;
+            this.tcpServerPortLbl.Text = "Server Port:";
             // 
             // tcpPortTxt
             // 
-            this.tcpPortTxt.Location = new System.Drawing.Point(6, 145);
+            this.tcpPortTxt.Location = new System.Drawing.Point(6, 146);
             this.tcpPortTxt.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -728,7 +730,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferencesToolStripMenuItem1,
+            this.preferencesBtn,
             this.graphToolStripMenuItem1,
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -737,11 +739,12 @@
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // preferencesToolStripMenuItem1
+            // preferencesBtn
             // 
-            this.preferencesToolStripMenuItem1.Name = "preferencesToolStripMenuItem1";
-            this.preferencesToolStripMenuItem1.Size = new System.Drawing.Size(80, 20);
-            this.preferencesToolStripMenuItem1.Text = "Preferences";
+            this.preferencesBtn.Name = "preferencesBtn";
+            this.preferencesBtn.Size = new System.Drawing.Size(80, 20);
+            this.preferencesBtn.Text = "Preferences";
+            this.preferencesBtn.Click += new System.EventHandler(this.preferencesBtn_Click);
             // 
             // graphToolStripMenuItem1
             // 
@@ -880,31 +883,99 @@
             this.bytesOutTimer.Interval = 500;
             this.bytesOutTimer.Tick += new System.EventHandler(this.bytesOutTimer_Tick);
             // 
-            // infoTxt
-            // 
-            this.infoTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoTxt.AutoSize = true;
-            this.infoTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.infoTxt.Location = new System.Drawing.Point(202, 454);
-            this.infoTxt.MinimumSize = new System.Drawing.Size(300, 20);
-            this.infoTxt.Name = "infoTxt";
-            this.infoTxt.Size = new System.Drawing.Size(300, 20);
-            this.infoTxt.TabIndex = 41;
-            this.infoTxt.Text = "N/A";
-            this.infoTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // bytesRateTimer
             // 
             this.bytesRateTimer.Enabled = true;
             this.bytesRateTimer.Interval = 1000;
             this.bytesRateTimer.Tick += new System.EventHandler(this.bytesRateTimer_Tick);
             // 
+            // infoTxt
+            // 
+            this.infoTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.infoTxt.AutoSize = true;
+            this.infoTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.infoTxt.Location = new System.Drawing.Point(260, 454);
+            this.infoTxt.MinimumSize = new System.Drawing.Size(240, 20);
+            this.infoTxt.Name = "infoTxt";
+            this.infoTxt.Size = new System.Drawing.Size(240, 20);
+            this.infoTxt.TabIndex = 41;
+            this.infoTxt.Text = "N/A";
+            this.infoTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // resetBtn
+            // 
+            this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.resetBtn.Location = new System.Drawing.Point(202, 453);
+            this.resetBtn.Name = "resetBtn";
+            this.resetBtn.Size = new System.Drawing.Size(51, 22);
+            this.resetBtn.TabIndex = 42;
+            this.resetBtn.Text = "Reset";
+            this.resetBtn.UseVisualStyleBackColor = true;
+            this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Enabled = false;
+            this.label2.Location = new System.Drawing.Point(3, 171);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "User Name:";
+            // 
+            // userNameTxt
+            // 
+            this.userNameTxt.Enabled = false;
+            this.userNameTxt.Location = new System.Drawing.Point(6, 187);
+            this.userNameTxt.Name = "userNameTxt";
+            this.userNameTxt.Size = new System.Drawing.Size(98, 20);
+            this.userNameTxt.TabIndex = 15;
+            // 
+            // passwordTxt
+            // 
+            this.passwordTxt.Enabled = false;
+            this.passwordTxt.Location = new System.Drawing.Point(7, 228);
+            this.passwordTxt.Name = "passwordTxt";
+            this.passwordTxt.Size = new System.Drawing.Size(98, 20);
+            this.passwordTxt.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Enabled = false;
+            this.label4.Location = new System.Drawing.Point(4, 212);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Password:";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 65);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 17);
+            this.radioButton1.TabIndex = 18;
+            this.radioButton1.Text = "SSH";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 399);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 512);
+            this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.infoTxt);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
@@ -956,8 +1027,8 @@
         private System.Windows.Forms.Button tcpConnectBtn;
         private System.Windows.Forms.TextBox tcpIpTxt;
         private System.Windows.Forms.NumericUpDown tcpPortTxt;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label tcpServerIpLbl;
+        private System.Windows.Forms.Label tcpServerPortLbl;
+        private System.Windows.Forms.Label tcpIpLbl;
         private System.Windows.Forms.RadioButton tcpClientRdBtn;
         private System.Windows.Forms.RadioButton tcpServerRdBtn;
         private System.Windows.Forms.TabPage tabPage2;
@@ -992,7 +1063,7 @@
         private System.Windows.Forms.ComboBox textToSendCmBx;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem preferencesBtn;
         private System.Windows.Forms.Label receivingRateLbl;
         private System.Windows.Forms.Label bytesOutLbl;
         private System.Windows.Forms.Label bytesInLbl;
@@ -1017,10 +1088,16 @@
         private System.Windows.Forms.Label udpIndicatorLbl;
         private System.Windows.Forms.Timer bytesInTimer;
         private System.Windows.Forms.Timer bytesOutTimer;
-        private System.Windows.Forms.Label infoTxt;
         private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
         private System.Windows.Forms.Timer bytesRateTimer;
+        private System.Windows.Forms.Label infoTxt;
+        private System.Windows.Forms.Button resetBtn;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox userNameTxt;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.TextBox passwordTxt;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
     }
 }
 

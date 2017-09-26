@@ -13,6 +13,9 @@ using Falcon.Forms;
 using Falcon.Utils;
 using Falcon.Com;
 using System.Threading;
+using Renci.SshNet;
+using System.Text.RegularExpressions;
+using Renci.SshNet.Common;
 
 namespace Falcon
 {
@@ -20,6 +23,7 @@ namespace Falcon
     {
         private AboutForm aboutForm_;
         private GraphForm graphFrom_;
+        private PreferencesForm preferencesForm_;
 
         public MainForm()
         {
@@ -53,6 +57,38 @@ namespace Falcon
         {
             ConnectTcp();
         }
+        /*
+        void HandleKeyEvent(Object sender, AuthenticationPromptEventArgs e)
+        {
+            foreach (AuthenticationPrompt prompt in e.Prompts)
+            {
+                if (prompt.Request.IndexOf("Password:", StringComparison.InvariantCultureIgnoreCase) != -1)
+                {
+                    prompt.Response = "0035";
+                }
+            }
+        }
+
+        
+        private void ConnectSsh()
+        {
+            var PasswordConnection = new PasswordAuthenticationMethod("submachine", "0035");
+            var KeyboardInteractive = new KeyboardInteractiveAuthenticationMethod("submachine");
+            KeyboardInteractive.AuthenticationPrompt += new EventHandler<AuthenticationPromptEventArgs>(HandleKeyEvent);
+            var ConnectionInfo = new ConnectionInfo("192.168.2.101", 22, "submachine", PasswordConnection, KeyboardInteractive);
+            using (var client = new SshClient(ConnectionInfo))
+            {
+                client.Connect();
+                string reply = string.Empty;
+                var shellStream = client.CreateShellStream("dumb", 80, 24, 800, 600, 1024);
+                client.RunCommand("ls -a");
+                reply = shellStream.ReadLine();
+                dataInScreenTxt.Text = "Reply: " + reply;
+        
+            }
+      
+    
+        }*/
 
         private void ConnectTcp()
         {
@@ -191,33 +227,35 @@ namespace Falcon
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
-            SendMsg();
-        }
-
-        private void SendMsg()
-        {
+            
             var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
             textToSendCmBx.Items.Add(textToSendCmBx.Text);
             textToSendCmBx.Text = "";
+            SendMsg(bytes);
+        }
+
+        private void SendMsg(byte [] msg)
+        {
+          
     
             if (ConnectionsManager.Inst.IsTcpServerInitiated())
-                ConnectionsManager.Inst.TCPServer.Send(bytes);
+                ConnectionsManager.Inst.TCPServer.Send(msg);
 
             if (ConnectionsManager.Inst.IsTcpClientInitiated())
-                ConnectionsManager.Inst.TCPClient.Send(bytes);
+                ConnectionsManager.Inst.TCPClient.Send(msg);
 
             if (ConnectionsManager.Inst.IsUdpServerInitiated())
-                ConnectionsManager.Inst.UDPServer.Send(bytes);
+                ConnectionsManager.Inst.UDPServer.Send(msg);
 
             if (ConnectionsManager.Inst.IsUdpClientInitiated())
-                ConnectionsManager.Inst.UDPClient.Send(bytes);
+                ConnectionsManager.Inst.UDPClient.Send(msg);
 
             if (ConnectionsManager.Inst.IsSerialInitiated())
-                ConnectionsManager.Inst.Serial.Send(bytes);
+                ConnectionsManager.Inst.Serial.Send(msg);
 
             if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                ConnectionsManager.Inst.BytesOutCounter.Add((uint)bytes.Length);
+                ConnectionsManager.Inst.BytesOutCounter.Add((uint)msg.Length);
                 BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutCounter.RecomendedMeasureUnit();
                 var format = "{0:0}";
                 if (mUnit != BytesCounter.MeasureUnit.B)
@@ -235,11 +273,6 @@ namespace Falcon
         private void clearScreenBtn_Click(object sender, EventArgs e)
         {
             dataInScreenTxt.Clear();
-            bytesInLbl.Text = "0 B";
-            bytesOutLbl.Text = "0 B";
-            ConnectionsManager.Inst.BytesInCounter.Reset();
-            ConnectionsManager.Inst.BytesOutCounter.Reset();
-            ConnectionsManager.Inst.PrevBytesCount = 0;
         }
 
         private void clearInHistoryBtn_Click(object sender, EventArgs e)
@@ -340,18 +373,14 @@ namespace Falcon
 
         private void tcpServerRdBtn_CheckedChanged(object sender, EventArgs e)
         {
-            if (tcpClientRdBtn.Checked)
-            {
-                tcpIpTxt.Enabled = true;
-            }
-            else 
-                tcpIpTxt.Enabled = false;
+            tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
+            tcpIpLbl.Enabled = tcpClientRdBtn.Checked;
         }
 
         private void textToSendCmBx_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
-                SendMsg();
+                sendBtn.PerformClick();
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
@@ -516,9 +545,44 @@ namespace Falcon
             UpdateSerialPorts();
         }
 
+        private void preferencesBtn_Click(object sender, EventArgs e)
+        {
+            if (preferencesForm_ == null || preferencesForm_.IsDisposed)
+            {
+                preferencesForm_ = new PreferencesForm();
+                preferencesForm_.Show();
+            }
+            else
+            {
+                preferencesForm_.Show();
+                preferencesForm_.Focus();
+            }
+        }
 
+        private void resetBtn_Click(object sender, EventArgs e)
+        {
+            bytesInLbl.Text = "0 B";
+            bytesOutLbl.Text = "0 B";
+            ConnectionsManager.Inst.BytesInCounter.Reset();
+            ConnectionsManager.Inst.BytesOutCounter.Reset();
+            ConnectionsManager.Inst.PrevBytesCount = 0;
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //ConnectSsh();
+            var ssh = new Ssh();
+            ssh.Connect("submachine", "0035");
+            ssh.Subscribe(Ondd);
+            ssh.CreateShellStream("terminal", 80, 24, 800, 600, 1024);
+        }
 
-
+        private void Ondd(byte[] bytes)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                dataInScreenTxt.Text += Encoding.UTF8.GetString(bytes);
+            });
+        }
     }
 }

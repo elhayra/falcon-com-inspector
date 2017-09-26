@@ -11,3 +11,6 @@ E:\workspace\Falcon\Falcon\obj\Debug\Falcon.Forms.AboutForm.resources
 E:\workspace\Falcon\Falcon\obj\Debug\Falcon.Forms.GraphForm.resources
 E:\workspace\Falcon\Falcon\obj\Debug\Falcon.Forms.SeriesForm.resources
 E:\workspace\Falcon\Falcon\obj\Debug\Falcon.csproj.CoreCompileInputs.cache
+E:\workspace\Falcon\Falcon\bin\Debug\Renci.SshNet.dll
+E:\workspace\Falcon\Falcon\bin\Debug\Renci.SshNet.xml
+E:\workspace\Falcon\Falcon\obj\Debug\Falcon.Forms.PreferencesForm.resources
