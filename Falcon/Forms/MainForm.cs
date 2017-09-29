@@ -16,6 +16,8 @@ using System.Threading;
 using Renci.SshNet;
 using System.Text.RegularExpressions;
 using Renci.SshNet.Common;
+using Falcon.Command;
+using System.Net.NetworkInformation;
 
 namespace Falcon
 {
@@ -201,7 +203,7 @@ namespace Falcon
 
         private void OnTcpByteIn(byte[] bytes)
         {
-            AppendBytesToScreens(bytes);
+            AppendBytesToTerminal(bytes);
         }
 
         private void tcpDisconnectBtn_Click(object sender, EventArgs e)
@@ -227,11 +229,90 @@ namespace Falcon
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
-            
-            var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
+            if (textToSendCmBx.Text == "")
+                return;
+
+            /* if no communication is open, handle text as a command line */
+            /* otherwise, send msg to the other side                      */
+            if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            {
+                
+                CommandParser.Type cmdType = CommandParser.GetCommandType(textToSendCmBx.Text);
+                string argument = CommandParser.GetCommandArgument(textToSendCmBx.Text);
+                bool noArgument = argument == null ? true : false;
+                switch (cmdType)
+                {
+                    case CommandParser.Type.AUTO_SCROLL:
+                        if (noArgument)
+                        {
+                            WriteLnToTerminal("autoscroll command must have an argument");
+                            return;
+                        }
+                        autoScrollChkBx.Checked = !autoScrollChkBx.Checked;
+                        string state = autoScrollChkBx.Checked ? "on" : "off"; //TODO: CHECK IF ARGUMENT IS NOT VALID (NOT ON OR OFF)
+                        WriteLnToTerminal("auto scroll is " + state);
+                        break;
+                    case CommandParser.Type.RESET:
+                        resetBtn.PerformClick();
+                        WriteLnToTerminal("");
+                        break;
+                    case CommandParser.Type.CLEAR:
+                        clearScreenBtn.PerformClick();
+                        WriteLnToTerminal("");
+                        break;
+                    case CommandParser.Type.PING:
+                        PingReply reply = null; ;
+                        if (Ping(argument, ref reply))
+                        {
+                            if (reply.Status == IPStatus.Success)
+                            {
+                                WriteLnToTerminal("Ping to  " + argument + " [" + reply.Address.ToString() + "] " + " Successful.\n"
+                                + "RTL: " + reply.RoundtripTime.ToString() + " ms");
+                            }
+                            else if (reply == null)
+                                WriteLnToTerminal("Ping Failed. Destination Unreachable");
+                            else
+                                WriteLnToTerminal("Ping Failed. RTL: " + reply.RoundtripTime.ToString() + "ms");
+                        }
+                        else
+                            WriteLnToTerminal("Ping Failed. Invalid Address");
+                        break;
+                    case CommandParser.Type.SSH:
+
+                        break;
+                    case CommandParser.Type.NONE:
+                        WriteLnToTerminal("'" + textToSendCmBx.Text + "'" + "is not recognized as a Falcon command");
+                        break;
+                }
+            }
+            else
+            {
+                var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
+                PassOutTxtToHistory();
+                SendMsg(bytes);
+            }
+        }
+
+        private void PassOutTxtToHistory()
+        {
+            if (textToSendCmBx.Items.Count > 10) //TODO: MAKE MAX HISTROY ITEMS A SETTING //////////////////////////////////
+                textToSendCmBx.Items.RemoveAt(0);
             textToSendCmBx.Items.Add(textToSendCmBx.Text);
             textToSendCmBx.Text = "";
-            SendMsg(bytes);
+        }
+
+        private bool Ping(string host, ref PingReply reply)
+        {
+            Ping pinger = new Ping();
+            try
+            {
+                reply = pinger.Send(host);
+            }
+            catch (PingException exp)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void SendMsg(byte [] msg)
@@ -330,7 +411,7 @@ namespace Falcon
 
         private void OnSerialByteIn(byte[] bytes)
         {
-            AppendBytesToScreens(bytes);            
+            AppendBytesToTerminal(bytes);            
         }
 
         private void dataInHistoryLstBx_SelectedIndexChanged(object sender, EventArgs e)
@@ -344,7 +425,7 @@ namespace Falcon
 
         }
 
-        private void AppendBytesToScreens(byte[] bytes)
+        private void AppendBytesToTerminal(byte[] bytes)
         {
 
             ConnectionsManager.Inst.BytesInCounter.Add((uint)bytes.Length);
@@ -371,6 +452,15 @@ namespace Falcon
             });
         }
 
+        private void WriteLnToTerminal(string txt)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                dataInScreenTxt.AppendText("> " + txt + "\n");
+                PassOutTxtToHistory();
+            });
+        }
+
         private void tcpServerRdBtn_CheckedChanged(object sender, EventArgs e)
         {
             tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
@@ -379,8 +469,8 @@ namespace Falcon
 
         private void textToSendCmBx_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-                sendBtn.PerformClick();
+            //if (e.KeyChar == (char)Keys.Enter)
+            //    sendBtn.PerformClick();
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
@@ -430,7 +520,7 @@ namespace Falcon
 
         private void OnUdpByteIn(byte[] bytes)
         {
-            AppendBytesToScreens(bytes);
+            AppendBytesToTerminal(bytes);
         }
 
         private void udpServerRdBtn_CheckedChanged(object sender, EventArgs e)

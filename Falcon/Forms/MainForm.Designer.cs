@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tcpConnectedClientsLbl = new System.Windows.Forms.Label();
             this.tcpConnectBtn = new System.Windows.Forms.Button();
@@ -39,6 +40,11 @@
             this.tcpDisconnectBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.passwordTxt = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.userNameTxt = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpIpLbl = new System.Windows.Forms.Label();
@@ -99,14 +105,7 @@
             this.bytesInTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesRateTimer = new System.Windows.Forms.Timer(this.components);
-            this.infoTxt = new System.Windows.Forms.Label();
             this.resetBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.userNameTxt = new System.Windows.Forms.TextBox();
-            this.passwordTxt = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -149,6 +148,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "TCP";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 399);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox5
             // 
@@ -237,6 +246,52 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Settings";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 65);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 17);
+            this.radioButton1.TabIndex = 18;
+            this.radioButton1.Text = "SSH";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // passwordTxt
+            // 
+            this.passwordTxt.Enabled = false;
+            this.passwordTxt.Location = new System.Drawing.Point(7, 228);
+            this.passwordTxt.Name = "passwordTxt";
+            this.passwordTxt.Size = new System.Drawing.Size(98, 20);
+            this.passwordTxt.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Enabled = false;
+            this.label4.Location = new System.Drawing.Point(4, 212);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Password:";
+            // 
+            // userNameTxt
+            // 
+            this.userNameTxt.Enabled = false;
+            this.userNameTxt.Location = new System.Drawing.Point(6, 187);
+            this.userNameTxt.Name = "userNameTxt";
+            this.userNameTxt.Size = new System.Drawing.Size(98, 20);
+            this.userNameTxt.TabIndex = 15;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Enabled = false;
+            this.label2.Location = new System.Drawing.Point(3, 171);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "User Name:";
             // 
             // tcpServerRdBtn
             // 
@@ -719,7 +774,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(528, 480);
+            this.sendBtn.Location = new System.Drawing.Point(619, 480);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -735,7 +790,7 @@
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(591, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(682, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -784,7 +839,7 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(508, 456);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(599, 456);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
@@ -804,7 +859,7 @@
             this.dataInScreenTxt.Name = "dataInScreenTxt";
             this.dataInScreenTxt.ReadOnly = true;
             this.dataInScreenTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataInScreenTxt.Size = new System.Drawing.Size(436, 392);
+            this.dataInScreenTxt.Size = new System.Drawing.Size(527, 392);
             this.dataInScreenTxt.TabIndex = 29;
             // 
             // textToSendCmBx
@@ -814,7 +869,7 @@
             this.textToSendCmBx.FormattingEnabled = true;
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 481);
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(376, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(467, 21);
             this.textToSendCmBx.TabIndex = 37;
             this.textToSendCmBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textToSendCmBx_KeyPress);
             // 
@@ -833,7 +888,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(436, 25);
+            this.groupBox4.Size = new System.Drawing.Size(527, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -843,7 +898,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(401, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(492, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -855,7 +910,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(361, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(452, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -867,7 +922,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(323, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(414, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -889,20 +944,6 @@
             this.bytesRateTimer.Interval = 1000;
             this.bytesRateTimer.Tick += new System.EventHandler(this.bytesRateTimer_Tick);
             // 
-            // infoTxt
-            // 
-            this.infoTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoTxt.AutoSize = true;
-            this.infoTxt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.infoTxt.Location = new System.Drawing.Point(260, 454);
-            this.infoTxt.MinimumSize = new System.Drawing.Size(240, 20);
-            this.infoTxt.Name = "infoTxt";
-            this.infoTxt.Size = new System.Drawing.Size(240, 20);
-            this.infoTxt.TabIndex = 41;
-            this.infoTxt.Text = "N/A";
-            this.infoTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -914,69 +955,13 @@
             this.resetBtn.UseVisualStyleBackColor = true;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(3, 171);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "User Name:";
-            // 
-            // userNameTxt
-            // 
-            this.userNameTxt.Enabled = false;
-            this.userNameTxt.Location = new System.Drawing.Point(6, 187);
-            this.userNameTxt.Name = "userNameTxt";
-            this.userNameTxt.Size = new System.Drawing.Size(98, 20);
-            this.userNameTxt.TabIndex = 15;
-            // 
-            // passwordTxt
-            // 
-            this.passwordTxt.Enabled = false;
-            this.passwordTxt.Location = new System.Drawing.Point(7, 228);
-            this.passwordTxt.Name = "passwordTxt";
-            this.passwordTxt.Size = new System.Drawing.Size(98, 20);
-            this.passwordTxt.TabIndex = 17;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Enabled = false;
-            this.label4.Location = new System.Drawing.Point(4, 212);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Password:";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 65);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 17);
-            this.radioButton1.TabIndex = 18;
-            this.radioButton1.Text = "SSH";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(15, 399);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainForm
             // 
+            this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 512);
+            this.ClientSize = new System.Drawing.Size(682, 512);
             this.Controls.Add(this.resetBtn);
-            this.Controls.Add(this.infoTxt);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
             this.Controls.Add(this.sendBtn);
@@ -1090,7 +1075,6 @@
         private System.Windows.Forms.Timer bytesOutTimer;
         private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
         private System.Windows.Forms.Timer bytesRateTimer;
-        private System.Windows.Forms.Label infoTxt;
         private System.Windows.Forms.Button resetBtn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox userNameTxt;
