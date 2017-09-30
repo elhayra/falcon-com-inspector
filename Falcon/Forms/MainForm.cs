@@ -236,54 +236,40 @@ namespace Falcon
             /* otherwise, send msg to the other side                      */
             if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                
-                CommandParser.Type cmdType = CommandParser.GetCommandType(textToSendCmBx.Text);
-                string argument = CommandParser.GetCommandArgument(textToSendCmBx.Text);
-                bool noArgument = argument == null ? true : false;
-                switch (cmdType)
-                {
-                    case CommandParser.Type.AUTO_SCROLL:
-                        if (noArgument)
-                        {
-                            WriteLnToTerminal("autoscroll command must have an argument");
-                            return;
-                        }
-                        autoScrollChkBx.Checked = !autoScrollChkBx.Checked;
-                        string state = autoScrollChkBx.Checked ? "on" : "off"; //TODO: CHECK IF ARGUMENT IS NOT VALID (NOT ON OR OFF)
-                        WriteLnToTerminal("auto scroll is " + state);
-                        break;
-                    case CommandParser.Type.RESET:
-                        resetBtn.PerformClick();
-                        WriteLnToTerminal("");
-                        break;
-                    case CommandParser.Type.CLEAR:
-                        clearScreenBtn.PerformClick();
-                        WriteLnToTerminal("");
-                        break;
-                    case CommandParser.Type.PING:
-                        PingReply reply = null; ;
-                        if (Ping(argument, ref reply))
-                        {
-                            if (reply.Status == IPStatus.Success)
-                            {
-                                WriteLnToTerminal("Ping to  " + argument + " [" + reply.Address.ToString() + "] " + " Successful.\n"
-                                + "RTL: " + reply.RoundtripTime.ToString() + " ms");
-                            }
-                            else if (reply == null)
-                                WriteLnToTerminal("Ping Failed. Destination Unreachable");
-                            else
-                                WriteLnToTerminal("Ping Failed. RTL: " + reply.RoundtripTime.ToString() + "ms");
-                        }
-                        else
-                            WriteLnToTerminal("Ping Failed. Invalid Address");
-                        break;
-                    case CommandParser.Type.SSH:
+                //TODO: COMMAND PARSER RETURN STRING ANSWER, BOOL IF SUCC AND TYPE
+                string [] cmdArgs = new string[5];
+                string cmdAnswer = "";
+                CommandParser.Type cmdType = CommandParser.Type.NONE;
+                bool validCmd;
+                validCmd = CommandParser.Parse(textToSendCmBx.Text, ref cmdAnswer, ref cmdType, ref cmdArgs);
 
-                        break;
-                    case CommandParser.Type.NONE:
-                        WriteLnToTerminal("'" + textToSendCmBx.Text + "'" + "is not recognized as a Falcon command");
-                        break;
+                if (validCmd)
+                {
+                    switch (cmdType)
+                    {
+                        case CommandParser.Type.AUTO_SCROLL:
+                            string flag = cmdArgs[AutoScrollArg.FLAG_INDX];
+                            bool value = flag == "on" ? true : false;
+                            autoScrollChkBx.Checked = value;
+                            break;
+                        case CommandParser.Type.RESET:
+                            resetBtn.PerformClick();
+                            break;
+                        case CommandParser.Type.CLEAR:
+                            clearScreenBtn.PerformClick();
+                            break;
+                        case CommandParser.Type.PING:
+                            break;
+                        case CommandParser.Type.SSH:
+                            ConnectSsh(cmdArgs[SshArg.HOSTADDR_INDX],
+                                       cmdArgs[SshArg.USERNAME_INDX],
+                                       cmdArgs[SshArg.PASS_INDX]);
+                            break;
+                        case CommandParser.Type.NONE:
+                            break;
+                    }
                 }
+                WriteLnToTerminal(cmdAnswer);
             }
             else
             {
@@ -301,19 +287,7 @@ namespace Falcon
             textToSendCmBx.Text = "";
         }
 
-        private bool Ping(string host, ref PingReply reply)
-        {
-            Ping pinger = new Ping();
-            try
-            {
-                reply = pinger.Send(host);
-            }
-            catch (PingException exp)
-            {
-                return false;
-            }
-            return true;
-        }
+       
 
         private void SendMsg(byte [] msg)
         {
@@ -660,14 +634,18 @@ namespace Falcon
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //ConnectSsh();
+          
+        }
+
+        private void ConnectSsh(string hostAddrs, string userName, string password)
+        {
             var ssh = new Ssh();
-            ssh.Connect("submachine", "0035");
-            ssh.Subscribe(Ondd);
+            ssh.Connect(hostAddrs, userName, password);
+            ssh.Subscribe(OnIncomingSsh);
             ssh.CreateShellStream("terminal", 80, 24, 800, 600, 1024);
         }
 
-        private void Ondd(byte[] bytes)
+        private void OnIncomingSsh(byte[] bytes)
         {
             Invoke((MethodInvoker)delegate
             {

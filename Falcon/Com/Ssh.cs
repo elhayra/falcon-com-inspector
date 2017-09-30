@@ -27,12 +27,12 @@ namespace Falcon.Com
             
         }
 
-        public bool Connect(string username, string password)
+        public bool Connect(string hostAddr, string username, string password)
         {
-            return Connect(username, password, DEFAULT_PORT);
+            return Connect(hostAddr, username, password, DEFAULT_PORT);
         }
 
-        public bool Connect(string username, string password, int port)
+        public bool Connect(string hostAddr, string username, string password, int port)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Falcon.Com
                 var PasswordConnection = new PasswordAuthenticationMethod(username, password);
                 var KeyboardInteractive = new KeyboardInteractiveAuthenticationMethod(username);
                 KeyboardInteractive.AuthenticationPrompt += new EventHandler<AuthenticationPromptEventArgs>(HandleKeyEvent);
-                var ConnectionInfo = new ConnectionInfo("192.168.2.101", 22, "submachine", PasswordConnection, KeyboardInteractive);
+                var ConnectionInfo = new ConnectionInfo(hostAddr, port, username, PasswordConnection, KeyboardInteractive);
                 client_ = new SshClient(ConnectionInfo);
                 client_.Connect();
                 return true;

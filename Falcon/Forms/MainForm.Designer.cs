@@ -106,6 +106,8 @@
             this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesRateTimer = new System.Windows.Forms.Timer(this.components);
             this.resetBtn = new System.Windows.Forms.Button();
+            this.sendFileBtn = new System.Windows.Forms.Button();
+            this.sendFileLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -868,6 +870,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textToSendCmBx.FormattingEnabled = true;
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 481);
+            this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
             this.textToSendCmBx.Size = new System.Drawing.Size(467, 21);
             this.textToSendCmBx.TabIndex = 37;
@@ -955,12 +958,33 @@
             this.resetBtn.UseVisualStyleBackColor = true;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
             // 
+            // sendFileBtn
+            // 
+            this.sendFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.sendFileBtn.Location = new System.Drawing.Point(259, 453);
+            this.sendFileBtn.Name = "sendFileBtn";
+            this.sendFileBtn.Size = new System.Drawing.Size(70, 22);
+            this.sendFileBtn.TabIndex = 43;
+            this.sendFileBtn.Text = "Send File";
+            this.sendFileBtn.UseVisualStyleBackColor = true;
+            // 
+            // sendFileLbl
+            // 
+            this.sendFileLbl.AutoSize = true;
+            this.sendFileLbl.Location = new System.Drawing.Point(336, 457);
+            this.sendFileLbl.Name = "sendFileLbl";
+            this.sendFileLbl.Size = new System.Drawing.Size(82, 13);
+            this.sendFileLbl.TabIndex = 44;
+            this.sendFileLbl.Text = "Sending file: 0%";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 512);
+            this.Controls.Add(this.sendFileLbl);
+            this.Controls.Add(this.sendFileBtn);
             this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
@@ -1082,6 +1106,8 @@
         private System.Windows.Forms.TextBox passwordTxt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button sendFileBtn;
+        private System.Windows.Forms.Label sendFileLbl;
     }
 }
 
