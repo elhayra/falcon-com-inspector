@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tcpConnectedClientsLbl = new System.Windows.Forms.Label();
             this.tcpConnectBtn = new System.Windows.Forms.Button();
@@ -40,11 +39,6 @@
             this.tcpDisconnectBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.passwordTxt = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.userNameTxt = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpIpLbl = new System.Windows.Forms.Label();
@@ -135,31 +129,20 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 35);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(130, 467);
+            this.tabControl1.Size = new System.Drawing.Size(130, 399);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(122, 441);
+            this.tabPage1.Size = new System.Drawing.Size(122, 373);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "TCP";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(15, 399);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox5
             // 
@@ -170,7 +153,7 @@
             this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
             this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
             this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Location = new System.Drawing.Point(6, 266);
+            this.groupBox5.Location = new System.Drawing.Point(6, 158);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(110, 124);
             this.groupBox5.TabIndex = 1;
@@ -231,11 +214,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.radioButton1);
-            this.groupBox3.Controls.Add(this.passwordTxt);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.userNameTxt);
-            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.tcpServerRdBtn);
             this.groupBox3.Controls.Add(this.tcpClientRdBtn);
             this.groupBox3.Controls.Add(this.tcpIpLbl);
@@ -244,56 +222,10 @@
             this.groupBox3.Controls.Add(this.tcpPortTxt);
             this.groupBox3.Location = new System.Drawing.Point(6, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(110, 257);
+            this.groupBox3.Size = new System.Drawing.Size(110, 149);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Settings";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 65);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 17);
-            this.radioButton1.TabIndex = 18;
-            this.radioButton1.Text = "SSH";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // passwordTxt
-            // 
-            this.passwordTxt.Enabled = false;
-            this.passwordTxt.Location = new System.Drawing.Point(7, 228);
-            this.passwordTxt.Name = "passwordTxt";
-            this.passwordTxt.Size = new System.Drawing.Size(98, 20);
-            this.passwordTxt.TabIndex = 17;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Enabled = false;
-            this.label4.Location = new System.Drawing.Point(4, 212);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Password:";
-            // 
-            // userNameTxt
-            // 
-            this.userNameTxt.Enabled = false;
-            this.userNameTxt.Location = new System.Drawing.Point(6, 187);
-            this.userNameTxt.Name = "userNameTxt";
-            this.userNameTxt.Size = new System.Drawing.Size(98, 20);
-            this.userNameTxt.TabIndex = 15;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(3, 171);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "User Name:";
             // 
             // tcpServerRdBtn
             // 
@@ -322,7 +254,7 @@
             // 
             this.tcpIpLbl.AutoSize = true;
             this.tcpIpLbl.Enabled = false;
-            this.tcpIpLbl.Location = new System.Drawing.Point(4, 91);
+            this.tcpIpLbl.Location = new System.Drawing.Point(4, 65);
             this.tcpIpLbl.Name = "tcpIpLbl";
             this.tcpIpLbl.Size = new System.Drawing.Size(54, 13);
             this.tcpIpLbl.TabIndex = 10;
@@ -331,7 +263,7 @@
             // tcpIpTxt
             // 
             this.tcpIpTxt.Enabled = false;
-            this.tcpIpTxt.Location = new System.Drawing.Point(6, 107);
+            this.tcpIpTxt.Location = new System.Drawing.Point(6, 81);
             this.tcpIpTxt.Name = "tcpIpTxt";
             this.tcpIpTxt.Size = new System.Drawing.Size(98, 20);
             this.tcpIpTxt.TabIndex = 13;
@@ -340,7 +272,7 @@
             // tcpServerPortLbl
             // 
             this.tcpServerPortLbl.AutoSize = true;
-            this.tcpServerPortLbl.Location = new System.Drawing.Point(3, 130);
+            this.tcpServerPortLbl.Location = new System.Drawing.Point(3, 104);
             this.tcpServerPortLbl.Name = "tcpServerPortLbl";
             this.tcpServerPortLbl.Size = new System.Drawing.Size(63, 13);
             this.tcpServerPortLbl.TabIndex = 11;
@@ -348,7 +280,7 @@
             // 
             // tcpPortTxt
             // 
-            this.tcpPortTxt.Location = new System.Drawing.Point(6, 146);
+            this.tcpPortTxt.Location = new System.Drawing.Point(6, 120);
             this.tcpPortTxt.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -366,7 +298,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(122, 441);
+            this.tabPage2.Size = new System.Drawing.Size(122, 373);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UDP";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -504,7 +436,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(122, 441);
+            this.tabPage3.Size = new System.Drawing.Size(122, 373);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Serial";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -765,7 +697,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(145, 453);
+            this.clearScreenBtn.Location = new System.Drawing.Point(145, 381);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -776,7 +708,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(619, 480);
+            this.sendBtn.Location = new System.Drawing.Point(619, 408);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -841,7 +773,7 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(599, 456);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(599, 384);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
@@ -861,7 +793,7 @@
             this.dataInScreenTxt.Name = "dataInScreenTxt";
             this.dataInScreenTxt.ReadOnly = true;
             this.dataInScreenTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataInScreenTxt.Size = new System.Drawing.Size(527, 392);
+            this.dataInScreenTxt.Size = new System.Drawing.Size(527, 317);
             this.dataInScreenTxt.TabIndex = 29;
             // 
             // textToSendCmBx
@@ -869,7 +801,7 @@
             this.textToSendCmBx.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textToSendCmBx.FormattingEnabled = true;
-            this.textToSendCmBx.Location = new System.Drawing.Point(146, 481);
+            this.textToSendCmBx.Location = new System.Drawing.Point(146, 409);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
             this.textToSendCmBx.Size = new System.Drawing.Size(467, 21);
@@ -950,7 +882,7 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetBtn.Location = new System.Drawing.Point(202, 453);
+            this.resetBtn.Location = new System.Drawing.Point(202, 381);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(51, 22);
             this.resetBtn.TabIndex = 42;
@@ -961,7 +893,7 @@
             // sendFileBtn
             // 
             this.sendFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sendFileBtn.Location = new System.Drawing.Point(259, 453);
+            this.sendFileBtn.Location = new System.Drawing.Point(259, 381);
             this.sendFileBtn.Name = "sendFileBtn";
             this.sendFileBtn.Size = new System.Drawing.Size(70, 22);
             this.sendFileBtn.TabIndex = 43;
@@ -970,8 +902,9 @@
             // 
             // sendFileLbl
             // 
+            this.sendFileLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.sendFileLbl.AutoSize = true;
-            this.sendFileLbl.Location = new System.Drawing.Point(336, 457);
+            this.sendFileLbl.Location = new System.Drawing.Point(336, 386);
             this.sendFileLbl.Name = "sendFileLbl";
             this.sendFileLbl.Size = new System.Drawing.Size(82, 13);
             this.sendFileLbl.TabIndex = 44;
@@ -982,7 +915,7 @@
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 512);
+            this.ClientSize = new System.Drawing.Size(682, 446);
             this.Controls.Add(this.sendFileLbl);
             this.Controls.Add(this.sendFileBtn);
             this.Controls.Add(this.resetBtn);
@@ -1100,12 +1033,6 @@
         private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
         private System.Windows.Forms.Timer bytesRateTimer;
         private System.Windows.Forms.Button resetBtn;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox userNameTxt;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.TextBox passwordTxt;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button sendFileBtn;
         private System.Windows.Forms.Label sendFileLbl;
     }

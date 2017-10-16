@@ -2,37 +2,42 @@
 using Renci.SshNet.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Falcon.Com
 {
     class Ssh
     {
         public const int DEFAULT_PORT = 22;
-        public const int BUFF_SIZE = 1;
+        public const int BUFF_SIZE = 1024;
+        public const int LISTEN_INTERVAL = 50; //millis
 
         public string UserName, Password;
 
-        private PasswordAuthenticationMethod passAuth_;
-        private KeyboardInteractiveAuthenticationMethod keyboardInteractive_;
         private SshClient client_;
         private ShellStream shellStream_;
-        private List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
+        private List<Action<string>> subsFuncs_ = new List<Action<string>>();
         private byte[] bytesIn_;
+
+        private Task listenTask_;
+        private CancellationTokenSource cts_;
 
         public Ssh()
         {
             
         }
 
-        public bool Connect(string hostAddr, string username, string password)
+        public bool Connect(string hostAddr, string username, string password, ref string reply)
         {
-            return Connect(hostAddr, username, password, DEFAULT_PORT);
+            return Connect(hostAddr, username, password, DEFAULT_PORT, ref reply);
         }
 
-        public bool Connect(string hostAddr, string username, string password, int port)
+        public bool Connect(string hostAddr, string username, string password, int port, ref string reply)
         {
             try
             {
@@ -49,6 +54,7 @@ namespace Falcon.Com
             }
             catch (Exception exp)
             {
+                reply = exp.Message;
                 return false;
             }
             
@@ -57,38 +63,49 @@ namespace Falcon.Com
         public void CreateShellStream(string terminalName, uint cols, uint rows, uint width, uint height, int buffSize)
         {
             shellStream_ = client_.CreateShellStream(terminalName, cols, rows, width, height, buffSize);
-            AsyncListen();
+            //AsyncListen();
+            cts_ = new CancellationTokenSource();
+            listenTask_ = new Task(() => Listen(cts_.Token), cts_.Token);
+            listenTask_.Start();
         }
 
-        private void AsyncListen()
+        private void Listen(CancellationToken ct)
         {
-            shellStream_.BeginRead(bytesIn_, 0, bytesIn_.Length, new AsyncCallback(OnReadCB), null);
+            while (!ct.IsCancellationRequested)
+            {
+                Thread.Sleep(LISTEN_INTERVAL);
+                if (shellStream_.DataAvailable)
+                {
+                    string result = "";
+                    result = shellStream_.Read();
+                    if (result != "")
+                        SendBytesToSubscribers(result);
+                }
+                    
+            }
         }
 
-        private void OnReadCB(IAsyncResult ar)
+        private void SendBytesToSubscribers(string msg)
         {
-            int numberOfBytesRead = shellStream_.EndRead(ar);
-            if (numberOfBytesRead == 0)
-                return;
             foreach (var func in subsFuncs_)
-                func(bytesIn_);
-            bytesIn_ = new byte[BUFF_SIZE];
-            AsyncListen();
+                func(msg);
         }
 
-        public void Subscribe(Action<byte[]> func)
+        public void Subscribe(Action<string> func)
         {
             subsFuncs_.Add(func);
         }
 
-        public void Unsubscribe(Action<byte[]> func)
+        public void Unsubscribe(Action<string> func)
         {
             subsFuncs_.Remove(func);
         }
 
         public void RunCommand(string command)
         {
-            client_.RunCommand(command);
+            shellStream_.WriteLine(command);
+            if (command == "exit")
+                cts_.Cancel();
         }
 
         void HandleKeyEvent(Object sender, AuthenticationPromptEventArgs e)

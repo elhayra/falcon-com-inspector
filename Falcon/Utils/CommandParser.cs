@@ -37,8 +37,7 @@ namespace Falcon.Command
         {
             IsValid = true;
             string[] addrArr = arg.Split('@');
-            string UserName = addrArr[USERNAME_INDX];
-            string HostAddress = "";
+            UserName = addrArr[USERNAME_INDX];
             try
             {
                 HostAddress = addrArr[HOSTADDR_INDX];

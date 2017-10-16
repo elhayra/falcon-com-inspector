@@ -27,6 +27,8 @@ namespace Falcon
         private GraphForm graphFrom_;
         private PreferencesForm preferencesForm_;
 
+        Ssh ssh_;
+
         public MainForm()
         {
             InitializeComponent();
@@ -232,11 +234,23 @@ namespace Falcon
             if (textToSendCmBx.Text == "")
                 return;
 
-            /* if no communication is open, handle text as a command line */
-            /* otherwise, send msg to the other side                      */
+            if (ssh_ != null) /* terminal is in ssh mode (ssh connected) */
+            {
+                ssh_.RunCommand(textToSendCmBx.Text);
+                if (textToSendCmBx.Text == "exit")
+                {
+                    clearScreenBtn.PerformClick();
+                    WriteLnToTerminal("ssh session terminated");
+                    ssh_ = null;
+                }
+                PassOutTxtToHistory();
+                return;
+            }
+
+            /* if no communication is open, handle text as a command */
+            /* line otherwise, send msg on opened communication line */
             if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                //TODO: COMMAND PARSER RETURN STRING ANSWER, BOOL IF SUCC AND TYPE
                 string [] cmdArgs = new string[5];
                 string cmdAnswer = "";
                 CommandParser.Type cmdType = CommandParser.Type.NONE;
@@ -261,9 +275,11 @@ namespace Falcon
                         case CommandParser.Type.PING:
                             break;
                         case CommandParser.Type.SSH:
-                            ConnectSsh(cmdArgs[SshArg.HOSTADDR_INDX],
-                                       cmdArgs[SshArg.USERNAME_INDX],
-                                       cmdArgs[SshArg.PASS_INDX]);
+                            bool a = ConnectSsh(cmdArgs[SshArg.HOSTADDR_INDX],
+                                                   cmdArgs[SshArg.USERNAME_INDX],
+                                                   cmdArgs[SshArg.PASS_INDX],
+                                                   ref cmdAnswer,
+                                                   ref ssh_);
                             break;
                         case CommandParser.Type.NONE:
                             break;
@@ -637,19 +653,26 @@ namespace Falcon
           
         }
 
-        private void ConnectSsh(string hostAddrs, string userName, string password)
+        private bool ConnectSsh(string hostAddrs, string userName, string password, ref string reply, ref Ssh ssh)
         {
-            var ssh = new Ssh();
-            ssh.Connect(hostAddrs, userName, password);
+            ssh = new Ssh();
             ssh.Subscribe(OnIncomingSsh);
-            ssh.CreateShellStream("terminal", 80, 24, 800, 600, 1024);
+            if (ssh.Connect(hostAddrs, userName, password, ref reply))
+            {
+                ssh.CreateShellStream("terminal", 80, 24, 800, 600, 1024); //TODO: CHANGE THIS ACCORDING TO WINDOW SIZE, FOR LONG LINES PRINTING
+                return true;
+            }
+            return false;
         }
 
-        private void OnIncomingSsh(byte[] bytes)
+        private void OnIncomingSsh(string msg)
         {
             Invoke((MethodInvoker)delegate
             {
-                dataInScreenTxt.Text += Encoding.UTF8.GetString(bytes);
+                if (autoScrollChkBx.Checked)
+                    dataInScreenTxt.AppendText(msg);
+                else
+                    dataInScreenTxt.Text += msg;
             });
         }
     }
