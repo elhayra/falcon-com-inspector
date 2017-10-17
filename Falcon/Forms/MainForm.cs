@@ -11,13 +11,8 @@ using Falcon.Com;
 using System.IO.Ports;
 using Falcon.Forms;
 using Falcon.Utils;
-using Falcon.Com;
 using System.Threading;
-using Renci.SshNet;
-using System.Text.RegularExpressions;
-using Renci.SshNet.Common;
-using Falcon.Command;
-using System.Net.NetworkInformation;
+using System.IO;
 
 namespace Falcon
 {
@@ -28,6 +23,8 @@ namespace Falcon
         private PreferencesForm preferencesForm_;
 
         Ssh ssh_;
+
+        string fileToSendPath_ = "";
 
         public MainForm()
         {
@@ -674,6 +671,70 @@ namespace Falcon
                 else
                     dataInScreenTxt.Text += msg;
             });
+        }
+
+        private void sendFileBtn_Click(object sender, EventArgs e)
+        {
+            fileToSendPath_ = FileTools.ChooseFilePath("txt(*.*) | *.*");
+            if (fileToSendPath_ != "")
+            {
+                sendFileBtn.Enabled = false;
+                stopSendFile.Enabled = true;
+                sendFileWorker.RunWorkerAsync();
+            }
+            else
+                MsgBox.ErrorMsg("File Error", "No file was selected, cancelling send process");
+        }
+
+        private void sendFileWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var lines = File.ReadAllLines(@fileToSendPath_);
+            fileToSendPath_ = ""; 
+            int iter_count = 1;
+
+            foreach (var line in lines)
+            {
+                double progress = (double)iter_count / (double)lines.Length * 100;
+                sendFileWorker.ReportProgress((int)progress);
+
+                SendMsg(Encoding.ASCII.GetBytes(line));
+
+                iter_count++;
+
+                if (sendFileWorker.CancellationPending)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        sendFileLbl.Text = "Canceled";
+                    });
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                    Thread.Sleep(5);
+            }
+        }
+
+        private void sendFileWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            sendFileLbl.Text = "Sending File: " + e.ProgressPercentage.ToString() + "%";
+            if (e.ProgressPercentage == 100)
+            {
+                sendFileLbl.Text = "Done";
+                stopSendFile.Enabled = false;
+                sendFileBtn.Enabled = true;
+            }
+        }
+
+        private void stopSendFile_Click(object sender, EventArgs e)
+        {
+          //  Invoke((MethodInvoker)delegate
+          //  {
+          //      sendFileLbl.Text = "Canceled";
+         //   });
+            sendFileBtn.Enabled = true;
+            stopSendFile.Enabled = false;
+            sendFileWorker.CancelAsync();
         }
     }
 }

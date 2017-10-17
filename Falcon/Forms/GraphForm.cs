@@ -192,5 +192,9 @@ namespace Falcon.Forms
             //TODO: UPDATE TIME AXIS ACCORDINGLY
         }
 
+        private void resetBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

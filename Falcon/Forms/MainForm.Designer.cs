@@ -102,6 +102,8 @@
             this.resetBtn = new System.Windows.Forms.Button();
             this.sendFileBtn = new System.Windows.Forms.Button();
             this.sendFileLbl = new System.Windows.Forms.Label();
+            this.sendFileWorker = new System.ComponentModel.BackgroundWorker();
+            this.stopSendFile = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -696,8 +698,8 @@
             // 
             // clearScreenBtn
             // 
-            this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(145, 381);
+            this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.clearScreenBtn.Location = new System.Drawing.Point(484, 381);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -881,8 +883,8 @@
             // 
             // resetBtn
             // 
-            this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetBtn.Location = new System.Drawing.Point(202, 381);
+            this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.resetBtn.Location = new System.Drawing.Point(541, 381);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(51, 22);
             this.resetBtn.TabIndex = 42;
@@ -893,22 +895,42 @@
             // sendFileBtn
             // 
             this.sendFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sendFileBtn.Location = new System.Drawing.Point(259, 381);
+            this.sendFileBtn.Location = new System.Drawing.Point(146, 381);
             this.sendFileBtn.Name = "sendFileBtn";
             this.sendFileBtn.Size = new System.Drawing.Size(70, 22);
             this.sendFileBtn.TabIndex = 43;
             this.sendFileBtn.Text = "Send File";
             this.sendFileBtn.UseVisualStyleBackColor = true;
+            this.sendFileBtn.Click += new System.EventHandler(this.sendFileBtn_Click);
             // 
             // sendFileLbl
             // 
             this.sendFileLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.sendFileLbl.AutoSize = true;
-            this.sendFileLbl.Location = new System.Drawing.Point(336, 386);
+            this.sendFileLbl.Location = new System.Drawing.Point(298, 385);
             this.sendFileLbl.Name = "sendFileLbl";
-            this.sendFileLbl.Size = new System.Drawing.Size(82, 13);
+            this.sendFileLbl.Size = new System.Drawing.Size(27, 13);
             this.sendFileLbl.TabIndex = 44;
-            this.sendFileLbl.Text = "Sending file: 0%";
+            this.sendFileLbl.Text = "N/A";
+            // 
+            // sendFileWorker
+            // 
+            this.sendFileWorker.WorkerReportsProgress = true;
+            this.sendFileWorker.WorkerSupportsCancellation = true;
+            this.sendFileWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.sendFileWorker_DoWork);
+            this.sendFileWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.sendFileWorker_ProgressChanged);
+            // 
+            // stopSendFile
+            // 
+            this.stopSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.stopSendFile.Enabled = false;
+            this.stopSendFile.Location = new System.Drawing.Point(222, 381);
+            this.stopSendFile.Name = "stopSendFile";
+            this.stopSendFile.Size = new System.Drawing.Size(70, 22);
+            this.stopSendFile.TabIndex = 45;
+            this.stopSendFile.Text = "Stop Send";
+            this.stopSendFile.UseVisualStyleBackColor = true;
+            this.stopSendFile.Click += new System.EventHandler(this.stopSendFile_Click);
             // 
             // MainForm
             // 
@@ -916,6 +938,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(682, 446);
+            this.Controls.Add(this.stopSendFile);
             this.Controls.Add(this.sendFileLbl);
             this.Controls.Add(this.sendFileBtn);
             this.Controls.Add(this.resetBtn);
@@ -1035,6 +1058,8 @@
         private System.Windows.Forms.Button resetBtn;
         private System.Windows.Forms.Button sendFileBtn;
         private System.Windows.Forms.Label sendFileLbl;
+        private System.ComponentModel.BackgroundWorker sendFileWorker;
+        private System.Windows.Forms.Button stopSendFile;
     }
 }
 
