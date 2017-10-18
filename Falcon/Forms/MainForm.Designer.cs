@@ -33,11 +33,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.tcpConnectedClientsLbl = new System.Windows.Forms.Label();
+            this.incomingClientsCountLBl = new System.Windows.Forms.Label();
             this.tcpConnectBtn = new System.Windows.Forms.Button();
             this.tcpConnectionStateLbl = new System.Windows.Forms.Label();
             this.tcpDisconnectBtn = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.incomingClientsLBl = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tcpServerRdBtn = new System.Windows.Forms.RadioButton();
             this.tcpClientRdBtn = new System.Windows.Forms.RadioButton();
@@ -150,26 +150,27 @@
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox5.Controls.Add(this.tcpConnectedClientsLbl);
+            this.groupBox5.Controls.Add(this.incomingClientsCountLBl);
             this.groupBox5.Controls.Add(this.tcpConnectBtn);
             this.groupBox5.Controls.Add(this.tcpConnectionStateLbl);
             this.groupBox5.Controls.Add(this.tcpDisconnectBtn);
-            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.incomingClientsLBl);
             this.groupBox5.Location = new System.Drawing.Point(6, 158);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(110, 124);
+            this.groupBox5.Size = new System.Drawing.Size(110, 144);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Connection";
             // 
-            // tcpConnectedClientsLbl
+            // incomingClientsCountLBl
             // 
-            this.tcpConnectedClientsLbl.AutoSize = true;
-            this.tcpConnectedClientsLbl.Location = new System.Drawing.Point(48, 78);
-            this.tcpConnectedClientsLbl.Name = "tcpConnectedClientsLbl";
-            this.tcpConnectedClientsLbl.Size = new System.Drawing.Size(13, 13);
-            this.tcpConnectedClientsLbl.TabIndex = 17;
-            this.tcpConnectedClientsLbl.Text = "0";
+            this.incomingClientsCountLBl.AutoSize = true;
+            this.incomingClientsCountLBl.Enabled = false;
+            this.incomingClientsCountLBl.Location = new System.Drawing.Point(47, 122);
+            this.incomingClientsCountLBl.Name = "incomingClientsCountLBl";
+            this.incomingClientsCountLBl.Size = new System.Drawing.Size(13, 13);
+            this.incomingClientsCountLBl.TabIndex = 17;
+            this.incomingClientsCountLBl.Text = "0";
             // 
             // tcpConnectBtn
             // 
@@ -185,7 +186,7 @@
             // 
             this.tcpConnectionStateLbl.AutoSize = true;
             this.tcpConnectionStateLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tcpConnectionStateLbl.Location = new System.Drawing.Point(8, 98);
+            this.tcpConnectionStateLbl.Location = new System.Drawing.Point(8, 74);
             this.tcpConnectionStateLbl.MaximumSize = new System.Drawing.Size(93, 19);
             this.tcpConnectionStateLbl.MinimumSize = new System.Drawing.Size(93, 19);
             this.tcpConnectionStateLbl.Name = "tcpConnectionStateLbl";
@@ -205,14 +206,15 @@
             this.tcpDisconnectBtn.UseVisualStyleBackColor = true;
             this.tcpDisconnectBtn.Click += new System.EventHandler(this.tcpDisconnectBtn_Click);
             // 
-            // label5
+            // incomingClientsLBl
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 78);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Clients:";
+            this.incomingClientsLBl.AutoSize = true;
+            this.incomingClientsLBl.Enabled = false;
+            this.incomingClientsLBl.Location = new System.Drawing.Point(11, 103);
+            this.incomingClientsLBl.Name = "incomingClientsLBl";
+            this.incomingClientsLBl.Size = new System.Drawing.Size(87, 13);
+            this.incomingClientsLBl.TabIndex = 16;
+            this.incomingClientsLBl.Text = "Incoming Clients:";
             // 
             // groupBox3
             // 
@@ -442,7 +444,6 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Serial";
             this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // groupBox2
             // 
@@ -808,7 +809,6 @@
             this.textToSendCmBx.Name = "textToSendCmBx";
             this.textToSendCmBx.Size = new System.Drawing.Size(467, 21);
             this.textToSendCmBx.TabIndex = 37;
-            this.textToSendCmBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textToSendCmBx_KeyPress);
             // 
             // groupBox4
             // 
@@ -1002,8 +1002,8 @@
         private System.Windows.Forms.Label lbl;
         private System.Windows.Forms.Button clearScreenBtn;
         private System.Windows.Forms.Button sendBtn;
-        private System.Windows.Forms.Label tcpConnectedClientsLbl;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label incomingClientsCountLBl;
+        private System.Windows.Forms.Label incomingClientsLBl;
         private System.Windows.Forms.Label tcpConnectionStateLbl;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;

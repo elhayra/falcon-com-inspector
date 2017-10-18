@@ -96,12 +96,12 @@ namespace Falcon.Com
 
         public static bool IsPortValid(int port)
         {
-            if (port > 65535)
+            if (port <= 65535)
                 return true;
             return false;
         }
 
-        public bool IsIpValid() { return IP == null; }
+        public bool IsIpValid() { return IP != null; }
         public bool IsPortValid() { return IsPortValid(Port); }
 
     }

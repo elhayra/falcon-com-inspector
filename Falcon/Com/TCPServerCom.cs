@@ -16,20 +16,23 @@ namespace Falcon.Com
         uint clientsCounter_ = 0;
         List<TcpSmartClient> clientsList_ = new List<TcpSmartClient>();
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
-        List<Action<uint>> notifyList_ = new List<Action<uint>>();
+        List<Action<uint>> notifyNewClientsLst_ = new List<Action<uint>>();
         bool isDead_ = true;
+
+        CancellationToken ct_;
+        CancellationTokenSource cs_;
+        Task keepAliveTask_;
 
         public bool IsDead { get { return isDead_; } }
 
         public TCPServerCom(int port) : base(IPAddress.Any, port) {}
 
-        public bool Connect()
+        public void Connect()
         {
             clientsCounter_ = 0;
             Start();
             AsyncListen();
             isDead_ = false;
-            return true;
         }
 
         private void AsyncListen()
@@ -73,12 +76,12 @@ namespace Falcon.Com
 
         public void NotifyOnNewClient(Action<uint> func)
         {
-            notifyList_.Add(func);
+            notifyNewClientsLst_.Add(func);
         }
 
         public void UnNotifyOnNewClient(Action<uint> func)
         {
-            notifyList_.Remove(func);
+            notifyNewClientsLst_.Remove(func);
         }
 
         private void PublishMsg(byte[] bytes)
@@ -91,7 +94,15 @@ namespace Falcon.Com
 
         private void NotifyOnNewClient()
         {
-            foreach (var func in notifyList_)
+            foreach (var func in notifyNewClientsLst_)
+            {
+                func(clientsCounter_);
+            }
+        }
+
+        private void NotifyOnDeadClient()
+        {
+            foreach (var func in notifyNewClientsLst_)
             {
                 func(clientsCounter_);
             }
@@ -100,6 +111,7 @@ namespace Falcon.Com
         public void Close()
         {
             isDead_ = true;
+            cs_.Cancel();
             foreach (var clientWrapper in clientsList_) 
                clientWrapper.Client.Close();
             Stop();

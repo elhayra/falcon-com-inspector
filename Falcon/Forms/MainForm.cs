@@ -58,38 +58,6 @@ namespace Falcon
         {
             ConnectTcp();
         }
-        /*
-        void HandleKeyEvent(Object sender, AuthenticationPromptEventArgs e)
-        {
-            foreach (AuthenticationPrompt prompt in e.Prompts)
-            {
-                if (prompt.Request.IndexOf("Password:", StringComparison.InvariantCultureIgnoreCase) != -1)
-                {
-                    prompt.Response = "0035";
-                }
-            }
-        }
-
-        
-        private void ConnectSsh()
-        {
-            var PasswordConnection = new PasswordAuthenticationMethod("submachine", "0035");
-            var KeyboardInteractive = new KeyboardInteractiveAuthenticationMethod("submachine");
-            KeyboardInteractive.AuthenticationPrompt += new EventHandler<AuthenticationPromptEventArgs>(HandleKeyEvent);
-            var ConnectionInfo = new ConnectionInfo("192.168.2.101", 22, "submachine", PasswordConnection, KeyboardInteractive);
-            using (var client = new SshClient(ConnectionInfo))
-            {
-                client.Connect();
-                string reply = string.Empty;
-                var shellStream = client.CreateShellStream("dumb", 80, 24, 800, 600, 1024);
-                client.RunCommand("ls -a");
-                reply = shellStream.ReadLine();
-                dataInScreenTxt.Text = "Reply: " + reply;
-        
-            }
-      
-    
-        }*/
 
         private void ConnectTcp()
         {
@@ -98,13 +66,11 @@ namespace Falcon
             if (tcpServerRdBtn.Checked)
             {
                 ConnectionsManager.Inst.InitTcpServer((int)tcpPortTxt.Value);
-                if (ConnectionsManager.Inst.TCPServer.Connect())
-                {
-                    ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
-                    ConnectionsManager.Inst.TCPServer.NotifyOnNewClient(OnNewTcpClient);
-                    tcpClientRdBtn.Enabled = false;
-                    connected = true;
-                }
+                ConnectionsManager.Inst.TCPServer.Connect();
+                ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
+                ConnectionsManager.Inst.TCPServer.NotifyOnNewClient(OnNewTcpClient);
+                tcpClientRdBtn.Enabled = false;
+                connected = true;
             }
             else
             {
@@ -196,7 +162,7 @@ namespace Falcon
         {
             Invoke((MethodInvoker)delegate
             {
-                tcpConnectedClientsLbl.Text = numOfClients.ToString();
+                incomingClientsCountLBl.Text = numOfClients.ToString();
             });
         }
 
@@ -304,8 +270,6 @@ namespace Falcon
 
         private void SendMsg(byte [] msg)
         {
-          
-    
             if (ConnectionsManager.Inst.IsTcpServerInitiated())
                 ConnectionsManager.Inst.TCPServer.Send(msg);
 
@@ -329,27 +293,20 @@ namespace Falcon
                 if (mUnit != BytesCounter.MeasureUnit.B)
                     format = "{0:0.00}";
                 var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesOutCounter.GetProcessedCounter(mUnit));
-
-                bytesOutLbl.BackColor = Color.LimeGreen;
-                bytesInTimer.Stop();
-                bytesInTimer.Start();
-                bytesOutTimer.Enabled = true;
-                bytesOutLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
+                Invoke((MethodInvoker)delegate
+                {
+                    bytesOutLbl.BackColor = Color.LimeGreen;
+                    bytesInTimer.Stop();
+                    bytesInTimer.Start();
+                    bytesOutTimer.Enabled = true;
+                    bytesOutLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
+                });
             }
         }
 
         private void clearScreenBtn_Click(object sender, EventArgs e)
         {
             dataInScreenTxt.Clear();
-        }
-
-        private void clearInHistoryBtn_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void serialConnectBtn_Click(object sender, EventArgs e)
@@ -401,20 +358,8 @@ namespace Falcon
             AppendBytesToTerminal(bytes);            
         }
 
-        private void dataInHistoryLstBx_SelectedIndexChanged(object sender, EventArgs e)
-        {
- 
-  
-        }
-
-        private void dataInHistoryLstBx_SizeChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void AppendBytesToTerminal(byte[] bytes)
         {
-
             ConnectionsManager.Inst.BytesInCounter.Add((uint)bytes.Length);
             BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
@@ -452,12 +397,9 @@ namespace Falcon
         {
             tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
             tcpIpLbl.Enabled = tcpClientRdBtn.Checked;
-        }
-
-        private void textToSendCmBx_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //if (e.KeyChar == (char)Keys.Enter)
-            //    sendBtn.PerformClick();
+            incomingClientsLBl.Enabled = tcpClientRdBtn.Checked;
+            incomingClientsCountLBl.Enabled = tcpClientRdBtn.Checked;
+            tcpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
@@ -645,11 +587,6 @@ namespace Falcon
             ConnectionsManager.Inst.PrevBytesCount = 0;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-          
-        }
-
         private bool ConnectSsh(string hostAddrs, string userName, string password, ref string reply, ref Ssh ssh)
         {
             ssh = new Ssh();
@@ -728,10 +665,6 @@ namespace Falcon
 
         private void stopSendFile_Click(object sender, EventArgs e)
         {
-          //  Invoke((MethodInvoker)delegate
-          //  {
-          //      sendFileLbl.Text = "Canceled";
-         //   });
             sendFileBtn.Enabled = true;
             stopSendFile.Enabled = false;
             sendFileWorker.CancelAsync();

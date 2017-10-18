@@ -174,7 +174,7 @@ namespace Falcon.Utils
                     return true;
             }
             type = Type.NONE;
-            answer = "'" + cmd + "'" + "is not recognized as a Falcon command";
+            answer = "'" + cmd + "'" + " is not recognized as a Falcon command";
             return false;
         }
 

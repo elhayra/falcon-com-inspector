@@ -9,10 +9,10 @@ namespace Falcon.Com
 {
     public class TcpSmartClient
     {
-        public const int BUFF_SIZE = 1;
+        public const int BUFF_SIZE = 1024;
         NetworkStream stream_;
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
-        byte[] container_;
+        byte[] bytesIn_;
         TcpClient tcpClient_;
         public TcpClient Client { get { return tcpClient_; } }
         bool isDead_ = false;
@@ -26,16 +26,18 @@ namespace Falcon.Com
 
         private void AsyncListen()
         {
-            container_ = new byte[BUFF_SIZE];
-            stream_.BeginRead(container_, 0, BUFF_SIZE, OnIncomingBytes, null);
+            bytesIn_ = new byte[BUFF_SIZE];
+            stream_.BeginRead(bytesIn_, 0, BUFF_SIZE, OnIncomingBytes, null);
         }
 
         private void OnIncomingBytes(IAsyncResult res)
         {
             if (!isDead_)
             {
-                stream_.EndRead(res);
-                Publish();
+                int numberOfBytesRead = stream_.EndRead(res);
+                byte[] truncArray = new byte[numberOfBytesRead];
+                Array.Copy(bytesIn_, truncArray, truncArray.Length);
+                Publish(truncArray);
                 AsyncListen();
             }
         }
@@ -50,11 +52,11 @@ namespace Falcon.Com
             subsList_.Remove(func);
         }
 
-        private void Publish()
+        private void Publish(byte [] msg)
         {
             foreach (var funcion in subsList_)
             {
-                funcion(container_);
+                funcion(msg);
             }
         }
 

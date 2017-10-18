@@ -9,7 +9,7 @@ namespace Falcon.Com
 {
     public class TCPClientCom : TcpClient
     {
-        public const int BUFF_SIZE = 1;
+        public const int BUFF_SIZE = 1024;
         NetworkStream serverStream_;
         byte[] bytesIn_;
         List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
@@ -70,8 +70,10 @@ namespace Falcon.Com
             int numberOfBytesRead = serverStream_.EndRead(ar);
             if (numberOfBytesRead == 0)
                 return;
+            byte[] truncArray = new byte[numberOfBytesRead];
+            Array.Copy(bytesIn_, truncArray, truncArray.Length);
             foreach (var func in subsFuncs_)
-                func(bytesIn_);
+                func(truncArray);
             bytesIn_ = new byte[BUFF_SIZE];
             AsyncListen();
         }
