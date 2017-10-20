@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using System.Collections;
+using Falcon.Utils;
 
 namespace Falcon.Com
 { 
@@ -17,11 +18,9 @@ namespace Falcon.Com
         List<TcpSmartClient> clientsList_ = new List<TcpSmartClient>();
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
         List<Action<uint>> notifyNewClientsLst_ = new List<Action<uint>>();
-        bool isDead_ = true;
-
-        CancellationToken ct_;
         CancellationTokenSource cs_;
-        Task keepAliveTask_;
+        CancellationToken ct_;
+        bool isDead_ = true;
 
         public bool IsDead { get { return isDead_; } }
 
@@ -30,14 +29,47 @@ namespace Falcon.Com
         public void Connect()
         {
             clientsCounter_ = 0;
-            Start();
+            try
+            {
+                Start();
+            }
+            catch (SocketException exp)
+            {
+                //error: trying to open more than one server with same ip and port
+                MsgBox.ErrorMsg("Server Error", exp.Message);
+            }
             AsyncListen();
             isDead_ = false;
+
+            cs_ = new CancellationTokenSource();
+            ct_ = cs_.Token;
+            var t = Task.Run(() => KeepAliveClients());
         }
 
+        /// <summary>
+        /// wait for new incoming clients
+        /// </summary>
         private void AsyncListen()
         {
             BeginAcceptTcpClient(OnIncomingClients, null);
+        }
+
+        private void KeepAliveClients()
+        {
+            while (!ct_.IsCancellationRequested)
+            {
+                foreach (var smartClient in clientsList_.ToList())
+                {
+                    if (smartClient.IsDead)
+                    {
+                        clientsCounter_--;
+                        smartClient.Close();
+                        clientsList_.Remove(smartClient);
+                        NotifyOnDeadClient();
+                    } 
+                }
+                Thread.Sleep(1000);
+            }
         }
 
         private void OnIncomingClients(IAsyncResult res)
@@ -74,12 +106,12 @@ namespace Falcon.Com
             subsList_.Remove(func);
         }
 
-        public void NotifyOnNewClient(Action<uint> func)
+        public void SubscribeToClientsState(Action<uint> func)
         {
             notifyNewClientsLst_.Add(func);
         }
 
-        public void UnNotifyOnNewClient(Action<uint> func)
+        public void UnsubscribeToClientsState(Action<uint> func)
         {
             notifyNewClientsLst_.Remove(func);
         }
@@ -110,8 +142,8 @@ namespace Falcon.Com
 
         public void Close()
         {
-            isDead_ = true;
             cs_.Cancel();
+            isDead_ = true;
             foreach (var clientWrapper in clientsList_) 
                clientWrapper.Client.Close();
             Stop();

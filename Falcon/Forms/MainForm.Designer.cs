@@ -198,7 +198,7 @@
             // tcpDisconnectBtn
             // 
             this.tcpDisconnectBtn.Enabled = false;
-            this.tcpDisconnectBtn.Location = new System.Drawing.Point(6, 48);
+            this.tcpDisconnectBtn.Location = new System.Drawing.Point(6, 45);
             this.tcpDisconnectBtn.Name = "tcpDisconnectBtn";
             this.tcpDisconnectBtn.Size = new System.Drawing.Size(98, 23);
             this.tcpDisconnectBtn.TabIndex = 15;

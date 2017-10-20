@@ -15,7 +15,7 @@ namespace Falcon.Com
         byte[] bytesIn_;
         TcpClient tcpClient_;
         public TcpClient Client { get { return tcpClient_; } }
-        bool isDead_ = false;
+        public bool IsDead = false;
 
         public TcpSmartClient(TcpClient tcpClient)
         {
@@ -26,15 +26,38 @@ namespace Falcon.Com
 
         private void AsyncListen()
         {
-            bytesIn_ = new byte[BUFF_SIZE];
-            stream_.BeginRead(bytesIn_, 0, BUFF_SIZE, OnIncomingBytes, null);
+            if (!IsDead)
+            {
+                bytesIn_ = new byte[BUFF_SIZE];
+                try
+                {
+                    stream_.BeginRead(bytesIn_, 0, BUFF_SIZE, OnIncomingBytes, null);
+                }
+                catch (System.ObjectDisposedException exp)
+                {
+                    IsDead = true;
+                }
+            }
         }
 
         private void OnIncomingBytes(IAsyncResult res)
         {
-            if (!isDead_)
+            if (!IsDead)
             {
-                int numberOfBytesRead = stream_.EndRead(res);
+                int numberOfBytesRead = 0;
+                try
+                {
+                    numberOfBytesRead = stream_.EndRead(res);
+                    if (numberOfBytesRead == 0)
+                    {
+                        IsDead = true;
+                        return;
+                    }
+                }
+                catch(System.ObjectDisposedException exp)
+                {
+                    IsDead = true;
+                }
                 byte[] truncArray = new byte[numberOfBytesRead];
                 Array.Copy(bytesIn_, truncArray, truncArray.Length);
                 Publish(truncArray);
@@ -62,7 +85,7 @@ namespace Falcon.Com
 
         public void Close()
         {
-            isDead_ = true;
+            IsDead = true;
             Client.Close();
         }
     }

@@ -112,12 +112,12 @@ namespace Falcon.Utils
             {
                 case "clear":
                     type = Type.CLEAR;
-                    answer = "reset done";
+                    answer = "clear done";
                     return true;
 
                 case "reset":
                     type = Type.RESET;
-                    answer = "clear done";
+                    answer = "reset done";
                     return true;
 
                 case "ssh":

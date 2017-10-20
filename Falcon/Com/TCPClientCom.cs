@@ -92,7 +92,7 @@ namespace Falcon.Com
         {
             isDead_ = true;
             serverStream_.Close();
-            Close();
+            base.Close();
         }
     }
 }

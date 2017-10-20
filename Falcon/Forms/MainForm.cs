@@ -68,7 +68,7 @@ namespace Falcon
                 ConnectionsManager.Inst.InitTcpServer((int)tcpPortTxt.Value);
                 ConnectionsManager.Inst.TCPServer.Connect();
                 ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
-                ConnectionsManager.Inst.TCPServer.NotifyOnNewClient(OnNewTcpClient);
+                ConnectionsManager.Inst.TCPServer.SubscribeToClientsState(OnNewTcpClient);
                 tcpClientRdBtn.Enabled = false;
                 connected = true;
             }
@@ -177,12 +177,14 @@ namespace Falcon
             {
                 ConnectionsManager.Inst.TCPServer.Close();
                 tcpClientRdBtn.Enabled = true;
+                incomingClientsCountLBl.Text = "0";
             }
             else
             {
                 ConnectionsManager.Inst.TCPClient.Kill();
                 tcpServerRdBtn.Enabled = true;
             }
+            stopSendFile.PerformClick();
 
             tcpIndicatorLbl.BackColor = SystemColors.Control;
             tcpConnectBtn.Enabled = true;
@@ -360,6 +362,8 @@ namespace Falcon
 
         private void AppendBytesToTerminal(byte[] bytes)
         {
+            if (bytes.Length == 0)
+                return;
             ConnectionsManager.Inst.BytesInCounter.Add((uint)bytes.Length);
             BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
@@ -373,7 +377,7 @@ namespace Falcon
                 bytesInTimer.Stop();
                 bytesInTimer.Start();
                 bytesInTimer.Enabled = true;
-                
+
                 bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
                 string bytesString = System.Text.Encoding.UTF8.GetString(bytes);
@@ -397,8 +401,8 @@ namespace Falcon
         {
             tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
             tcpIpLbl.Enabled = tcpClientRdBtn.Checked;
-            incomingClientsLBl.Enabled = tcpClientRdBtn.Checked;
-            incomingClientsCountLBl.Enabled = tcpClientRdBtn.Checked;
+            incomingClientsLBl.Enabled = tcpServerRdBtn.Checked;
+            incomingClientsCountLBl.Enabled = tcpServerRdBtn.Checked;
             tcpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
         }
 
@@ -648,7 +652,7 @@ namespace Falcon
                     return;
                 }
                 else
-                    Thread.Sleep(5);
+                    Thread.Sleep(1);
             }
         }
 

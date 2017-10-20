@@ -51,11 +51,11 @@ namespace Falcon.Com
 
         public bool IsSomeConnectionInitiated()
         {
-            if (IsTcpClientInitiated() ||
-                IsTcpServerInitiated() ||
-                IsUdpClientInitiated() ||
-                IsUdpServerInitiated() ||
-                IsSerialInitiated())
+            if ((IsTcpClientInitiated() && !tcpClient_.IsDead) ||
+                (IsTcpServerInitiated() && !tcpServer_.IsDead) ||
+                (IsUdpClientInitiated() && !udpClient_.IsDead) ||
+                (IsUdpServerInitiated() && !udpClient_.IsDead) ||
+                (IsSerialInitiated() && serialCom_.IsOpen))
                 return true;
             return false;
         }
