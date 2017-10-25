@@ -26,7 +26,7 @@ namespace Falcon.Com
 
         public TCPServerCom(int port) : base(IPAddress.Any, port) {}
 
-        public void Connect()
+        public bool Connect()
         {
             clientsCounter_ = 0;
             try
@@ -37,6 +37,7 @@ namespace Falcon.Com
             {
                 //error: trying to open more than one server with same ip and port
                 MsgBox.ErrorMsg("Server Error", exp.Message);
+                return false;
             }
             AsyncListen();
             isDead_ = false;
@@ -44,6 +45,7 @@ namespace Falcon.Com
             cs_ = new CancellationTokenSource();
             ct_ = cs_.Token;
             var t = Task.Run(() => KeepAliveClients());
+            return true;
         }
 
         /// <summary>

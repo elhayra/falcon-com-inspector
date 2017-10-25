@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using Falcon.Utils;
 
 namespace Falcon.Com
 {
@@ -16,14 +17,13 @@ namespace Falcon.Com
     {
         private IPEndPoint endpoint_;
         List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
-        bool isDead_ = true;
+        bool isDead_ = false;
 
         public bool IsDead { get { return isDead_; } }
 
-        public UDPServerCom(int port) : base(new IPEndPoint(IPAddress.Any, port))
+        public UDPServerCom(int port) : base(new IPEndPoint(IPAddress.Any, port)) 
         {
             endpoint_ = new IPEndPoint(IPAddress.Any, port);
-            isDead_ = false;
             AsyncListen();
         }
 
@@ -64,13 +64,13 @@ namespace Falcon.Com
             {
                 try
                 {
-                    Send(bytes, bytes.Length, endpoint_);
+                    int a = Send(bytes, bytes.Length, endpoint_);
                     return true;
                 }
-                catch (System.Net.Sockets.SocketException exp)
+                catch (SocketException exp)
                 {
-                    //server must first recieve bytes so it knows the client address to send bytes to.
-                    //If trying to send before any bytes recieved, this exception will be raised
+                    MsgBox.ErrorMsg("UDP Server Error", exp.Message + "\n" +
+                        "server must recieve bytes from client (to get client address) before trying to send bytes");
                 }
             }
             return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Falcon.Com
 {
     public class TCPClientCom : TcpClient
     {
-        public const int BUFF_SIZE = 1024;
+        public const int BUFF_SIZE = 65536;
         NetworkStream serverStream_;
         byte[] bytesIn_;
         List<Action<byte[]>> subsFuncs_ = new List<Action<byte[]>>();
@@ -82,7 +83,14 @@ namespace Falcon.Com
         {
             if (!IsDead)
             {
-                serverStream_.Write(bytes, 0, bytes.Length);
+                try
+                {
+                    serverStream_.Write(bytes, 0, bytes.Length);
+                }
+                catch (IOException exp)
+                {
+                    return false;
+                }
                 return true;
             }
             return false;

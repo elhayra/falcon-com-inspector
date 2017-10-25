@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Falcon.Com
 {
     public class TcpSmartClient
     {
-        public const int BUFF_SIZE = 1024;
+        public const int BUFF_SIZE = 65536;
         NetworkStream stream_;
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
         byte[] bytesIn_;
@@ -21,6 +22,11 @@ namespace Falcon.Com
         {
             tcpClient_ = tcpClient;
             stream_ = tcpClient_.GetStream();
+
+            tcpClient_.NoDelay = true;
+            tcpClient_.ReceiveBufferSize = 8192;
+            tcpClient_.SendBufferSize = 8192;
+            
             AsyncListen();
         }
 
@@ -54,14 +60,21 @@ namespace Falcon.Com
                         return;
                     }
                 }
-                catch(System.ObjectDisposedException exp)
+                catch(ObjectDisposedException exp)
                 {
                     IsDead = true;
                 }
-                byte[] truncArray = new byte[numberOfBytesRead];
-                Array.Copy(bytesIn_, truncArray, truncArray.Length);
-                Publish(truncArray);
-                AsyncListen();
+                 catch (IOException exp)
+                {
+                    IsDead = true;
+                }
+                if (!IsDead)
+                {
+                    byte[] truncArray = new byte[numberOfBytesRead];
+                    Array.Copy(bytesIn_, truncArray, truncArray.Length);
+                    Publish(truncArray);
+                    AsyncListen();
+                }
             }
         }
 

@@ -35,8 +35,5 @@
     <Setting Name="autoScroll" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="cmdChar" Type="System.Char" Scope="User">
-      <Value Profile="(Default)">!</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

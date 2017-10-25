@@ -15,7 +15,6 @@ namespace Falcon.Forms
         public PreferencesForm()
         {
             InitializeComponent();
-            cmdCharCmBx.Text = Properties.Settings.Default.cmdChar.ToString();
         }
 
         private void PreferencesForm_Load(object sender, EventArgs e)
@@ -25,7 +24,6 @@ namespace Falcon.Forms
 
         private void applyBtn_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.cmdChar = Convert.ToChar(cmdCharCmBx.Text);
 
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();

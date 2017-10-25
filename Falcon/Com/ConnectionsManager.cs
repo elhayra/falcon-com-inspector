@@ -54,7 +54,7 @@ namespace Falcon.Com
             if ((IsTcpClientInitiated() && !tcpClient_.IsDead) ||
                 (IsTcpServerInitiated() && !tcpServer_.IsDead) ||
                 (IsUdpClientInitiated() && !udpClient_.IsDead) ||
-                (IsUdpServerInitiated() && !udpClient_.IsDead) ||
+                (IsUdpServerInitiated() && !udpServer_.IsDead) ||
                 (IsSerialInitiated() && serialCom_.IsOpen))
                 return true;
             return false;

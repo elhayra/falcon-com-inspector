@@ -154,17 +154,5 @@ namespace Falcon.Properties {
                 this["autoScroll"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("!")]
-        public char cmdChar {
-            get {
-                return ((char)(this["cmdChar"]));
-            }
-            set {
-                this["cmdChar"] = value;
-            }
-        }
     }
 }

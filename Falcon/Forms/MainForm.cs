@@ -13,6 +13,7 @@ using Falcon.Forms;
 using Falcon.Utils;
 using System.Threading;
 using System.IO;
+using System.Net.Sockets;
 
 namespace Falcon
 {
@@ -66,11 +67,18 @@ namespace Falcon
             if (tcpServerRdBtn.Checked)
             {
                 ConnectionsManager.Inst.InitTcpServer((int)tcpPortTxt.Value);
-                ConnectionsManager.Inst.TCPServer.Connect();
-                ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
-                ConnectionsManager.Inst.TCPServer.SubscribeToClientsState(OnNewTcpClient);
-                tcpClientRdBtn.Enabled = false;
-                connected = true;
+                if (!ConnectionsManager.Inst.TCPServer.Connect())
+                {
+                    tcpConnectionStateLbl.BackColor = Color.Tomato;
+                    tcpConnectionStateLbl.Text = "Failed";
+                }
+                else
+                {
+                    ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
+                    ConnectionsManager.Inst.TCPServer.SubscribeToClientsState(OnNewTcpClient);
+                    tcpClientRdBtn.Enabled = false;
+                    connected = true;
+                }
             }
             else
             {
@@ -173,6 +181,7 @@ namespace Falcon
 
         private void tcpDisconnectBtn_Click(object sender, EventArgs e)
         {
+            stopSendFile.PerformClick();
             if (tcpServerRdBtn.Checked)
             {
                 ConnectionsManager.Inst.TCPServer.Close();
@@ -184,8 +193,6 @@ namespace Falcon
                 ConnectionsManager.Inst.TCPClient.Kill();
                 tcpServerRdBtn.Enabled = true;
             }
-            stopSendFile.PerformClick();
-
             tcpIndicatorLbl.BackColor = SystemColors.Control;
             tcpConnectBtn.Enabled = true;
             tcpConnectionStateLbl.Text = "Disconnected";
@@ -262,9 +269,9 @@ namespace Falcon
 
         private void PassOutTxtToHistory()
         {
-            if (textToSendCmBx.Items.Count > 10) //TODO: MAKE MAX HISTROY ITEMS A SETTING //////////////////////////////////
-                textToSendCmBx.Items.RemoveAt(0);
-            textToSendCmBx.Items.Add(textToSendCmBx.Text);
+            if (textToSendCmBx.Items.Count >= 10) //TODO: MAKE MAX HISTROY ITEMS A SETTING //////////////////////////////////
+                textToSendCmBx.Items.RemoveAt(textToSendCmBx.Items.Count-1); //remove last element
+            textToSendCmBx.Items.Insert(0, textToSendCmBx.Text); //push back new element 
             textToSendCmBx.Text = "";
         }
 
@@ -272,22 +279,27 @@ namespace Falcon
 
         private void SendMsg(byte [] msg)
         {
+            bool send_success = false;
             if (ConnectionsManager.Inst.IsTcpServerInitiated())
-                ConnectionsManager.Inst.TCPServer.Send(msg);
+                send_success = ConnectionsManager.Inst.TCPServer.Send(msg);
 
             if (ConnectionsManager.Inst.IsTcpClientInitiated())
-                ConnectionsManager.Inst.TCPClient.Send(msg);
+            {
+                send_success = ConnectionsManager.Inst.TCPClient.Send(msg);
+                if (!send_success)
+                    tcpDisconnectBtn.PerformClick();
+            }
 
             if (ConnectionsManager.Inst.IsUdpServerInitiated())
-                ConnectionsManager.Inst.UDPServer.Send(msg);
+                send_success = ConnectionsManager.Inst.UDPServer.Send(msg);
 
             if (ConnectionsManager.Inst.IsUdpClientInitiated())
-                ConnectionsManager.Inst.UDPClient.Send(msg);
+                send_success = ConnectionsManager.Inst.UDPClient.Send(msg);
 
             if (ConnectionsManager.Inst.IsSerialInitiated())
-                ConnectionsManager.Inst.Serial.Send(msg);
+                send_success = ConnectionsManager.Inst.Serial.Send(msg);
 
-            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            if (send_success && ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
                 ConnectionsManager.Inst.BytesOutCounter.Add((uint)msg.Length);
                 BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutCounter.RecomendedMeasureUnit();
@@ -309,12 +321,15 @@ namespace Falcon
         private void clearScreenBtn_Click(object sender, EventArgs e)
         {
             dataInScreenTxt.Clear();
+            textToSendCmBx.Items.Clear();
+            textToSendCmBx.Text = "";
         }
 
         private void serialConnectBtn_Click(object sender, EventArgs e)
         {
             SaveSerialSettings();
             string port = serialComCmBx.Text;
+            bool failed = false;
             if (port == "")
             {
                 MsgBox.WarningMsg("Serial Connection Failed", "No port was selected");
@@ -337,17 +352,22 @@ namespace Falcon
                 serialConnectBtn.Enabled = false;
                 ConnectionsManager.Inst.Serial.Subscribe(OnSerialByteIn);
             }
+            else
+            {
+                serialConnectionStateLbl.Text = "Failed";
+                serialConnectionStateLbl.BackColor = Color.Tomato;
+            }
         }
 
         private void serialDisconnectBtn_Click(object sender, EventArgs e)
         {
+            stopSendFile.PerformClick();
             var t = Task.Run(delegate
             {
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
                 ConnectionsManager.Inst.Serial.CloseMe();
                 Thread.CurrentThread.Priority = ThreadPriority.Normal;
             });
-           
             serialDisconnectBtn.Enabled = false;
             serialConnectBtn.Enabled = true;
             serialConnectionStateLbl.Text = "Disconnected";
@@ -402,8 +422,9 @@ namespace Falcon
             tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
             tcpIpLbl.Enabled = tcpClientRdBtn.Checked;
             incomingClientsLBl.Enabled = tcpServerRdBtn.Checked;
-            incomingClientsCountLBl.Enabled = tcpServerRdBtn.Checked;
-            tcpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
+
+            if (tcpServerRdBtn.Checked)
+                tcpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
@@ -414,13 +435,23 @@ namespace Falcon
         private void ConnectUdp()
         {
             SaveUdpSettings();
-            bool connected = false;
+            bool connected = true;
             if (udpServerRdBtn.Checked)
             {
-                ConnectionsManager.Inst.InitUdpServer((int)udpPortTxt.Value);
-                ConnectionsManager.Inst.UDPServer.Subscribe(OnUdpByteIn);
-                udpClientRdBtn.Enabled = false;
-                connected = true;
+                try
+                {
+                    ConnectionsManager.Inst.InitUdpServer((int)udpPortTxt.Value);
+                }
+                catch (SocketException exp)
+                {
+                    MsgBox.ErrorMsg("UDP Server Error", exp.Message);
+                    connected = false;
+                }
+                if (connected)
+                {
+                    ConnectionsManager.Inst.UDPServer.Subscribe(OnUdpByteIn);
+                    udpClientRdBtn.Enabled = false;
+                }
             }
             else
             {
@@ -458,10 +489,10 @@ namespace Falcon
 
         private void udpServerRdBtn_CheckedChanged(object sender, EventArgs e)
         {
+            udpIpTxt.Enabled = !udpServerRdBtn.Checked;
             if (udpServerRdBtn.Checked)
-                udpIpTxt.Enabled = false;
-            else
-                udpIpTxt.Enabled = true;
+                udpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
+
         }
 
         private void aboutBtn_Click(object sender, EventArgs e)
@@ -480,6 +511,7 @@ namespace Falcon
 
         private void udpDisconnectBtn_Click(object sender, EventArgs e)
         {
+            stopSendFile.PerformClick();
             if (udpServerRdBtn.Checked)
             {
                 ConnectionsManager.Inst.UDPServer.Close();
@@ -490,10 +522,10 @@ namespace Falcon
                 ConnectionsManager.Inst.UDPClient.Kill();
                 udpServerRdBtn.Enabled = true;
             }
-
             udpIndicatorLbl.BackColor = SystemColors.Control;
             udpConnectBtn.Enabled = true;
             udpConnectionStateLbl.Text = "Disconnected";
+            udpConnectionStateLbl.BackColor = SystemColors.Control;
         }
 
         private void bytesInTimer_Tick(object sender, EventArgs e)
@@ -651,8 +683,8 @@ namespace Falcon
                     e.Cancel = true;
                     return;
                 }
-                else
-                    Thread.Sleep(1);
+                //else
+                //    Thread.Sleep(1);
             }
         }
 
