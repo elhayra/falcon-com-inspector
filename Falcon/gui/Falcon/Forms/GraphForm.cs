@@ -21,6 +21,8 @@ namespace Falcon.Forms
         SeriesForm seriesFrom_;
         Stopwatch stopwatch_;
 
+        bool gotData_ = false;
+
         public GraphForm(ref TextBox dataInScreenTxt)
         {
             InitializeComponent();
@@ -35,14 +37,14 @@ namespace Falcon.Forms
 
         public void OnIncomingData(string data)
         {
+            gotData_ = true;
             double[] resultCsv = null;
             resultCsv = DataStream.extractCsvFromLine(data);
+            ToggleInvalidDataAlert("", false);
 
             if (resultCsv != null && resultCsv.Length > 0)
             {
-                ToggleInvalidDataAlert("", false);
                 TreeNode root = treeView.Nodes[0];
-
                 stopwatch_.Stop();
                 ChartManager.Inst.LastPointTime = stopwatch_.ElapsedMilliseconds / 1000.0;
 
@@ -119,6 +121,10 @@ namespace Falcon.Forms
 
         private void graphTimer_Tick(object sender, EventArgs e)
         {
+            if (!gotData_)
+                ToggleInvalidDataAlert("NO DATA", true);
+            else
+                gotData_ = false;
         }
 
         private void ToggleInvalidDataAlert(string msg, bool onoff)
@@ -129,15 +135,9 @@ namespace Falcon.Forms
 
         private void addPointToSeries(string seriesName, double y)
         {
-            chart.Series[seriesName].Points.AddXY(ChartManager.Inst.LastPointTime, y);
-
-            if (chart.Series[seriesName].Points.Count == ChartManager.Inst.TailLength) //trim line tail
-            {
-                DataPoint firstElement = chart.Series[seriesName].Points.First<DataPoint>();
-                chart.Series[seriesName].Points.Remove(firstElement);
-            }
-            chart.ResetAutoValues();
-            chart.Update();
+            ChartManager.Inst.AddPointToSeries(seriesName, ChartManager.Inst.LastPointTime, y);
+            ChartManager.Inst.TrimAllToTailSize();
+            ChartManager.Inst.UpdateChart();
         }
 
         private void chart_MouseLeave(object sender, EventArgs e)
@@ -193,6 +193,14 @@ namespace Falcon.Forms
         private void resetBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void GraphForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                applyBtn.PerformClick();
+            }
         }
     }
 }

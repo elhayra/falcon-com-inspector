@@ -12,9 +12,9 @@ namespace Falcon.Graph
     {
         public const int MAX_SERIESES = 10;
         public double LastPointTime = 0; //secs
-        public int TailLength = 10;
+        public int TailLength = 100;
 
-        //using this list allows also keep track after the tail
+        /* this list also allows keep track after tail length */
         List<SeriesManager> seriesManagersList_ = new List<SeriesManager>();
 
         Chart chart_ = null;
@@ -153,6 +153,16 @@ namespace Falcon.Graph
                 chart_.Series[nameId].Points.Remove(firstElement);
                 return true;
             }
+            else
+            {
+                while (TailLength <= chart_.Series[nameId].Points.Count)
+                {
+                    DataPoint firstElement = chart_.Series[nameId].Points.First<DataPoint>();
+                    chart_.Series[nameId].Points.Remove(firstElement);
+                }
+                return true;
+            }
+
             return false;
         }
 
