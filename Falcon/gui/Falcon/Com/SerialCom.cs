@@ -28,6 +28,7 @@ namespace Falcon.Com
             Parity = parity;
             DataBits = dataBits;
             StopBits = stopBits;
+            
 
             try
             {

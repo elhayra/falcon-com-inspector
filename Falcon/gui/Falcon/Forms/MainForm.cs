@@ -411,30 +411,37 @@ namespace Falcon
 
             Invoke((MethodInvoker)delegate
             {
-                bytesInLbl.BackColor = Color.LimeGreen;
-                bytesInTimer.Stop();
-                bytesInTimer.Start();
-                bytesInTimer.Enabled = true;
-
-                bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
-
-                string bytesString = System.Text.Encoding.UTF8.GetString(bytes);
-                if (autoScrollChkBx.Checked)
-                    dataInScreenTxt.AppendText(bytesString);
-                else
-                    dataInScreenTxt.Text += bytesString;
-
-                /* if new line arrived, pass it to graph form */
-                if (graphFrom_ != null &&
-                    dataInScreenTxt.Lines.Any() &&
-                    dataInScreenTxt.Lines.Length >= 2 &&
-                    dataInScreenTxt.Lines.Length != prevLinesCount_)
+                try
                 {
-                    prevLinesCount_ = dataInScreenTxt.Lines.Length;
-                    string newLine = dataInScreenTxt.Lines[dataInScreenTxt.Lines.Length - 2];
-                    graphFrom_.OnIncomingData(newLine);
-                }
+                    bytesInLbl.BackColor = Color.LimeGreen;
+                    bytesInTimer.Stop();
+                    bytesInTimer.Start();
+                    bytesInTimer.Enabled = true;
 
+                    bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
+
+                    string bytesString = System.Text.Encoding.UTF8.GetString(bytes);
+                    if (autoScrollChkBx.Checked)
+                        dataInScreenTxt.AppendText(bytesString);
+                    else
+                        dataInScreenTxt.Text += bytesString;
+
+                    /* if new line arrived, pass it to graph form */
+                    if (graphFrom_ != null &&
+                        dataInScreenTxt.Lines.Any() &&
+                        dataInScreenTxt.Lines.Length >= 2 &&
+                        dataInScreenTxt.Lines.Length != prevLinesCount_)
+                    {
+                        prevLinesCount_ = dataInScreenTxt.Lines.Length;
+                        string newLine = dataInScreenTxt.Lines[dataInScreenTxt.Lines.Length - 2];
+                        graphFrom_.OnIncomingData(newLine);
+                    }
+
+                }
+                catch (ObjectDisposedException exp)
+                {
+                    return;
+                }
             });
         }
 
