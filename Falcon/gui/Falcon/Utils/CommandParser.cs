@@ -149,7 +149,7 @@ namespace Falcon.Utils
                     if (Ping(rawArgs, ref reply) &&
                         reply.Status == IPStatus.Success)
                     {
-                        answer = "Ping to " + rawArgs + " [" + reply.Address.ToString() + "] Successful.\n"
+                        answer = "Ping to " + rawArgs + " [" + reply.Address.ToString() + "] Successful. "
                                  + "RTL: " + reply.RoundtripTime.ToString() + " ms";
                         return true;
                     }

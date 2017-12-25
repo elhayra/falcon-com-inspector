@@ -45,6 +45,7 @@ namespace Falcon.Com
             catch (SocketException exp)
             {
                 //wrong address
+                isDead_ = true;
             }
             return !isDead_;
         }

@@ -83,7 +83,6 @@
             this.clearScreenBtn = new System.Windows.Forms.Button();
             this.sendBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.preferencesBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -732,7 +731,6 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferencesBtn,
             this.graphToolStripMenuItem1,
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -740,13 +738,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(682, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // preferencesBtn
-            // 
-            this.preferencesBtn.Name = "preferencesBtn";
-            this.preferencesBtn.Size = new System.Drawing.Size(80, 20);
-            this.preferencesBtn.Text = "Preferences";
-            this.preferencesBtn.Click += new System.EventHandler(this.preferencesBtn_Click);
             // 
             // graphToolStripMenuItem1
             // 
@@ -808,6 +799,7 @@
             this.dataInScreenTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataInScreenTxt.Size = new System.Drawing.Size(527, 317);
             this.dataInScreenTxt.TabIndex = 29;
+            this.dataInScreenTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
             // textToSendCmBx
             // 
@@ -1038,7 +1030,6 @@
         private System.Windows.Forms.ComboBox textToSendCmBx;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ToolStripMenuItem preferencesBtn;
         private System.Windows.Forms.Label receivingRateLbl;
         private System.Windows.Forms.Label bytesOutLbl;
         private System.Windows.Forms.Label bytesInLbl;

@@ -92,7 +92,7 @@ namespace Falcon.Com
 
         public static string[] GetConnectedPorts()
         {
-            return SerialPort.GetPortNames();
+            return SerialPort.GetPortNames().Distinct().ToArray();
         }
 
         public static Parity StringToParity(string parity)

@@ -21,7 +21,6 @@ E:\workspace\Falcon\Falcon\gui\Falcon\bin\Debug\Renci.SshNet.dll
 E:\workspace\Falcon\Falcon\gui\Falcon\bin\Debug\Renci.SshNet.xml
 E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.csprojResolveAssemblyReference.cache
 E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.Forms.AboutForm.resources
-E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.Forms.PreferencesForm.resources
 E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.Forms.SeriesForm.resources
 E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.Forms.GraphForm.resources
 E:\workspace\Falcon\Falcon\gui\Falcon\obj\Debug\Falcon.MainForm.resources

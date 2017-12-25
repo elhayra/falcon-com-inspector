@@ -22,7 +22,6 @@ namespace Falcon
     {
         private AboutForm aboutForm_;
         private GraphForm graphFrom_;
-        private PreferencesForm preferencesForm_;
 
         Ssh ssh_;
 
@@ -33,6 +32,8 @@ namespace Falcon
         public MainForm()
         {
             InitializeComponent();
+
+            Application.EnableVisualStyles();
 
             this.SetStyle(
               ControlStyles.AllPaintingInWmPaint |
@@ -638,20 +639,6 @@ namespace Falcon
             UpdateSerialPorts();
         }
 
-        private void preferencesBtn_Click(object sender, EventArgs e)
-        {
-            if (preferencesForm_ == null || preferencesForm_.IsDisposed)
-            {
-                preferencesForm_ = new PreferencesForm();
-                preferencesForm_.Show();
-            }
-            else
-            {
-                preferencesForm_.Show();
-                preferencesForm_.Focus();
-            }
-        }
-
         private void resetBtn_Click(object sender, EventArgs e)
         {
             bytesInLbl.Text = "0 B";
@@ -721,8 +708,6 @@ namespace Falcon
                     e.Cancel = true;
                     return;
                 }
-                //else
-                //    Thread.Sleep(1);
             }
         }
 
@@ -742,6 +727,15 @@ namespace Falcon
             sendFileBtn.Enabled = true;
             stopSendFile.Enabled = false;
             sendFileWorker.CancelAsync();
+        }
+        
+        /* allow select all text in output txt box */
+        private void dataInScreenTxt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                dataInScreenTxt.SelectAll();
+            }
         }
     }
 }

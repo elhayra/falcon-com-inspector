@@ -53,7 +53,7 @@ namespace Falcon.Com
             {
                 //other side disconnected
             }
-            catch (System.ObjectDisposedException exp)
+            catch (ObjectDisposedException exp)
             {
                 //disconnect
             }

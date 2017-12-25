@@ -44,8 +44,6 @@ namespace Falcon.Com
             set { port_ = value; }
         }
 
-        
-
         public IPEndPoint EndPoint()
         {
             return new IPEndPoint(IP, Port);

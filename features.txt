@@ -1,30 +1,25 @@
-settings:
+Preferences form:
 append in new line
 show sent time stamp
 show index of each byte ???[0]b1, [1]b2 ...
 choose font color - green or white
 encoding - ascii, utf, raw bytes etc...
-logging to file
+logging to file: with time or without
 send trainling <nl - new line> for each message sent
-command line character, i.e $, #, !
-
-
-handle memory when there is a lot of lines
+add timestamp for each read
 
 
 command line:
+make command parser class switch case modular in key value, each command is class (value)
 filter,
 send range
 send file - loop or once
 send raw bytes in packet
 get ideas from termie
-add timestamp for each read
-sending ping
 check range - insert start and end number, and the window will print arrow if some bytes are missing in the range (jumps of 1)
-auto baud rate finder - if more than 50 percent is "?" than its wrong baud rate (if suppose to be strings println)
+change ssh object terminal size according to actual falcon window size
 
 about form
-green marker when connected, red when not
 
 tests:
 server closes comm first
@@ -33,16 +28,17 @@ trying to connect disconnect then connect again
 entering invalid values
 pressing buttons in the wrong order
 
-when client disconnect from tcp - how to recognize it?
-
-graph indicator can display amount of incoming data rate, or connected to number that im getting in, and display values of this number, and setpoint
-zoom in or out from graph
-
-return connection failed if it failed
-
 when sending fails dont count bytes
-handle connetcions excepotions
-handle trying connect to serial with no port selected
+clean code, and delete redundant callbacks
 
-adding up to 10 axes in graph, up to 10 setpoints. enable connecting them together with incoming data. for example, if incoming is 1, 20, 30
-than index 0 that equal 1 can be any axis and so on
+
+/* ------------------------- */
+CALSS MATE
+
+delegate search button to a task, and if after 3 seconds (for example: no internet connections) task not finished, cancell task - this will keep for responsive
+
+clean code
+
+about form
+
+change components names to suit c# conventions

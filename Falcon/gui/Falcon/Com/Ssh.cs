@@ -63,7 +63,6 @@ namespace Falcon.Com
         public void CreateShellStream(string terminalName, uint cols, uint rows, uint width, uint height, int buffSize)
         {
             shellStream_ = client_.CreateShellStream(terminalName, cols, rows, width, height, buffSize);
-            //AsyncListen();
             cts_ = new CancellationTokenSource();
             listenTask_ = new Task(() => Listen(cts_.Token), cts_.Token);
             listenTask_.Start();
@@ -81,7 +80,6 @@ namespace Falcon.Com
                     if (result != "")
                         SendBytesToSubscribers(result);
                 }
-                    
             }
         }
 

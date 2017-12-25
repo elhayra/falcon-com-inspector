@@ -162,8 +162,6 @@ namespace Falcon.Graph
                 }
                 return true;
             }
-
-            return false;
         }
 
         public void AddPointToSeries(string nameId, double x, double y)

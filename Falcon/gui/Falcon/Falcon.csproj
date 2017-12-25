@@ -67,12 +67,6 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PreferencesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PreferencesForm.Designer.cs">
-      <DependentUpon>PreferencesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\SeriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,9 +94,6 @@
     <Compile Include="Utils\MsgBox.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PreferencesForm.resx">
-      <DependentUpon>PreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SeriesForm.resx">
       <DependentUpon>SeriesForm.cs</DependentUpon>
@@ -136,16 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\connect_icon.ico" />
-    <EmbeddedResource Include="Images\disconnect_icon.png" />
-    <EmbeddedResource Include="Images\graph_icon.png" />
-    <EmbeddedResource Include="Images\refresh_icon.png" />
-    <EmbeddedResource Include="Images\send_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Images\falcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
