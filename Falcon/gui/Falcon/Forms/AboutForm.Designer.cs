@@ -38,7 +38,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.urlLbl = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -116,7 +116,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.linkLabel1);
+            this.groupBox2.Controls.Add(this.urlLbl);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(-2, -6);
@@ -128,21 +128,22 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(61, 24);
+            this.label4.Location = new System.Drawing.Point(60, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(71, 13);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Elchay Rauper";
+            this.label4.Text = "Elhay Rauper";
             // 
-            // linkLabel1
+            // urlLbl
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(53, 67);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(89, 13);
-            this.linkLabel1.TabIndex = 4;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "www.argubit.com";
+            this.urlLbl.AutoSize = true;
+            this.urlLbl.Location = new System.Drawing.Point(36, 66);
+            this.urlLbl.Name = "urlLbl";
+            this.urlLbl.Size = new System.Drawing.Size(128, 13);
+            this.urlLbl.TabIndex = 4;
+            this.urlLbl.TabStop = true;
+            this.urlLbl.Text = "www.techandcoding.com";
+            this.urlLbl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label8
             // 
@@ -156,11 +157,11 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(54, 46);
+            this.label7.Location = new System.Drawing.Point(57, 46);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(86, 13);
+            this.label7.Size = new System.Drawing.Size(79, 13);
             this.label7.TabIndex = 1;
-            this.label7.Text = "ArguBit Software";
+            this.label7.Text = "Erobit Software";
             // 
             // contextMenuStrip1
             // 
@@ -200,7 +201,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel urlLbl;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.RichTextBox richTextBox1;

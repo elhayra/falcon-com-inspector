@@ -82,10 +82,14 @@ namespace Falcon.Com
         {
             if (connected_)
             {
-                string incoming = ReadExisting();
+                int numBytes = BytesToRead;
+                var buff = new byte[numBytes];
+                int bytesRead = Read(buff, 0, numBytes);
+                if (bytesRead != numBytes)
+                    return;
                 foreach (var func in subsList_)
                 {
-                    func(Encoding.ASCII.GetBytes(incoming));
+                    func(buff);
                 }
             }
         }
