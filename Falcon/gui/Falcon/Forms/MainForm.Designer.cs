@@ -103,6 +103,20 @@
             this.sendFileLbl = new System.Windows.Forms.Label();
             this.sendFileWorker = new System.ComponentModel.BackgroundWorker();
             this.stopSendFile = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.asciiRdbtn = new System.Windows.Forms.RadioButton();
+            this.bytesRdbtn = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.searchTxt = new System.Windows.Forms.TextBox();
+            this.searchBtn = new System.Windows.Forms.Button();
+            this.detailedChkBx = new System.Windows.Forms.CheckBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.displayModeRdbtn = new System.Windows.Forms.RadioButton();
+            this.plotModeRdbtn = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -118,6 +132,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.serialDataBitsTxt)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -130,7 +148,7 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 35);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(130, 399);
+            this.tabControl1.Size = new System.Drawing.Size(130, 492);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -140,7 +158,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(122, 373);
+            this.tabPage1.Size = new System.Drawing.Size(122, 466);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "TCP";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -301,7 +319,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(122, 373);
+            this.tabPage2.Size = new System.Drawing.Size(122, 466);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UDP";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -439,7 +457,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(122, 373);
+            this.tabPage3.Size = new System.Drawing.Size(122, 466);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Serial";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -709,7 +727,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(484, 381);
+            this.clearScreenBtn.Location = new System.Drawing.Point(637, 420);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -720,7 +738,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(619, 408);
+            this.sendBtn.Location = new System.Drawing.Point(579, 420);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -735,7 +753,7 @@
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(682, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(760, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -777,11 +795,13 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(599, 384);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(122, 20);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
+            this.autoScrollChkBx.Tag = "";
             this.autoScrollChkBx.Text = "Auto Scroll";
+            this.toolTip.SetToolTip(this.autoScrollChkBx, "Auto scroll when text reach the button of the display");
             this.autoScrollChkBx.UseVisualStyleBackColor = true;
             // 
             // dataInScreenTxt
@@ -797,7 +817,7 @@
             this.dataInScreenTxt.Name = "dataInScreenTxt";
             this.dataInScreenTxt.ReadOnly = true;
             this.dataInScreenTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataInScreenTxt.Size = new System.Drawing.Size(527, 317);
+            this.dataInScreenTxt.Size = new System.Drawing.Size(601, 356);
             this.dataInScreenTxt.TabIndex = 29;
             this.dataInScreenTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
@@ -806,16 +826,18 @@
             this.textToSendCmBx.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textToSendCmBx.FormattingEnabled = true;
-            this.textToSendCmBx.Location = new System.Drawing.Point(146, 409);
+            this.textToSendCmBx.Location = new System.Drawing.Point(146, 421);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(467, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(427, 21);
             this.textToSendCmBx.TabIndex = 37;
             // 
             // groupBox4
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.serialIndicatorLbl);
             this.groupBox4.Controls.Add(this.udpIndicatorLbl);
             this.groupBox4.Controls.Add(this.tcpIndicatorLbl);
@@ -827,7 +849,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(527, 25);
+            this.groupBox4.Size = new System.Drawing.Size(605, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -837,7 +859,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(492, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(570, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -849,7 +871,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(452, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(530, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -861,7 +883,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(414, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(492, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -886,9 +908,9 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetBtn.Location = new System.Drawing.Point(541, 381);
+            this.resetBtn.Location = new System.Drawing.Point(693, 420);
             this.resetBtn.Name = "resetBtn";
-            this.resetBtn.Size = new System.Drawing.Size(51, 22);
+            this.resetBtn.Size = new System.Drawing.Size(54, 22);
             this.resetBtn.TabIndex = 42;
             this.resetBtn.Text = "Reset";
             this.resetBtn.UseVisualStyleBackColor = true;
@@ -897,11 +919,11 @@
             // sendFileBtn
             // 
             this.sendFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sendFileBtn.Location = new System.Drawing.Point(146, 381);
+            this.sendFileBtn.Location = new System.Drawing.Point(9, 40);
             this.sendFileBtn.Name = "sendFileBtn";
-            this.sendFileBtn.Size = new System.Drawing.Size(70, 22);
+            this.sendFileBtn.Size = new System.Drawing.Size(51, 22);
             this.sendFileBtn.TabIndex = 43;
-            this.sendFileBtn.Text = "Send File";
+            this.sendFileBtn.Text = "Send";
             this.sendFileBtn.UseVisualStyleBackColor = true;
             this.sendFileBtn.Click += new System.EventHandler(this.sendFileBtn_Click);
             // 
@@ -909,7 +931,7 @@
             // 
             this.sendFileLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.sendFileLbl.AutoSize = true;
-            this.sendFileLbl.Location = new System.Drawing.Point(298, 385);
+            this.sendFileLbl.Location = new System.Drawing.Point(6, 19);
             this.sendFileLbl.Name = "sendFileLbl";
             this.sendFileLbl.Size = new System.Drawing.Size(27, 13);
             this.sendFileLbl.TabIndex = 44;
@@ -926,28 +948,169 @@
             // 
             this.stopSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.stopSendFile.Enabled = false;
-            this.stopSendFile.Location = new System.Drawing.Point(222, 381);
+            this.stopSendFile.Location = new System.Drawing.Point(66, 40);
             this.stopSendFile.Name = "stopSendFile";
-            this.stopSendFile.Size = new System.Drawing.Size(70, 22);
+            this.stopSendFile.Size = new System.Drawing.Size(51, 22);
             this.stopSendFile.TabIndex = 45;
-            this.stopSendFile.Text = "Stop Send";
+            this.stopSendFile.Text = "Cancel";
             this.stopSendFile.UseVisualStyleBackColor = true;
             this.stopSendFile.Click += new System.EventHandler(this.stopSendFile_Click);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox8.Controls.Add(this.sendFileBtn);
+            this.groupBox8.Controls.Add(this.sendFileLbl);
+            this.groupBox8.Controls.Add(this.stopSendFile);
+            this.groupBox8.Location = new System.Drawing.Point(236, 448);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(128, 75);
+            this.groupBox8.TabIndex = 46;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Send File";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox9.Controls.Add(this.detailedChkBx);
+            this.groupBox9.Controls.Add(this.bytesRdbtn);
+            this.groupBox9.Controls.Add(this.asciiRdbtn);
+            this.groupBox9.Controls.Add(this.autoScrollChkBx);
+            this.groupBox9.Location = new System.Drawing.Point(370, 448);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(271, 75);
+            this.groupBox9.TabIndex = 47;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Display";
+            // 
+            // asciiRdbtn
+            // 
+            this.asciiRdbtn.AutoSize = true;
+            this.asciiRdbtn.Checked = true;
+            this.asciiRdbtn.Location = new System.Drawing.Point(7, 20);
+            this.asciiRdbtn.Name = "asciiRdbtn";
+            this.asciiRdbtn.Size = new System.Drawing.Size(52, 17);
+            this.asciiRdbtn.TabIndex = 0;
+            this.asciiRdbtn.TabStop = true;
+            this.asciiRdbtn.Text = "ASCII";
+            this.toolTip.SetToolTip(this.asciiRdbtn, "Dispaly incoming bytes as ASCII");
+            this.asciiRdbtn.UseVisualStyleBackColor = true;
+            // 
+            // bytesRdbtn
+            // 
+            this.bytesRdbtn.AutoSize = true;
+            this.bytesRdbtn.Location = new System.Drawing.Point(7, 43);
+            this.bytesRdbtn.Name = "bytesRdbtn";
+            this.bytesRdbtn.Size = new System.Drawing.Size(99, 17);
+            this.bytesRdbtn.TabIndex = 1;
+            this.bytesRdbtn.Text = "Unsigned Bytes";
+            this.toolTip.SetToolTip(this.bytesRdbtn, "Display incoming bytes as unsigned bytes");
+            this.bytesRdbtn.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(370, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 46;
+            this.label2.Text = "0 B/s";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(320, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 13);
+            this.label4.TabIndex = 45;
+            this.label4.Text = "Tx Rate:";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox10.Controls.Add(this.searchBtn);
+            this.groupBox10.Controls.Add(this.searchTxt);
+            this.groupBox10.Location = new System.Drawing.Point(647, 448);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(100, 75);
+            this.groupBox10.TabIndex = 48;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Search";
+            // 
+            // searchTxt
+            // 
+            this.searchTxt.Location = new System.Drawing.Point(6, 19);
+            this.searchTxt.Name = "searchTxt";
+            this.searchTxt.Size = new System.Drawing.Size(84, 20);
+            this.searchTxt.TabIndex = 0;
+            // 
+            // searchBtn
+            // 
+            this.searchBtn.Location = new System.Drawing.Point(7, 46);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(83, 23);
+            this.searchBtn.TabIndex = 1;
+            this.searchBtn.Text = "Search";
+            this.searchBtn.UseVisualStyleBackColor = true;
+            // 
+            // detailedChkBx
+            // 
+            this.detailedChkBx.AutoSize = true;
+            this.detailedChkBx.Location = new System.Drawing.Point(122, 44);
+            this.detailedChkBx.Name = "detailedChkBx";
+            this.detailedChkBx.Size = new System.Drawing.Size(65, 17);
+            this.detailedChkBx.TabIndex = 28;
+            this.detailedChkBx.Text = "Detailed";
+            this.toolTip.SetToolTip(this.detailedChkBx, "When message arrives, print details like timestamp in dispay");
+            this.detailedChkBx.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.plotModeRdbtn);
+            this.groupBox11.Controls.Add(this.displayModeRdbtn);
+            this.groupBox11.Location = new System.Drawing.Point(146, 448);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(83, 75);
+            this.groupBox11.TabIndex = 49;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Mode";
+            // 
+            // displayModeRdbtn
+            // 
+            this.displayModeRdbtn.AutoSize = true;
+            this.displayModeRdbtn.Location = new System.Drawing.Point(7, 19);
+            this.displayModeRdbtn.Name = "displayModeRdbtn";
+            this.displayModeRdbtn.Size = new System.Drawing.Size(59, 17);
+            this.displayModeRdbtn.TabIndex = 0;
+            this.displayModeRdbtn.TabStop = true;
+            this.displayModeRdbtn.Text = "Display";
+            this.displayModeRdbtn.UseVisualStyleBackColor = true;
+            // 
+            // plotModeRdbtn
+            // 
+            this.plotModeRdbtn.AutoSize = true;
+            this.plotModeRdbtn.Location = new System.Drawing.Point(7, 43);
+            this.plotModeRdbtn.Name = "plotModeRdbtn";
+            this.plotModeRdbtn.Size = new System.Drawing.Size(43, 17);
+            this.plotModeRdbtn.TabIndex = 1;
+            this.plotModeRdbtn.TabStop = true;
+            this.plotModeRdbtn.Text = "Plot";
+            this.plotModeRdbtn.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 446);
-            this.Controls.Add(this.stopSendFile);
-            this.Controls.Add(this.sendFileLbl);
-            this.Controls.Add(this.sendFileBtn);
+            this.ClientSize = new System.Drawing.Size(760, 539);
+            this.Controls.Add(this.groupBox11);
+            this.Controls.Add(this.groupBox10);
+            this.Controls.Add(this.groupBox9);
+            this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
             this.Controls.Add(this.sendBtn);
-            this.Controls.Add(this.autoScrollChkBx);
             this.Controls.Add(this.dataInScreenTxt);
             this.Controls.Add(this.clearScreenBtn);
             this.Controls.Add(this.tabControl1);
@@ -958,6 +1121,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Falcon Com Inspector";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -981,6 +1145,14 @@
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1061,6 +1233,20 @@
         private System.Windows.Forms.Label sendFileLbl;
         private System.ComponentModel.BackgroundWorker sendFileWorker;
         private System.Windows.Forms.Button stopSendFile;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.CheckBox detailedChkBx;
+        private System.Windows.Forms.RadioButton bytesRdbtn;
+        private System.Windows.Forms.RadioButton asciiRdbtn;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button searchBtn;
+        private System.Windows.Forms.TextBox searchTxt;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.RadioButton plotModeRdbtn;
+        private System.Windows.Forms.RadioButton displayModeRdbtn;
     }
 }
 

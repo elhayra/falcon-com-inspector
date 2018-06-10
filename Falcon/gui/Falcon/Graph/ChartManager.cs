@@ -41,7 +41,6 @@ namespace Falcon.Graph
     class ChartManager
     {
         public const int MAX_SERIESES = 10;
-        public double LastPointTime = 0; //secs
         public int TailLength = 100;
 
         /* this list also allows keep track after tail length */

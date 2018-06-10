@@ -32,17 +32,8 @@
 *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-using System.Windows.Forms.DataVisualization.Charting;
-using Falcon.Utils;
 using Falcon.Graph;
 using Falcon.Com;
 using System.Diagnostics;
@@ -78,8 +69,9 @@ namespace Falcon.Forms
             if (resultCsv != null && resultCsv.Length > 0)
             {
                 TreeNode root = treeView.Nodes[0];
+                // stop timer for measurment
                 stopwatch_.Stop();
-                ChartManager.Inst.LastPointTime = stopwatch_.ElapsedMilliseconds / 1000.0;
+                double lastTime = stopwatch_.ElapsedMilliseconds / 1000.0;
 
                 foreach (var series in ChartManager.Inst.GetSeriesManagersList())
                 {
@@ -88,11 +80,11 @@ namespace Falcon.Forms
                         switch (series.DataType)
                         {
                             case SeriesManager.Type.BYTES_RATE:
-                                addPointToSeries("Bytes Rate", ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
+                                addPointToSeries("Bytes Rate", lastTime, ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
                                 break;
 
                             case SeriesManager.Type.SETPOINT:
-                                addPointToSeries(series.NameId, series.Setpoint);
+                                addPointToSeries(series.NameId, lastTime, series.Setpoint);
                                 break;
 
                             case SeriesManager.Type.INCOMING_DATA:
@@ -100,7 +92,7 @@ namespace Falcon.Forms
                                 root.Nodes[series.DataIndex].Nodes[0].Text = series.NameId;
                                 root.Nodes[series.DataIndex].Nodes[0].Nodes[0].Text = resultCsv[series.DataIndex].ToString();
 
-                                addPointToSeries(series.NameId, resultCsv[series.DataIndex]);
+                                addPointToSeries(series.NameId, lastTime, resultCsv[series.DataIndex]);
                                 break;
                             default:
                                 ToggleInvalidDataAlert("INVALID DATA", true);
@@ -113,6 +105,7 @@ namespace Falcon.Forms
                     }
                 }
 
+                // resume timer
                 stopwatch_.Start();
             }
             else
@@ -166,9 +159,9 @@ namespace Falcon.Forms
             invalidDataLbl.Visible = onoff;
         }
 
-        private void addPointToSeries(string seriesName, double y)
+        private void addPointToSeries(string seriesName, double x, double y)
         {
-            ChartManager.Inst.AddPointToSeries(seriesName, ChartManager.Inst.LastPointTime, y);
+            ChartManager.Inst.AddPointToSeries(seriesName, x, y);
             ChartManager.Inst.TrimAllToTailSize();
             ChartManager.Inst.UpdateChart();
         }

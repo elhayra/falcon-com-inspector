@@ -454,11 +454,23 @@ namespace Falcon
 
                     bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
-                    string bytesString = System.Text.Encoding.UTF8.GetString(bytes);
+                    string displayStr = "";
+                    if (asciiRdbtn.Checked)
+                        displayStr = Encoding.UTF8.GetString(bytes);
+                    else if (bytesRdbtn.Checked)
+                    {
+                        displayStr = "|";
+                        foreach (byte b in bytes)
+                        {
+                            displayStr += b + "|";
+                        }
+                    }
+
+
                     if (autoScrollChkBx.Checked)
-                        dataInScreenTxt.AppendText(bytesString);
+                        dataInScreenTxt.AppendText(displayStr);
                     else
-                        dataInScreenTxt.Text += bytesString;
+                        dataInScreenTxt.Text += displayStr;
 
                     /* if new line arrived, pass it to graph form */
                     if (graphFrom_ != null &&
@@ -769,6 +781,11 @@ namespace Falcon
             {
                 dataInScreenTxt.SelectAll();
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
