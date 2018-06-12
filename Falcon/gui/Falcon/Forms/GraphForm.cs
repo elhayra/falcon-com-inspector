@@ -80,7 +80,7 @@ namespace Falcon.Forms
                         switch (series.DataType)
                         {
                             case SeriesManager.Type.BYTES_RATE:
-                                addPointToSeries("Bytes Rate", lastTime, ConnectionsManager.Inst.BytesRateCounter.GetRawCounter());
+                                addPointToSeries("Bytes Rate", lastTime, ConnectionsManager.Inst.BytesInRateCounter.GetRawCounter());
                                 break;
 
                             case SeriesManager.Type.SETPOINT:

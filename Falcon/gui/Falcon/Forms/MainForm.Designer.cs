@@ -92,12 +92,14 @@
             this.dataInScreenTxt = new System.Windows.Forms.TextBox();
             this.textToSendCmBx = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.sendingRateLbl = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.serialIndicatorLbl = new System.Windows.Forms.Label();
             this.udpIndicatorLbl = new System.Windows.Forms.Label();
             this.tcpIndicatorLbl = new System.Windows.Forms.Label();
             this.bytesInTimer = new System.Windows.Forms.Timer(this.components);
             this.bytesOutTimer = new System.Windows.Forms.Timer(this.components);
-            this.bytesRateTimer = new System.Windows.Forms.Timer(this.components);
+            this.bytesInRateTimer = new System.Windows.Forms.Timer(this.components);
             this.resetBtn = new System.Windows.Forms.Button();
             this.sendFileBtn = new System.Windows.Forms.Button();
             this.sendFileLbl = new System.Windows.Forms.Label();
@@ -105,18 +107,17 @@
             this.stopSendFile = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.asciiRdbtn = new System.Windows.Forms.RadioButton();
-            this.bytesRdbtn = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.searchTxt = new System.Windows.Forms.TextBox();
-            this.searchBtn = new System.Windows.Forms.Button();
             this.detailedChkBx = new System.Windows.Forms.CheckBox();
+            this.bytesRdbtn = new System.Windows.Forms.RadioButton();
+            this.asciiRdbtn = new System.Windows.Forms.RadioButton();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.searchBtn = new System.Windows.Forms.Button();
+            this.searchTxt = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.displayModeRdbtn = new System.Windows.Forms.RadioButton();
             this.plotModeRdbtn = new System.Windows.Forms.RadioButton();
+            this.displayModeRdbtn = new System.Windows.Forms.RadioButton();
+            this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -812,7 +813,7 @@
             this.dataInScreenTxt.BackColor = System.Drawing.Color.Black;
             this.dataInScreenTxt.Font = new System.Drawing.Font("Miriam Fixed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataInScreenTxt.ForeColor = System.Drawing.Color.LimeGreen;
-            this.dataInScreenTxt.Location = new System.Drawing.Point(146, 58);
+            this.dataInScreenTxt.Location = new System.Drawing.Point(145, 58);
             this.dataInScreenTxt.Multiline = true;
             this.dataInScreenTxt.Name = "dataInScreenTxt";
             this.dataInScreenTxt.ReadOnly = true;
@@ -836,7 +837,7 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.sendingRateLbl);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.serialIndicatorLbl);
             this.groupBox4.Controls.Add(this.udpIndicatorLbl);
@@ -852,6 +853,24 @@
             this.groupBox4.Size = new System.Drawing.Size(605, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
+            // 
+            // sendingRateLbl
+            // 
+            this.sendingRateLbl.AutoSize = true;
+            this.sendingRateLbl.Location = new System.Drawing.Point(370, 8);
+            this.sendingRateLbl.Name = "sendingRateLbl";
+            this.sendingRateLbl.Size = new System.Drawing.Size(33, 13);
+            this.sendingRateLbl.TabIndex = 46;
+            this.sendingRateLbl.Text = "0 B/s";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(320, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 13);
+            this.label4.TabIndex = 45;
+            this.label4.Text = "Tx Rate:";
             // 
             // serialIndicatorLbl
             // 
@@ -899,11 +918,11 @@
             this.bytesOutTimer.Interval = 500;
             this.bytesOutTimer.Tick += new System.EventHandler(this.bytesOutTimer_Tick);
             // 
-            // bytesRateTimer
+            // bytesInRateTimer
             // 
-            this.bytesRateTimer.Enabled = true;
-            this.bytesRateTimer.Interval = 1000;
-            this.bytesRateTimer.Tick += new System.EventHandler(this.bytesRateTimer_Tick);
+            this.bytesInRateTimer.Enabled = true;
+            this.bytesInRateTimer.Interval = 1000;
+            this.bytesInRateTimer.Tick += new System.EventHandler(this.bytesRateTimer_Tick);
             // 
             // resetBtn
             // 
@@ -983,6 +1002,28 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Display";
             // 
+            // detailedChkBx
+            // 
+            this.detailedChkBx.AutoSize = true;
+            this.detailedChkBx.Location = new System.Drawing.Point(122, 44);
+            this.detailedChkBx.Name = "detailedChkBx";
+            this.detailedChkBx.Size = new System.Drawing.Size(65, 17);
+            this.detailedChkBx.TabIndex = 28;
+            this.detailedChkBx.Text = "Detailed";
+            this.toolTip.SetToolTip(this.detailedChkBx, "When message arrives, print details like timestamp in dispay");
+            this.detailedChkBx.UseVisualStyleBackColor = true;
+            // 
+            // bytesRdbtn
+            // 
+            this.bytesRdbtn.AutoSize = true;
+            this.bytesRdbtn.Location = new System.Drawing.Point(7, 43);
+            this.bytesRdbtn.Name = "bytesRdbtn";
+            this.bytesRdbtn.Size = new System.Drawing.Size(99, 17);
+            this.bytesRdbtn.TabIndex = 1;
+            this.bytesRdbtn.Text = "Unsigned Bytes";
+            this.toolTip.SetToolTip(this.bytesRdbtn, "Display incoming bytes as unsigned bytes");
+            this.bytesRdbtn.UseVisualStyleBackColor = true;
+            // 
             // asciiRdbtn
             // 
             this.asciiRdbtn.AutoSize = true;
@@ -996,35 +1037,6 @@
             this.toolTip.SetToolTip(this.asciiRdbtn, "Dispaly incoming bytes as ASCII");
             this.asciiRdbtn.UseVisualStyleBackColor = true;
             // 
-            // bytesRdbtn
-            // 
-            this.bytesRdbtn.AutoSize = true;
-            this.bytesRdbtn.Location = new System.Drawing.Point(7, 43);
-            this.bytesRdbtn.Name = "bytesRdbtn";
-            this.bytesRdbtn.Size = new System.Drawing.Size(99, 17);
-            this.bytesRdbtn.TabIndex = 1;
-            this.bytesRdbtn.Text = "Unsigned Bytes";
-            this.toolTip.SetToolTip(this.bytesRdbtn, "Display incoming bytes as unsigned bytes");
-            this.bytesRdbtn.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(370, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
-            this.label2.TabIndex = 46;
-            this.label2.Text = "0 B/s";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(320, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 13);
-            this.label4.TabIndex = 45;
-            this.label4.Text = "Tx Rate:";
-            // 
             // groupBox10
             // 
             this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1037,13 +1049,6 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Search";
             // 
-            // searchTxt
-            // 
-            this.searchTxt.Location = new System.Drawing.Point(6, 19);
-            this.searchTxt.Name = "searchTxt";
-            this.searchTxt.Size = new System.Drawing.Size(84, 20);
-            this.searchTxt.TabIndex = 0;
-            // 
             // searchBtn
             // 
             this.searchBtn.Location = new System.Drawing.Point(7, 46);
@@ -1053,16 +1058,12 @@
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
             // 
-            // detailedChkBx
+            // searchTxt
             // 
-            this.detailedChkBx.AutoSize = true;
-            this.detailedChkBx.Location = new System.Drawing.Point(122, 44);
-            this.detailedChkBx.Name = "detailedChkBx";
-            this.detailedChkBx.Size = new System.Drawing.Size(65, 17);
-            this.detailedChkBx.TabIndex = 28;
-            this.detailedChkBx.Text = "Detailed";
-            this.toolTip.SetToolTip(this.detailedChkBx, "When message arrives, print details like timestamp in dispay");
-            this.detailedChkBx.UseVisualStyleBackColor = true;
+            this.searchTxt.Location = new System.Drawing.Point(6, 19);
+            this.searchTxt.Name = "searchTxt";
+            this.searchTxt.Size = new System.Drawing.Size(84, 20);
+            this.searchTxt.TabIndex = 0;
             // 
             // groupBox11
             // 
@@ -1075,6 +1076,17 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Mode";
             // 
+            // plotModeRdbtn
+            // 
+            this.plotModeRdbtn.AutoSize = true;
+            this.plotModeRdbtn.Location = new System.Drawing.Point(7, 43);
+            this.plotModeRdbtn.Name = "plotModeRdbtn";
+            this.plotModeRdbtn.Size = new System.Drawing.Size(43, 17);
+            this.plotModeRdbtn.TabIndex = 1;
+            this.plotModeRdbtn.TabStop = true;
+            this.plotModeRdbtn.Text = "Plot";
+            this.plotModeRdbtn.UseVisualStyleBackColor = true;
+            // 
             // displayModeRdbtn
             // 
             this.displayModeRdbtn.AutoSize = true;
@@ -1086,16 +1098,11 @@
             this.displayModeRdbtn.Text = "Display";
             this.displayModeRdbtn.UseVisualStyleBackColor = true;
             // 
-            // plotModeRdbtn
+            // bytesOutRateTimer
             // 
-            this.plotModeRdbtn.AutoSize = true;
-            this.plotModeRdbtn.Location = new System.Drawing.Point(7, 43);
-            this.plotModeRdbtn.Name = "plotModeRdbtn";
-            this.plotModeRdbtn.Size = new System.Drawing.Size(43, 17);
-            this.plotModeRdbtn.TabIndex = 1;
-            this.plotModeRdbtn.TabStop = true;
-            this.plotModeRdbtn.Text = "Plot";
-            this.plotModeRdbtn.UseVisualStyleBackColor = true;
+            this.bytesOutRateTimer.Enabled = true;
+            this.bytesOutRateTimer.Interval = 1000;
+            this.bytesOutRateTimer.Tick += new System.EventHandler(this.bytesOutRateTimer_Tick);
             // 
             // MainForm
             // 
@@ -1227,14 +1234,14 @@
         private System.Windows.Forms.Timer bytesInTimer;
         private System.Windows.Forms.Timer bytesOutTimer;
         private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
-        private System.Windows.Forms.Timer bytesRateTimer;
+        private System.Windows.Forms.Timer bytesInRateTimer;
         private System.Windows.Forms.Button resetBtn;
         private System.Windows.Forms.Button sendFileBtn;
         private System.Windows.Forms.Label sendFileLbl;
         private System.ComponentModel.BackgroundWorker sendFileWorker;
         private System.Windows.Forms.Button stopSendFile;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label sendingRateLbl;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.CheckBox detailedChkBx;
@@ -1247,6 +1254,7 @@
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.RadioButton plotModeRdbtn;
         private System.Windows.Forms.RadioButton displayModeRdbtn;
+        private System.Windows.Forms.Timer bytesOutRateTimer;
     }
 }
 

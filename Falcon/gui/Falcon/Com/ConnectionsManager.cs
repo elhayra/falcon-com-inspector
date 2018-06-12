@@ -55,8 +55,10 @@ namespace Falcon.Com
         public BytesCounter BytesCounter = new BytesCounter();
         public BytesCounter BytesOutCounter = new BytesCounter();
         public BytesCounter BytesInCounter = new BytesCounter();
-        public BytesCounter BytesRateCounter = new BytesCounter();
-        public ulong PrevBytesCount;
+        public BytesCounter BytesInRateCounter = new BytesCounter();
+        public BytesCounter BytesOutRateCounter = new BytesCounter();
+        public ulong PrevBytesInCount;
+        public ulong PrevBytesOutCount;
 
         ConnectionsManager()
         {

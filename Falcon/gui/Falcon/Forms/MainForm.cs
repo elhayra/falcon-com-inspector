@@ -665,14 +665,14 @@ namespace Falcon
         private void bytesRateTimer_Tick(object sender, EventArgs e)
         {
             ulong newBytesCount = ConnectionsManager.Inst.BytesInCounter.GetRawCounter();
-            ConnectionsManager.Inst.BytesRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesCount);
-            ConnectionsManager.Inst.PrevBytesCount = newBytesCount;
+            ConnectionsManager.Inst.BytesInRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesInCount);
+            ConnectionsManager.Inst.PrevBytesInCount = newBytesCount;
 
-            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesRateCounter.RecomendedMeasureUnit();
+            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesRateCounter.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesInRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
             {
                 receivingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
@@ -690,7 +690,7 @@ namespace Falcon
             bytesOutLbl.Text = "0 B";
             ConnectionsManager.Inst.BytesInCounter.Reset();
             ConnectionsManager.Inst.BytesOutCounter.Reset();
-            ConnectionsManager.Inst.PrevBytesCount = 0;
+            ConnectionsManager.Inst.PrevBytesInCount = 0;
         }
 
         private bool ConnectSsh(string hostAddrs, string userName, string password, ref string reply, ref Ssh ssh)
@@ -786,6 +786,23 @@ namespace Falcon
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void bytesOutRateTimer_Tick(object sender, EventArgs e)
+        {
+            ulong newBytesCount = ConnectionsManager.Inst.BytesOutCounter.GetRawCounter();
+            ConnectionsManager.Inst.BytesOutRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesOutCount);
+            ConnectionsManager.Inst.PrevBytesOutCount = newBytesCount;
+
+            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutRateCounter.RecomendedMeasureUnit();
+            var format = "{0:0}";
+            if (mUnit != BytesCounter.MeasureUnit.B)
+                format = "{0:0.00}";
+            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesOutRateCounter.GetProcessedCounter(mUnit));
+            Invoke((MethodInvoker)delegate
+            {
+                sendingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
+            });
         }
     }
 }
