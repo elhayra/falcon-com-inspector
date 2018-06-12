@@ -62,6 +62,8 @@ namespace Falcon
 
         int prevLinesCount_ = 0;
 
+        int searchPos_ = 0;
+
         public MainForm()
         {
             InitializeComponent();
@@ -371,7 +373,7 @@ namespace Falcon
 
         private void clearScreenBtn_Click(object sender, EventArgs e)
         {
-            dataInScreenTxt.Clear();
+            displayTxt.Clear();
             textToSendCmBx.Items.Clear();
             textToSendCmBx.Text = "";
             prevLinesCount_ = 0;
@@ -468,18 +470,18 @@ namespace Falcon
 
 
                     if (autoScrollChkBx.Checked)
-                        dataInScreenTxt.AppendText(displayStr);
+                        displayTxt.AppendText(displayStr);
                     else
-                        dataInScreenTxt.Text += displayStr;
+                        displayTxt.Text += displayStr;
 
                     /* if new line arrived, pass it to graph form */
                     if (graphFrom_ != null &&
-                        dataInScreenTxt.Lines.Any() &&
-                        dataInScreenTxt.Lines.Length >= 2 &&
-                        dataInScreenTxt.Lines.Length != prevLinesCount_)
+                        displayTxt.Lines.Any() &&
+                        displayTxt.Lines.Length >= 2 &&
+                        displayTxt.Lines.Length != prevLinesCount_)
                     {
-                        prevLinesCount_ = dataInScreenTxt.Lines.Length;
-                        string newLine = dataInScreenTxt.Lines[dataInScreenTxt.Lines.Length - 2];
+                        prevLinesCount_ = displayTxt.Lines.Length;
+                        string newLine = displayTxt.Lines[displayTxt.Lines.Length - 2];
                         graphFrom_.OnIncomingData(newLine);
                     }
 
@@ -495,7 +497,7 @@ namespace Falcon
         {
             Invoke((MethodInvoker)delegate
             {
-                dataInScreenTxt.AppendText("> " + txt + "\n");
+                displayTxt.AppendText("> " + txt + "\n");
                 PassOutTxtToHistory();
             });
         }
@@ -652,7 +654,7 @@ namespace Falcon
             if (graphFrom_ == null || graphFrom_.IsDisposed)
             {
                 ChartManager.Inst.Reset();
-                graphFrom_ = new GraphForm(ref dataInScreenTxt);
+                graphFrom_ = new GraphForm(ref displayTxt);
                 graphFrom_.Show();
             }
             else
@@ -710,9 +712,9 @@ namespace Falcon
             Invoke((MethodInvoker)delegate
             {
                 if (autoScrollChkBx.Checked)
-                    dataInScreenTxt.AppendText(msg);
+                    displayTxt.AppendText(msg);
                 else
-                    dataInScreenTxt.Text += msg;
+                    displayTxt.Text += msg;
             });
         }
 
@@ -779,7 +781,7 @@ namespace Falcon
         {
             if (e.Control && e.KeyCode == Keys.A)
             {
-                dataInScreenTxt.SelectAll();
+                displayTxt.SelectAll();
             }
         }
 
@@ -803,6 +805,46 @@ namespace Falcon
             {
                 sendingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
             });
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            searchPos_ = displayTxt.Text.IndexOf(searchTxt.Text);
+            if (searchPos_ != -1)
+            {
+                searchNextBtn.Enabled = true;
+                displayTxt.SelectionStart = searchPos_;
+                displayTxt.SelectionLength = searchTxt.Text.Length;
+                displayTxt.HideSelection = false;
+                searchPos_ += searchTxt.Text.Length;
+            }
+            else
+                searchPos_ = 0;
+        }
+
+        private void searchFwdBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string subStr = displayTxt.Text.Substring(searchPos_, displayTxt.Text.Length - searchPos_);
+                int pos = subStr.IndexOf(searchTxt.Text);
+                if (searchPos_ != -1)
+                {
+                    displayTxt.SelectionStart = pos + searchPos_;
+                    displayTxt.SelectionLength = searchTxt.Text.Length;
+                    displayTxt.HideSelection = false;
+                    searchPos_ += pos + searchPos_ + searchTxt.Text.Length;
+                }
+                if (searchPos_ >= displayTxt.Text.Length)
+                {
+                    searchPos_ = 0;
+                }
+            }
+            catch (ArgumentOutOfRangeException exp) 
+            {
+                searchNextBtn.Enabled = false;
+                return;
+            }
         }
     }
 }

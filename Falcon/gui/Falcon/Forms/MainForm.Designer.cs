@@ -89,7 +89,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoScrollChkBx = new System.Windows.Forms.CheckBox();
-            this.dataInScreenTxt = new System.Windows.Forms.TextBox();
+            this.displayTxt = new System.Windows.Forms.TextBox();
             this.textToSendCmBx = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.sendingRateLbl = new System.Windows.Forms.Label();
@@ -111,6 +111,7 @@
             this.bytesRdbtn = new System.Windows.Forms.RadioButton();
             this.asciiRdbtn = new System.Windows.Forms.RadioButton();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.searchNextBtn = new System.Windows.Forms.Button();
             this.searchBtn = new System.Windows.Forms.Button();
             this.searchTxt = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -805,22 +806,22 @@
             this.toolTip.SetToolTip(this.autoScrollChkBx, "Auto scroll when text reach the button of the display");
             this.autoScrollChkBx.UseVisualStyleBackColor = true;
             // 
-            // dataInScreenTxt
+            // displayTxt
             // 
-            this.dataInScreenTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.displayTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataInScreenTxt.BackColor = System.Drawing.Color.Black;
-            this.dataInScreenTxt.Font = new System.Drawing.Font("Miriam Fixed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataInScreenTxt.ForeColor = System.Drawing.Color.LimeGreen;
-            this.dataInScreenTxt.Location = new System.Drawing.Point(145, 58);
-            this.dataInScreenTxt.Multiline = true;
-            this.dataInScreenTxt.Name = "dataInScreenTxt";
-            this.dataInScreenTxt.ReadOnly = true;
-            this.dataInScreenTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataInScreenTxt.Size = new System.Drawing.Size(601, 356);
-            this.dataInScreenTxt.TabIndex = 29;
-            this.dataInScreenTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
+            this.displayTxt.BackColor = System.Drawing.Color.Black;
+            this.displayTxt.Font = new System.Drawing.Font("Miriam Fixed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.displayTxt.ForeColor = System.Drawing.Color.LimeGreen;
+            this.displayTxt.Location = new System.Drawing.Point(145, 58);
+            this.displayTxt.Multiline = true;
+            this.displayTxt.Name = "displayTxt";
+            this.displayTxt.ReadOnly = true;
+            this.displayTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.displayTxt.Size = new System.Drawing.Size(601, 356);
+            this.displayTxt.TabIndex = 29;
+            this.displayTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
             // textToSendCmBx
             // 
@@ -1040,6 +1041,7 @@
             // groupBox10
             // 
             this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox10.Controls.Add(this.searchNextBtn);
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
             this.groupBox10.Location = new System.Drawing.Point(647, 448);
@@ -1049,14 +1051,25 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Search";
             // 
+            // searchNextBtn
+            // 
+            this.searchNextBtn.Location = new System.Drawing.Point(63, 46);
+            this.searchNextBtn.Name = "searchNextBtn";
+            this.searchNextBtn.Size = new System.Drawing.Size(27, 23);
+            this.searchNextBtn.TabIndex = 2;
+            this.searchNextBtn.Text = ">";
+            this.searchNextBtn.UseVisualStyleBackColor = true;
+            this.searchNextBtn.Click += new System.EventHandler(this.searchFwdBtn_Click);
+            // 
             // searchBtn
             // 
-            this.searchBtn.Location = new System.Drawing.Point(7, 46);
+            this.searchBtn.Location = new System.Drawing.Point(6, 46);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(83, 23);
+            this.searchBtn.Size = new System.Drawing.Size(55, 23);
             this.searchBtn.TabIndex = 1;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
             // searchTxt
             // 
@@ -1118,7 +1131,7 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.textToSendCmBx);
             this.Controls.Add(this.sendBtn);
-            this.Controls.Add(this.dataInScreenTxt);
+            this.Controls.Add(this.displayTxt);
             this.Controls.Add(this.clearScreenBtn);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -1205,7 +1218,7 @@
         private System.Windows.Forms.ComboBox serialStopBitsCmBx;
         private System.Windows.Forms.Button serialComRefreshBtn;
         private System.Windows.Forms.CheckBox autoScrollChkBx;
-        private System.Windows.Forms.TextBox dataInScreenTxt;
+        private System.Windows.Forms.TextBox displayTxt;
         private System.Windows.Forms.ComboBox textToSendCmBx;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1255,6 +1268,7 @@
         private System.Windows.Forms.RadioButton plotModeRdbtn;
         private System.Windows.Forms.RadioButton displayModeRdbtn;
         private System.Windows.Forms.Timer bytesOutRateTimer;
+        private System.Windows.Forms.Button searchNextBtn;
     }
 }
 
