@@ -29,69 +29,69 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode63});
-            System.Windows.Forms.TreeNode treeNode65 = new System.Windows.Forms.TreeNode("index 0", new System.Windows.Forms.TreeNode[] {
-            treeNode64});
-            System.Windows.Forms.TreeNode treeNode66 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode67 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode66});
-            System.Windows.Forms.TreeNode treeNode68 = new System.Windows.Forms.TreeNode("index 1", new System.Windows.Forms.TreeNode[] {
-            treeNode67});
-            System.Windows.Forms.TreeNode treeNode69 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode70 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode69});
-            System.Windows.Forms.TreeNode treeNode71 = new System.Windows.Forms.TreeNode("index 2", new System.Windows.Forms.TreeNode[] {
-            treeNode70});
-            System.Windows.Forms.TreeNode treeNode72 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode73 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode72});
-            System.Windows.Forms.TreeNode treeNode74 = new System.Windows.Forms.TreeNode("index 3", new System.Windows.Forms.TreeNode[] {
-            treeNode73});
-            System.Windows.Forms.TreeNode treeNode75 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode76 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode75});
-            System.Windows.Forms.TreeNode treeNode77 = new System.Windows.Forms.TreeNode("index 4", new System.Windows.Forms.TreeNode[] {
-            treeNode76});
-            System.Windows.Forms.TreeNode treeNode78 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode79 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode78});
-            System.Windows.Forms.TreeNode treeNode80 = new System.Windows.Forms.TreeNode("index 5", new System.Windows.Forms.TreeNode[] {
-            treeNode79});
-            System.Windows.Forms.TreeNode treeNode81 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode82 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode81});
-            System.Windows.Forms.TreeNode treeNode83 = new System.Windows.Forms.TreeNode("index 6", new System.Windows.Forms.TreeNode[] {
-            treeNode82});
-            System.Windows.Forms.TreeNode treeNode84 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode85 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode84});
-            System.Windows.Forms.TreeNode treeNode86 = new System.Windows.Forms.TreeNode("index 7", new System.Windows.Forms.TreeNode[] {
-            treeNode85});
-            System.Windows.Forms.TreeNode treeNode87 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode88 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode87});
-            System.Windows.Forms.TreeNode treeNode89 = new System.Windows.Forms.TreeNode("index 8", new System.Windows.Forms.TreeNode[] {
-            treeNode88});
-            System.Windows.Forms.TreeNode treeNode90 = new System.Windows.Forms.TreeNode("null");
-            System.Windows.Forms.TreeNode treeNode91 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
-            treeNode90});
-            System.Windows.Forms.TreeNode treeNode92 = new System.Windows.Forms.TreeNode("index 9", new System.Windows.Forms.TreeNode[] {
-            treeNode91});
-            System.Windows.Forms.TreeNode treeNode93 = new System.Windows.Forms.TreeNode("Incoming Data", new System.Windows.Forms.TreeNode[] {
-            treeNode65,
-            treeNode68,
-            treeNode71,
-            treeNode74,
-            treeNode77,
-            treeNode80,
-            treeNode83,
-            treeNode86,
-            treeNode89,
-            treeNode92});
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("index 0", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("index 1", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("index 2", new System.Windows.Forms.TreeNode[] {
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("index 3", new System.Windows.Forms.TreeNode[] {
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("index 4", new System.Windows.Forms.TreeNode[] {
+            treeNode14});
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode16});
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("index 5", new System.Windows.Forms.TreeNode[] {
+            treeNode17});
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("index 6", new System.Windows.Forms.TreeNode[] {
+            treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode22});
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("index 7", new System.Windows.Forms.TreeNode[] {
+            treeNode23});
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode25});
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("index 8", new System.Windows.Forms.TreeNode[] {
+            treeNode26});
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("null");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("null", new System.Windows.Forms.TreeNode[] {
+            treeNode28});
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("index 9", new System.Windows.Forms.TreeNode[] {
+            treeNode29});
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Incoming Data", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6,
+            treeNode9,
+            treeNode12,
+            treeNode15,
+            treeNode18,
+            treeNode21,
+            treeNode24,
+            treeNode27,
+            treeNode30});
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphTimer = new System.Windows.Forms.Timer(this.components);
             this.applyBtn = new System.Windows.Forms.Button();
@@ -100,8 +100,10 @@
             this.tailTxt = new System.Windows.Forms.NumericUpDown();
             this.treeView = new System.Windows.Forms.TreeView();
             this.invalidDataLbl = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tailTxt)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart
@@ -110,44 +112,44 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart.BackColor = System.Drawing.Color.Black;
-            chartArea3.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea3.AxisX.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX.Title = "Time (seconds)";
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.AxisX.TitleForeColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisX2.TitleForeColor = System.Drawing.Color.White;
-            chartArea3.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea3.AxisY.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY.Title = "Bytes Per Second";
-            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            chartArea3.AxisY.TitleForeColor = System.Drawing.Color.White;
-            chartArea3.AxisY2.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea3.AxisY2.TitleForeColor = System.Drawing.Color.White;
-            chartArea3.BackColor = System.Drawing.Color.Black;
-            chartArea3.Name = "ChartArea";
-            this.chart.ChartAreas.Add(chartArea3);
-            legend3.BackColor = System.Drawing.Color.Black;
-            legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            legend3.IsTextAutoFit = false;
-            legend3.Name = "Legend";
-            this.chart.Legends.Add(legend3);
+            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.Title = "Time (seconds)";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX2.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.Title = "Bytes Per Second";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.BackColor = System.Drawing.Color.Black;
+            chartArea1.Name = "ChartArea";
+            this.chart.ChartAreas.Add(chartArea1);
+            legend1.BackColor = System.Drawing.Color.Black;
+            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            legend1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend";
+            this.chart.Legends.Add(legend1);
             this.chart.Location = new System.Drawing.Point(171, -1);
             this.chart.Name = "chart";
             this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
@@ -165,11 +167,12 @@
             // 
             // applyBtn
             // 
-            this.applyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.applyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.applyBtn.ForeColor = System.Drawing.Color.Black;
-            this.applyBtn.Location = new System.Drawing.Point(1047, 516);
+            this.applyBtn.Location = new System.Drawing.Point(1068, 8);
             this.applyBtn.Name = "applyBtn";
-            this.applyBtn.Size = new System.Drawing.Size(86, 35);
+            this.applyBtn.Size = new System.Drawing.Size(65, 27);
             this.applyBtn.TabIndex = 7;
             this.applyBtn.Text = "Apply";
             this.applyBtn.UseVisualStyleBackColor = true;
@@ -177,9 +180,10 @@
             // 
             // addRmBtn
             // 
-            this.addRmBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.addRmBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.addRmBtn.ForeColor = System.Drawing.Color.Black;
-            this.addRmBtn.Location = new System.Drawing.Point(1047, 428);
+            this.addRmBtn.Location = new System.Drawing.Point(5, 5);
             this.addRmBtn.Name = "addRmBtn";
             this.addRmBtn.Size = new System.Drawing.Size(86, 35);
             this.addRmBtn.TabIndex = 6;
@@ -189,24 +193,26 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Black;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(1047, 471);
+            this.label2.BackColor = System.Drawing.SystemColors.Control;
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(906, 15);
             this.label2.MaximumSize = new System.Drawing.Size(86, 0);
-            this.label2.MinimumSize = new System.Drawing.Size(86, 0);
+            this.label2.MinimumSize = new System.Drawing.Size(50, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tail Length:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tailTxt
             // 
-            this.tailTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tailTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tailTxt.BackColor = System.Drawing.Color.LightGreen;
-            this.tailTxt.Location = new System.Drawing.Point(1047, 490);
+            this.tailTxt.Location = new System.Drawing.Point(974, 12);
             this.tailTxt.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -231,70 +237,70 @@
             this.treeView.ForeColor = System.Drawing.Color.White;
             this.treeView.Location = new System.Drawing.Point(1, 0);
             this.treeView.Name = "treeView";
-            treeNode63.Name = "data";
-            treeNode63.Text = "null";
-            treeNode64.Name = "name";
-            treeNode64.Text = "null";
-            treeNode65.Name = "index0";
-            treeNode65.Text = "index 0";
-            treeNode66.Name = "data";
-            treeNode66.Text = "null";
-            treeNode67.Name = "name";
-            treeNode67.Text = "null";
-            treeNode68.Name = "index1 ";
-            treeNode68.Text = "index 1";
-            treeNode69.Name = "data";
-            treeNode69.Text = "null";
-            treeNode70.Name = "name";
-            treeNode70.Text = "null";
-            treeNode71.Name = "index2";
-            treeNode71.Text = "index 2";
-            treeNode72.Name = "data";
-            treeNode72.Text = "null";
-            treeNode73.Name = "name";
-            treeNode73.Text = "null";
-            treeNode74.Name = "index3";
-            treeNode74.Text = "index 3";
-            treeNode75.Name = "data";
-            treeNode75.Text = "null";
-            treeNode76.Name = "name";
-            treeNode76.Text = "null";
-            treeNode77.Name = "index4";
-            treeNode77.Text = "index 4";
-            treeNode78.Name = "data";
-            treeNode78.Text = "null";
-            treeNode79.Name = "name";
-            treeNode79.Text = "null";
-            treeNode80.Name = "index5";
-            treeNode80.Text = "index 5";
-            treeNode81.Name = "data";
-            treeNode81.Text = "null";
-            treeNode82.Name = "name";
-            treeNode82.Text = "null";
-            treeNode83.Name = "index6";
-            treeNode83.Text = "index 6";
-            treeNode84.Name = "data";
-            treeNode84.Text = "null";
-            treeNode85.Name = "name";
-            treeNode85.Text = "null";
-            treeNode86.Name = "index7";
-            treeNode86.Text = "index 7";
-            treeNode87.Name = "data";
-            treeNode87.Text = "null";
-            treeNode88.Name = "name";
-            treeNode88.Text = "null";
-            treeNode89.Name = "index8";
-            treeNode89.Text = "index 8";
-            treeNode90.Name = "data";
-            treeNode90.Text = "null";
-            treeNode91.Name = "name";
-            treeNode91.Text = "null";
-            treeNode92.Name = "index9";
-            treeNode92.Text = "index 9";
-            treeNode93.Name = "dataIndexes";
-            treeNode93.Text = "Incoming Data";
+            treeNode1.Name = "data";
+            treeNode1.Text = "null";
+            treeNode2.Name = "name";
+            treeNode2.Text = "null";
+            treeNode3.Name = "index0";
+            treeNode3.Text = "index 0";
+            treeNode4.Name = "data";
+            treeNode4.Text = "null";
+            treeNode5.Name = "name";
+            treeNode5.Text = "null";
+            treeNode6.Name = "index1 ";
+            treeNode6.Text = "index 1";
+            treeNode7.Name = "data";
+            treeNode7.Text = "null";
+            treeNode8.Name = "name";
+            treeNode8.Text = "null";
+            treeNode9.Name = "index2";
+            treeNode9.Text = "index 2";
+            treeNode10.Name = "data";
+            treeNode10.Text = "null";
+            treeNode11.Name = "name";
+            treeNode11.Text = "null";
+            treeNode12.Name = "index3";
+            treeNode12.Text = "index 3";
+            treeNode13.Name = "data";
+            treeNode13.Text = "null";
+            treeNode14.Name = "name";
+            treeNode14.Text = "null";
+            treeNode15.Name = "index4";
+            treeNode15.Text = "index 4";
+            treeNode16.Name = "data";
+            treeNode16.Text = "null";
+            treeNode17.Name = "name";
+            treeNode17.Text = "null";
+            treeNode18.Name = "index5";
+            treeNode18.Text = "index 5";
+            treeNode19.Name = "data";
+            treeNode19.Text = "null";
+            treeNode20.Name = "name";
+            treeNode20.Text = "null";
+            treeNode21.Name = "index6";
+            treeNode21.Text = "index 6";
+            treeNode22.Name = "data";
+            treeNode22.Text = "null";
+            treeNode23.Name = "name";
+            treeNode23.Text = "null";
+            treeNode24.Name = "index7";
+            treeNode24.Text = "index 7";
+            treeNode25.Name = "data";
+            treeNode25.Text = "null";
+            treeNode26.Name = "name";
+            treeNode26.Text = "null";
+            treeNode27.Name = "index8";
+            treeNode27.Text = "index 8";
+            treeNode28.Name = "data";
+            treeNode28.Text = "null";
+            treeNode29.Name = "name";
+            treeNode29.Text = "null";
+            treeNode30.Name = "index9";
+            treeNode30.Text = "index 9";
+            treeNode31.Name = "dataIndexes";
+            treeNode31.Text = "Incoming Data";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode93});
+            treeNode31});
             this.treeView.Size = new System.Drawing.Size(178, 560);
             this.treeView.TabIndex = 8;
             // 
@@ -311,16 +317,26 @@
             this.invalidDataLbl.Text = "INVALID DATA";
             this.invalidDataLbl.Visible = false;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.addRmBtn);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.tailTxt);
+            this.panel1.Controls.Add(this.applyBtn);
+            this.panel1.Location = new System.Drawing.Point(1, 515);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1141, 45);
+            this.panel1.TabIndex = 9;
+            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1141, 558);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.tailTxt);
-            this.Controls.Add(this.applyBtn);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView);
-            this.Controls.Add(this.addRmBtn);
             this.Controls.Add(this.invalidDataLbl);
             this.Controls.Add(this.chart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -333,6 +349,8 @@
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GraphForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tailTxt)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,5 +366,6 @@
         private System.Windows.Forms.Button applyBtn;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.Label invalidDataLbl;
+        private System.Windows.Forms.Panel panel1;
     }
 }

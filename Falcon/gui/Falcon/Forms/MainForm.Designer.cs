@@ -115,9 +115,6 @@
             this.searchBtn = new System.Windows.Forms.Button();
             this.searchTxt = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.plotModeRdbtn = new System.Windows.Forms.RadioButton();
-            this.displayModeRdbtn = new System.Windows.Forms.RadioButton();
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -137,7 +134,6 @@
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
-            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -805,6 +801,7 @@
             this.autoScrollChkBx.Text = "Auto Scroll";
             this.toolTip.SetToolTip(this.autoScrollChkBx, "Auto scroll when text reach the button of the display");
             this.autoScrollChkBx.UseVisualStyleBackColor = true;
+            this.autoScrollChkBx.CheckedChanged += new System.EventHandler(this.autoScrollChkBx_CheckedChanged);
             // 
             // displayTxt
             // 
@@ -982,7 +979,7 @@
             this.groupBox8.Controls.Add(this.sendFileBtn);
             this.groupBox8.Controls.Add(this.sendFileLbl);
             this.groupBox8.Controls.Add(this.stopSendFile);
-            this.groupBox8.Location = new System.Drawing.Point(236, 448);
+            this.groupBox8.Location = new System.Drawing.Point(618, 448);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(128, 75);
             this.groupBox8.TabIndex = 46;
@@ -996,7 +993,7 @@
             this.groupBox9.Controls.Add(this.bytesRdbtn);
             this.groupBox9.Controls.Add(this.asciiRdbtn);
             this.groupBox9.Controls.Add(this.autoScrollChkBx);
-            this.groupBox9.Location = new System.Drawing.Point(370, 448);
+            this.groupBox9.Location = new System.Drawing.Point(252, 448);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(271, 75);
             this.groupBox9.TabIndex = 47;
@@ -1013,6 +1010,7 @@
             this.detailedChkBx.Text = "Detailed";
             this.toolTip.SetToolTip(this.detailedChkBx, "When message arrives, print details like timestamp in dispay");
             this.detailedChkBx.UseVisualStyleBackColor = true;
+            this.detailedChkBx.CheckedChanged += new System.EventHandler(this.detailedChkBx_CheckedChanged);
             // 
             // bytesRdbtn
             // 
@@ -1024,6 +1022,7 @@
             this.bytesRdbtn.Text = "Unsigned Bytes";
             this.toolTip.SetToolTip(this.bytesRdbtn, "Display incoming bytes as unsigned bytes");
             this.bytesRdbtn.UseVisualStyleBackColor = true;
+            this.bytesRdbtn.CheckedChanged += new System.EventHandler(this.bytesRdbtn_CheckedChanged);
             // 
             // asciiRdbtn
             // 
@@ -1037,6 +1036,7 @@
             this.asciiRdbtn.Text = "ASCII";
             this.toolTip.SetToolTip(this.asciiRdbtn, "Dispaly incoming bytes as ASCII");
             this.asciiRdbtn.UseVisualStyleBackColor = true;
+            this.asciiRdbtn.CheckedChanged += new System.EventHandler(this.asciiRdbtn_CheckedChanged);
             // 
             // groupBox10
             // 
@@ -1044,7 +1044,7 @@
             this.groupBox10.Controls.Add(this.searchNextBtn);
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
-            this.groupBox10.Location = new System.Drawing.Point(647, 448);
+            this.groupBox10.Location = new System.Drawing.Point(146, 448);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(100, 75);
             this.groupBox10.TabIndex = 48;
@@ -1078,39 +1078,6 @@
             this.searchTxt.Size = new System.Drawing.Size(84, 20);
             this.searchTxt.TabIndex = 0;
             // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.plotModeRdbtn);
-            this.groupBox11.Controls.Add(this.displayModeRdbtn);
-            this.groupBox11.Location = new System.Drawing.Point(146, 448);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(83, 75);
-            this.groupBox11.TabIndex = 49;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Mode";
-            // 
-            // plotModeRdbtn
-            // 
-            this.plotModeRdbtn.AutoSize = true;
-            this.plotModeRdbtn.Location = new System.Drawing.Point(7, 43);
-            this.plotModeRdbtn.Name = "plotModeRdbtn";
-            this.plotModeRdbtn.Size = new System.Drawing.Size(43, 17);
-            this.plotModeRdbtn.TabIndex = 1;
-            this.plotModeRdbtn.TabStop = true;
-            this.plotModeRdbtn.Text = "Plot";
-            this.plotModeRdbtn.UseVisualStyleBackColor = true;
-            // 
-            // displayModeRdbtn
-            // 
-            this.displayModeRdbtn.AutoSize = true;
-            this.displayModeRdbtn.Location = new System.Drawing.Point(7, 19);
-            this.displayModeRdbtn.Name = "displayModeRdbtn";
-            this.displayModeRdbtn.Size = new System.Drawing.Size(59, 17);
-            this.displayModeRdbtn.TabIndex = 0;
-            this.displayModeRdbtn.TabStop = true;
-            this.displayModeRdbtn.Text = "Display";
-            this.displayModeRdbtn.UseVisualStyleBackColor = true;
-            // 
             // bytesOutRateTimer
             // 
             this.bytesOutRateTimer.Enabled = true;
@@ -1123,7 +1090,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 539);
-            this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
@@ -1171,8 +1137,6 @@
             this.groupBox9.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1264,9 +1228,6 @@
         private System.Windows.Forms.Button searchBtn;
         private System.Windows.Forms.TextBox searchTxt;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.GroupBox groupBox11;
-        private System.Windows.Forms.RadioButton plotModeRdbtn;
-        private System.Windows.Forms.RadioButton displayModeRdbtn;
         private System.Windows.Forms.Timer bytesOutRateTimer;
         private System.Windows.Forms.Button searchNextBtn;
     }

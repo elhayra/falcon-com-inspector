@@ -154,5 +154,29 @@ namespace Falcon.Properties {
                 this["autoScroll"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool displayASCII {
+            get {
+                return ((bool)(this["displayASCII"]));
+            }
+            set {
+                this["displayASCII"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool displayDetailed {
+            get {
+                return ((bool)(this["displayDetailed"]));
+            }
+            set {
+                this["displayDetailed"] = value;
+            }
+        }
     }
 }

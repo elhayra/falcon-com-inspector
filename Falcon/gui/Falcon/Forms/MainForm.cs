@@ -83,6 +83,7 @@ namespace Falcon
             LoadSerialSettigns();
             LoadTcpSettings();
             LoadUdpSettings();
+            LoadGlobalSettings();
         }
 
         private void UpdateSerialPorts()
@@ -189,6 +190,14 @@ namespace Falcon
             Properties.Settings.Default.serialParity = serialParityCmBx.Text;
             Properties.Settings.Default.serialStopBits = serialStopBitsCmBx.Text;
             SaveProperties();
+        }
+
+        private void LoadGlobalSettings()
+        {
+            asciiRdbtn.Checked = Properties.Settings.Default.displayASCII;
+            bytesRdbtn.Checked = !asciiRdbtn.Checked;
+            detailedChkBx.Checked = Properties.Settings.Default.displayDetailed;
+            autoScrollChkBx.Checked = Properties.Settings.Default.autoScroll;
         }
 
         private void LoadSerialSettigns()
@@ -732,7 +741,7 @@ namespace Falcon
         }
 
         private void sendFileWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
+        { 
             var lines = File.ReadAllLines(@fileToSendPath_);
             fileToSendPath_ = ""; 
             int iter_count = 1;
@@ -845,6 +854,30 @@ namespace Falcon
                 searchNextBtn.Enabled = false;
                 return;
             }
+        }
+
+        private void asciiRdbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.displayASCII = true;
+            SaveProperties();
+        }
+
+        private void bytesRdbtn_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.displayASCII = false;
+            SaveProperties();
+        }
+
+        private void autoScrollChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.autoScroll = autoScrollChkBx.Checked;
+            SaveProperties();
+        }
+
+        private void detailedChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.displayDetailed = detailedChkBx.Checked;
+            SaveProperties();
         }
     }
 }
