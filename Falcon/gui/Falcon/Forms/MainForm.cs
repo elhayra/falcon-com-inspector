@@ -198,6 +198,7 @@ namespace Falcon
             bytesRdbtn.Checked = !asciiRdbtn.Checked;
             detailedChkBx.Checked = Properties.Settings.Default.displayDetailed;
             autoScrollChkBx.Checked = Properties.Settings.Default.autoScroll;
+            newLineChkBx.Checked = Properties.Settings.Default.newLine;
         }
 
         private void LoadSerialSettigns()
@@ -443,6 +444,11 @@ namespace Falcon
             AppendBytesToTerminal(bytes);            
         }
 
+        public static string GetTime()
+        {
+            return DateTime.Now.ToString("hh-mm-ss.fff");
+        }
+
         private void AppendBytesToTerminal(byte[] bytes)
         {
             if (bytes.Length == 0)
@@ -466,11 +472,14 @@ namespace Falcon
                     bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
                     string displayStr = "";
+                    if (detailedChkBx.Checked)
+                        displayStr = "[" + GetTime() + "]: ";
+
                     if (asciiRdbtn.Checked)
-                        displayStr = Encoding.UTF8.GetString(bytes);
-                    else if (bytesRdbtn.Checked)
+                        displayStr += Encoding.UTF8.GetString(bytes);
+                    else //bytesRdbtn.Checked
                     {
-                        displayStr = "|";
+                        displayStr += "|";
                         foreach (byte b in bytes)
                         {
                             displayStr += b + "|";
@@ -482,6 +491,9 @@ namespace Falcon
                         displayTxt.AppendText(displayStr);
                     else
                         displayTxt.Text += displayStr;
+
+                    if (newLineChkBx.Checked)
+                        displayTxt.AppendText(Environment.NewLine);
 
                     /* if new line arrived, pass it to graph form */
                     if (graphFrom_ != null &&
@@ -877,6 +889,12 @@ namespace Falcon
         private void detailedChkBx_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.displayDetailed = detailedChkBx.Checked;
+            SaveProperties();
+        }
+
+        private void newLineChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.newLine = newLineChkBx.Checked;
             SaveProperties();
         }
     }
