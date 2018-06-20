@@ -966,7 +966,7 @@
             // 
             this.stopSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.stopSendFile.Enabled = false;
-            this.stopSendFile.Location = new System.Drawing.Point(66, 40);
+            this.stopSendFile.Location = new System.Drawing.Point(66, 38);
             this.stopSendFile.Name = "stopSendFile";
             this.stopSendFile.Size = new System.Drawing.Size(51, 22);
             this.stopSendFile.TabIndex = 45;
