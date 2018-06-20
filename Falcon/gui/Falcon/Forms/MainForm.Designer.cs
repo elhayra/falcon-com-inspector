@@ -663,8 +663,10 @@
             // serialComCmBx
             // 
             this.serialComCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serialComCmBx.DropDownWidth = 200;
             this.serialComCmBx.FormattingEnabled = true;
             this.serialComCmBx.Location = new System.Drawing.Point(7, 33);
+            this.serialComCmBx.MaxDropDownItems = 15;
             this.serialComCmBx.Name = "serialComCmBx";
             this.serialComCmBx.Size = new System.Drawing.Size(98, 21);
             this.serialComCmBx.TabIndex = 4;

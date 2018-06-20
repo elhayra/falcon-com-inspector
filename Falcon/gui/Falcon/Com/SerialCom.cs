@@ -35,6 +35,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO.Ports;
+using System.Management;
+
 
 namespace Falcon.Com
 {
@@ -42,16 +44,16 @@ namespace Falcon.Com
     {
         private bool connected_ = false;
         List<Action<byte[]>> subsList_ = new List<Action<byte[]>>();
-   
+
         public bool Connect(string port, int baudRate)
         {
             return Connect(port, baudRate, Parity.None, 8, StopBits.One);
         }
 
-        public bool Connect(string port, 
-                            int baudRate, 
-                            Parity parity, 
-                            int dataBits, 
+        public bool Connect(string port,
+                            int baudRate,
+                            Parity parity,
+                            int dataBits,
                             StopBits stopBits)
         {
             BaudRate = baudRate;
@@ -59,7 +61,7 @@ namespace Falcon.Com
             Parity = parity;
             DataBits = dataBits;
             StopBits = stopBits;
-            
+
 
             try
             {
@@ -125,9 +127,85 @@ namespace Falcon.Com
             }
         }
 
+
+        /// <summary>
+        /// Get connected COM port names
+        /// </summary>
+        /// <returns>array of connected COM ports</returns>
         public static string[] GetConnectedPorts()
         {
-            return SerialPort.GetPortNames().Distinct().ToArray();
+            return GetPortNames().Distinct().ToArray();
+        }
+
+        /// <summary>
+        /// Get detailed collection of connected COM port objects
+        /// </summary>
+        /// <returns>collection of connected COM ports objects</returns>
+        public static List<ManagementBaseObject> GetConnectedPortsDetailedList()
+        {
+            ManagementObjectCollection portsCollection;
+            List<ManagementBaseObject> comPortsList;
+
+            using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_PnPEntity"))
+            {
+                portsCollection = searcher.Get();
+                comPortsList = new List<ManagementBaseObject>();
+
+                foreach (var device in portsCollection)
+                {
+                    // verify port is COM port
+                    string name = (String)device.GetPropertyValue("Name");
+                    if (name != null && name.Contains("(COM"))
+                    {
+                        comPortsList.Add(device);
+                    }
+                }
+            }
+
+            return comPortsList;
+        }
+
+        /// <summary>
+        /// Get port simplefied name. i.e. 'COM3'
+        /// </summary>
+        /// <param name="detailedPort">string of port details</param>
+        /// <returns>port simplefied name</returns>
+        public static string DetailedToSimplefiedPortName(string detailedPort)
+        {
+            int startIndx = detailedPort.IndexOf('(');
+            int endIndx = detailedPort.IndexOf(')');
+            int portNameLength = endIndx - startIndx - 1;
+            string simplefiedPortName = detailedPort.Substring(startIndx + 1, portNameLength);
+
+            if (startIndx == -1 ||
+               endIndx == -1 ||
+               startIndx >= endIndx ||
+               portNameLength < 4 ||
+               !simplefiedPortName.Contains("COM"))
+            {
+                return null;
+            }
+
+            return simplefiedPortName;
+        }
+
+        /// <summary>
+        /// Get detailed list of connected COM ports strings
+        /// </summary>
+        /// <returns>List of connected COM ports strings</returns>
+        public static List<string> GetConnectedPortsDetailedStrings()
+        {
+            List<string> portsStrings = new List<string>();
+            List<ManagementBaseObject> comPorts = GetConnectedPortsDetailedList();
+
+            foreach (var comDevice in comPorts)
+            {
+                string detailedPort = (String)comDevice.GetPropertyValue("Name");
+
+                portsStrings.Add(detailedPort);
+            }
+
+            return portsStrings;
         }
 
         public static Parity StringToParity(string parity)
@@ -165,6 +243,7 @@ namespace Falcon.Com
                     return StopBits.None;
             }
         }
+
     }
 }
 

@@ -89,11 +89,14 @@ namespace Falcon
         private void UpdateSerialPorts()
         {
             serialComCmBx.Items.Clear();
-            var availablePorts = SerialCom.GetConnectedPorts();
-            serialComCmBx.Items.AddRange(availablePorts);
+            var availablePorts = SerialCom.GetConnectedPortsDetailedStrings();
+            serialComCmBx.Items.AddRange(availablePorts.ToArray());
             if (serialComCmBx.Items.Count > 0)
                 serialComCmBx.SelectedIndex = 0;
         }
+
+
+     
 
         private void tcpConnectBtn_Click(object sender, EventArgs e)
         {
@@ -391,23 +394,36 @@ namespace Falcon
 
         private void serialConnectBtn_Click(object sender, EventArgs e)
         {
-            SaveSerialSettings();
-            string port = serialComCmBx.Text;
-            bool failed = false;
-            if (port == "")
+            // no port was selected
+            if (serialComCmBx.Text == "")
             {
                 MsgBox.WarningMsg("Serial Connection Failed", "No port was selected");
                 serialConnectionStateLbl.Text = "Failed";
                 serialConnectionStateLbl.BackColor = Color.Tomato;
                 return;
             }
+
+            SaveSerialSettings();
+            string detailedPort = serialComCmBx.Text;
+            string portName = SerialCom.DetailedToSimplefiedPortName(detailedPort);
+
+            // selected port is not a serial port (doesn't contain 'COM')
+            if (portName == null)
+            {
+                MsgBox.WarningMsg("Serial Connection Failed", "Invalid port");
+                serialConnectionStateLbl.Text = "Failed";
+                serialConnectionStateLbl.BackColor = Color.Tomato;
+                return;
+            }
+         
+
             int baud = int.Parse(serialBaudCmBx.SelectedItem.ToString());
             StopBits stopBits = SerialCom.StringToStopBits(serialStopBitsCmBx.SelectedItem.ToString());
             int dataBits = (int)serialDataBitsTxt.Value;
             Parity parity = SerialCom.StringToParity(serialParityCmBx.SelectedItem.ToString());
 
             ConnectionsManager.Inst.InitSerial();
-            if (ConnectionsManager.Inst.Serial.Connect(port, baud, parity, dataBits, stopBits))
+            if (ConnectionsManager.Inst.Serial.Connect(portName, baud, parity, dataBits, stopBits))
             {
                 serialConnectionStateLbl.Text = "Connected";
                 serialConnectionStateLbl.BackColor = Color.LimeGreen;
