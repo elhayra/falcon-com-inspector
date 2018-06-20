@@ -107,6 +107,7 @@
             this.stopSendFile = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.newLineChkBx = new System.Windows.Forms.CheckBox();
             this.detailedChkBx = new System.Windows.Forms.CheckBox();
             this.bytesRdbtn = new System.Windows.Forms.RadioButton();
             this.asciiRdbtn = new System.Windows.Forms.RadioButton();
@@ -116,7 +117,6 @@
             this.searchTxt = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
-            this.newLineChkBx = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -980,9 +980,9 @@
             this.groupBox8.Controls.Add(this.sendFileBtn);
             this.groupBox8.Controls.Add(this.sendFileLbl);
             this.groupBox8.Controls.Add(this.stopSendFile);
-            this.groupBox8.Location = new System.Drawing.Point(618, 448);
+            this.groupBox8.Location = new System.Drawing.Point(449, 452);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(128, 75);
+            this.groupBox8.Size = new System.Drawing.Size(124, 75);
             this.groupBox8.TabIndex = 46;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Send File";
@@ -995,12 +995,28 @@
             this.groupBox9.Controls.Add(this.bytesRdbtn);
             this.groupBox9.Controls.Add(this.asciiRdbtn);
             this.groupBox9.Controls.Add(this.autoScrollChkBx);
-            this.groupBox9.Location = new System.Drawing.Point(252, 448);
+            this.groupBox9.Location = new System.Drawing.Point(146, 452);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(297, 75);
             this.groupBox9.TabIndex = 47;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Display";
+            // 
+            // newLineChkBx
+            // 
+            this.newLineChkBx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.newLineChkBx.AutoSize = true;
+            this.newLineChkBx.Checked = true;
+            this.newLineChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.newLineChkBx.Location = new System.Drawing.Point(220, 20);
+            this.newLineChkBx.Name = "newLineChkBx";
+            this.newLineChkBx.Size = new System.Drawing.Size(71, 17);
+            this.newLineChkBx.TabIndex = 29;
+            this.newLineChkBx.Tag = "";
+            this.newLineChkBx.Text = "New Line";
+            this.toolTip.SetToolTip(this.newLineChkBx, "Add new line characters (\'\\r\\n\') at the end of each message");
+            this.newLineChkBx.UseVisualStyleBackColor = true;
+            this.newLineChkBx.CheckedChanged += new System.EventHandler(this.newLineChkBx_CheckedChanged);
             // 
             // detailedChkBx
             // 
@@ -1042,20 +1058,20 @@
             // 
             // groupBox10
             // 
-            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox10.Controls.Add(this.searchNextBtn);
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
-            this.groupBox10.Location = new System.Drawing.Point(146, 448);
+            this.groupBox10.Location = new System.Drawing.Point(579, 452);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(100, 75);
+            this.groupBox10.Size = new System.Drawing.Size(167, 75);
             this.groupBox10.TabIndex = 48;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Search";
             // 
             // searchNextBtn
             // 
-            this.searchNextBtn.Location = new System.Drawing.Point(63, 46);
+            this.searchNextBtn.Location = new System.Drawing.Point(134, 46);
             this.searchNextBtn.Name = "searchNextBtn";
             this.searchNextBtn.Size = new System.Drawing.Size(27, 23);
             this.searchNextBtn.TabIndex = 2;
@@ -1067,7 +1083,7 @@
             // 
             this.searchBtn.Location = new System.Drawing.Point(6, 46);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(55, 23);
+            this.searchBtn.Size = new System.Drawing.Size(122, 23);
             this.searchBtn.TabIndex = 1;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
@@ -1077,7 +1093,7 @@
             // 
             this.searchTxt.Location = new System.Drawing.Point(6, 19);
             this.searchTxt.Name = "searchTxt";
-            this.searchTxt.Size = new System.Drawing.Size(84, 20);
+            this.searchTxt.Size = new System.Drawing.Size(155, 20);
             this.searchTxt.TabIndex = 0;
             // 
             // bytesOutRateTimer
@@ -1085,22 +1101,6 @@
             this.bytesOutRateTimer.Enabled = true;
             this.bytesOutRateTimer.Interval = 1000;
             this.bytesOutRateTimer.Tick += new System.EventHandler(this.bytesOutRateTimer_Tick);
-            // 
-            // newLineChkBx
-            // 
-            this.newLineChkBx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.newLineChkBx.AutoSize = true;
-            this.newLineChkBx.Checked = true;
-            this.newLineChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.newLineChkBx.Location = new System.Drawing.Point(220, 20);
-            this.newLineChkBx.Name = "newLineChkBx";
-            this.newLineChkBx.Size = new System.Drawing.Size(71, 17);
-            this.newLineChkBx.TabIndex = 29;
-            this.newLineChkBx.Tag = "";
-            this.newLineChkBx.Text = "New Line";
-            this.toolTip.SetToolTip(this.newLineChkBx, "Add new line characters (\'\\r\\n\') at the end of each message");
-            this.newLineChkBx.UseVisualStyleBackColor = true;
-            this.newLineChkBx.CheckedChanged += new System.EventHandler(this.newLineChkBx_CheckedChanged);
             // 
             // MainForm
             // 
