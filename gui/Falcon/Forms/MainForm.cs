@@ -32,9 +32,7 @@
 *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -48,6 +46,7 @@ using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using Falcon.Graph;
+using System.Collections.Generic;
 
 namespace Falcon
 {
@@ -63,6 +62,8 @@ namespace Falcon
         int prevLinesCount_ = 0;
 
         int searchPos_ = 0;
+
+        List<string> connectedSerialPorts;
 
         public MainForm()
         {
@@ -86,11 +87,47 @@ namespace Falcon
             LoadGlobalSettings();
         }
 
+        /// <summary>
+        /// Update serialComCmBx items, and keep existing 
+        /// ports at their current index in the list
+        /// </summary>
         private void UpdateSerialPorts()
         {
-            serialComCmBx.Items.Clear();
-            var availablePorts = SerialCom.GetConnectedPortsDetailedStrings();
-            serialComCmBx.Items.AddRange(availablePorts.ToArray());
+            var t = Task.Run(delegate
+            {
+                // the following function is a blocking one, therefore must be 
+                // called in a seperate thread so GUI won't freeze
+                connectedSerialPorts = SerialCom.GetConnectedPortsDetailedStrings();
+            });
+
+            if (connectedSerialPorts == null)
+                return;
+
+            // create a clone of serialComCmBx.Items to allow
+            // modifying serialComCmBx.Items while iterating
+            // over its elements
+            List<string> portsListClone = new List<string>();
+            foreach (string port in serialComCmBx.Items)
+                portsListClone.Add(port);
+
+            //remove disconnected ports from combobox
+            foreach (string port in portsListClone)
+            {
+                if (!connectedSerialPorts.Contains(port))
+                {
+                    serialComCmBx.Items.Remove(port);
+                }
+            }
+
+            // add new connected ports the combobox
+            foreach (string port in connectedSerialPorts)
+            {
+                if (!serialComCmBx.Items.Contains(port))
+                {
+                    serialComCmBx.Items.Add(port);
+                }
+            }
+
             if (serialComCmBx.Items.Count > 0)
                 serialComCmBx.SelectedIndex = 0;
         }
@@ -425,6 +462,7 @@ namespace Falcon
             ConnectionsManager.Inst.InitSerial();
             if (ConnectionsManager.Inst.Serial.Connect(portName, baud, parity, dataBits, stopBits))
             {
+                serialPortLbl.Text = portName;
                 serialConnectionStateLbl.Text = "Connected";
                 serialConnectionStateLbl.BackColor = Color.LimeGreen;
                 serialIndicatorLbl.BackColor = Color.LimeGreen;
@@ -450,6 +488,7 @@ namespace Falcon
             });
             serialDisconnectBtn.Enabled = false;
             serialConnectBtn.Enabled = true;
+            serialPortLbl.Text = "-";
             serialConnectionStateLbl.Text = "Disconnected";
             serialConnectionStateLbl.BackColor = SystemColors.Control;
             serialIndicatorLbl.BackColor = SystemColors.Control;
@@ -912,6 +951,14 @@ namespace Falcon
         {
             Properties.Settings.Default.newLine = newLineChkBx.Checked;
             SaveProperties();
+        }
+
+        /// <summary>
+        /// auto update serialComCmBx with serial ports data
+        /// </summary>
+        private void serialPortsTimer_Tick(object sender, EventArgs e)
+        {
+           UpdateSerialPorts();
         }
     }
 }

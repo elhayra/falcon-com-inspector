@@ -117,6 +117,8 @@
             this.searchTxt = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
+            this.serialPortsTimer = new System.Windows.Forms.Timer(this.components);
+            this.serialPortLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -468,7 +470,7 @@
             this.groupBox2.Controls.Add(this.serialConnectBtn);
             this.groupBox2.Controls.Add(this.serialDisconnectBtn);
             this.groupBox2.Controls.Add(this.serialConnectionStateLbl);
-            this.groupBox2.Location = new System.Drawing.Point(6, 264);
+            this.groupBox2.Location = new System.Drawing.Point(6, 279);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(111, 104);
             this.groupBox2.TabIndex = 19;
@@ -511,6 +513,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.serialPortLbl);
             this.groupBox1.Controls.Add(this.serialComRefreshBtn);
             this.groupBox1.Controls.Add(this.serialParityCmBx);
             this.groupBox1.Controls.Add(this.label8);
@@ -524,14 +527,14 @@
             this.groupBox1.Controls.Add(this.serialComCmBx);
             this.groupBox1.Location = new System.Drawing.Point(6, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(111, 254);
+            this.groupBox1.Size = new System.Drawing.Size(111, 270);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
             // serialComRefreshBtn
             // 
-            this.serialComRefreshBtn.Location = new System.Drawing.Point(7, 57);
+            this.serialComRefreshBtn.Location = new System.Drawing.Point(7, 63);
             this.serialComRefreshBtn.Name = "serialComRefreshBtn";
             this.serialComRefreshBtn.Size = new System.Drawing.Size(98, 23);
             this.serialComRefreshBtn.TabIndex = 25;
@@ -549,7 +552,7 @@
             "Even ",
             "Mark",
             "Space"});
-            this.serialParityCmBx.Location = new System.Drawing.Point(7, 225);
+            this.serialParityCmBx.Location = new System.Drawing.Point(7, 231);
             this.serialParityCmBx.Name = "serialParityCmBx";
             this.serialParityCmBx.Size = new System.Drawing.Size(99, 21);
             this.serialParityCmBx.TabIndex = 7;
@@ -557,7 +560,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(4, 209);
+            this.label8.Location = new System.Drawing.Point(4, 215);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(36, 13);
             this.label8.TabIndex = 3;
@@ -572,7 +575,7 @@
             "1",
             "1.5",
             "2"});
-            this.serialStopBitsCmBx.Location = new System.Drawing.Point(6, 185);
+            this.serialStopBitsCmBx.Location = new System.Drawing.Point(6, 191);
             this.serialStopBitsCmBx.Name = "serialStopBitsCmBx";
             this.serialStopBitsCmBx.Size = new System.Drawing.Size(99, 21);
             this.serialStopBitsCmBx.TabIndex = 24;
@@ -580,7 +583,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 169);
+            this.label7.Location = new System.Drawing.Point(4, 175);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 2;
@@ -606,14 +609,14 @@
             "115200",
             "128000",
             "256000"});
-            this.serialBaudCmBx.Location = new System.Drawing.Point(6, 106);
+            this.serialBaudCmBx.Location = new System.Drawing.Point(6, 112);
             this.serialBaudCmBx.Name = "serialBaudCmBx";
             this.serialBaudCmBx.Size = new System.Drawing.Size(99, 21);
             this.serialBaudCmBx.TabIndex = 5;
             // 
             // serialDataBitsTxt
             // 
-            this.serialDataBitsTxt.Location = new System.Drawing.Point(6, 146);
+            this.serialDataBitsTxt.Location = new System.Drawing.Point(6, 152);
             this.serialDataBitsTxt.Maximum = new decimal(new int[] {
             8,
             0,
@@ -636,7 +639,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 90);
+            this.label6.Location = new System.Drawing.Point(3, 96);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 1;
@@ -654,7 +657,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 130);
+            this.label9.Location = new System.Drawing.Point(3, 136);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 13);
             this.label9.TabIndex = 22;
@@ -665,7 +668,7 @@
             this.serialComCmBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serialComCmBx.DropDownWidth = 200;
             this.serialComCmBx.FormattingEnabled = true;
-            this.serialComCmBx.Location = new System.Drawing.Point(7, 33);
+            this.serialComCmBx.Location = new System.Drawing.Point(7, 39);
             this.serialComCmBx.MaxDropDownItems = 15;
             this.serialComCmBx.Name = "serialComCmBx";
             this.serialComCmBx.Size = new System.Drawing.Size(98, 21);
@@ -939,7 +942,7 @@
             // sendFileBtn
             // 
             this.sendFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.sendFileBtn.Location = new System.Drawing.Point(9, 40);
+            this.sendFileBtn.Location = new System.Drawing.Point(6, 47);
             this.sendFileBtn.Name = "sendFileBtn";
             this.sendFileBtn.Size = new System.Drawing.Size(51, 22);
             this.sendFileBtn.TabIndex = 43;
@@ -968,7 +971,7 @@
             // 
             this.stopSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.stopSendFile.Enabled = false;
-            this.stopSendFile.Location = new System.Drawing.Point(66, 38);
+            this.stopSendFile.Location = new System.Drawing.Point(66, 47);
             this.stopSendFile.Name = "stopSendFile";
             this.stopSendFile.Size = new System.Drawing.Size(51, 22);
             this.stopSendFile.TabIndex = 45;
@@ -1103,6 +1106,21 @@
             this.bytesOutRateTimer.Enabled = true;
             this.bytesOutRateTimer.Interval = 1000;
             this.bytesOutRateTimer.Tick += new System.EventHandler(this.bytesOutRateTimer_Tick);
+            // 
+            // serialPortsTimer
+            // 
+            this.serialPortsTimer.Enabled = true;
+            this.serialPortsTimer.Interval = 1000;
+            this.serialPortsTimer.Tick += new System.EventHandler(this.serialPortsTimer_Tick);
+            // 
+            // serialPortLbl
+            // 
+            this.serialPortLbl.AutoSize = true;
+            this.serialPortLbl.Location = new System.Drawing.Point(41, 17);
+            this.serialPortLbl.Name = "serialPortLbl";
+            this.serialPortLbl.Size = new System.Drawing.Size(10, 13);
+            this.serialPortLbl.TabIndex = 26;
+            this.serialPortLbl.Text = "-";
             // 
             // MainForm
             // 
@@ -1251,6 +1269,8 @@
         private System.Windows.Forms.Timer bytesOutRateTimer;
         private System.Windows.Forms.Button searchNextBtn;
         private System.Windows.Forms.CheckBox newLineChkBx;
+        private System.Windows.Forms.Timer serialPortsTimer;
+        private System.Windows.Forms.Label serialPortLbl;
     }
 }
 
