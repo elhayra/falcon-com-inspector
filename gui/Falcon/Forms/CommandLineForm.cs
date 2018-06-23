@@ -33,7 +33,7 @@ namespace Falcon.Forms
 
         private void PrintLinePrefix()
         {
-            PrintToScreen(CLI_PREFIX_TEXT, true);
+            PrintToScreen(CLI_PREFIX_TEXT, Color.LawnGreen, true);
         }
 
         private void cliDisplayTxtBx_KeyPress(object sender, KeyPressEventArgs e)
@@ -49,12 +49,23 @@ namespace Falcon.Forms
             }
         }
 
-        private void PrintToScreen(string text, bool append)
+        /// <summary>
+        /// Print text to CLI display. All printings should be done throught this function
+        /// </summary>
+        /// <param name="text">text to print</param>
+        /// <param name="append">appen text or overwrite existing text with this</param>
+        private void PrintToScreen(string text, Color color, bool append)
         {
             if (append)
-                cliDisplayTxtBx.Text += text;
+                RichTextBoxExtensions.AppendText(cliDisplayTxtBx, text, color);
             else
-                cliDisplayTxtBx.Text = text;
+            {
+                cliDisplayTxtBx.Text = "";
+                RichTextBoxExtensions.AppendText(cliDisplayTxtBx, text, color);
+            }
+
+
+
             ProtectCliPrefixText();
         }
 
@@ -63,6 +74,11 @@ namespace Falcon.Forms
             ProtectCliPrefixText();
         }
 
+        /// <summary>
+        /// Protect CLI prefix text from being selected or edited.
+        /// If trying to select prefix text, this function will move
+        /// cursor to an index after prefix text in the current line
+        /// </summary>
         private void ProtectCliPrefixText()
         {
             int selectionIndex = cliDisplayTxtBx.SelectionStart + 1;
@@ -76,6 +92,19 @@ namespace Falcon.Forms
                 if (lineRelativeSelection <= CLI_PREFIX_TEXT.Length)
                     cliDisplayTxtBx.SelectionStart = lineStartIndex + CLI_PREFIX_TEXT.Length;
             }
+        }
+    }
+
+    public static class RichTextBoxExtensions
+    {
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
         }
     }
 }
