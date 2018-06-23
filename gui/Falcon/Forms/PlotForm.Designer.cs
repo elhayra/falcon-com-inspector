@@ -1,6 +1,6 @@
 ﻿namespace Falcon.Forms
 {
-    partial class GraphForm
+    partial class PlotForm
     {
         /// <summary>
         /// Required designer variable.
@@ -153,7 +153,7 @@
             this.chart.Location = new System.Drawing.Point(171, -1);
             this.chart.Name = "chart";
             this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            this.chart.Size = new System.Drawing.Size(971, 561);
+            this.chart.Size = new System.Drawing.Size(811, 561);
             this.chart.TabIndex = 2;
             this.chart.Text = "chart";
             this.chart.MouseEnter += new System.EventHandler(this.chart_MouseEnter);
@@ -170,7 +170,7 @@
             this.applyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.applyBtn.ForeColor = System.Drawing.Color.Black;
-            this.applyBtn.Location = new System.Drawing.Point(1068, 8);
+            this.applyBtn.Location = new System.Drawing.Point(908, 8);
             this.applyBtn.Name = "applyBtn";
             this.applyBtn.Size = new System.Drawing.Size(65, 27);
             this.applyBtn.TabIndex = 7;
@@ -198,7 +198,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(906, 15);
+            this.label2.Location = new System.Drawing.Point(746, 15);
             this.label2.MaximumSize = new System.Drawing.Size(86, 0);
             this.label2.MinimumSize = new System.Drawing.Size(50, 0);
             this.label2.Name = "label2";
@@ -212,7 +212,7 @@
             this.tailTxt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tailTxt.BackColor = System.Drawing.Color.LightGreen;
-            this.tailTxt.Location = new System.Drawing.Point(974, 12);
+            this.tailTxt.Location = new System.Drawing.Point(814, 12);
             this.tailTxt.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -327,14 +327,14 @@
             this.panel1.Controls.Add(this.applyBtn);
             this.panel1.Location = new System.Drawing.Point(1, 515);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1141, 45);
+            this.panel1.Size = new System.Drawing.Size(981, 45);
             this.panel1.TabIndex = 9;
             // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1141, 558);
+            this.ClientSize = new System.Drawing.Size(981, 558);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.invalidDataLbl);

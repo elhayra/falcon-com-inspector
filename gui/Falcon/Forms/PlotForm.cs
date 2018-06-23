@@ -40,14 +40,14 @@ using System.Diagnostics;
 
 namespace Falcon.Forms
 {
-    public partial class GraphForm : Form
+    public partial class PlotForm : Form
     {
         SeriesForm seriesFrom_;
         Stopwatch stopwatch_;
 
         bool gotData_ = false;
 
-        public GraphForm(ref TextBox dataInScreenTxt)
+        public PlotForm()
         {
             InitializeComponent();
             ChartManager.Inst.Init(ref chart);

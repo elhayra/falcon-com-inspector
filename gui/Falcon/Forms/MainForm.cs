@@ -60,10 +60,13 @@ namespace Falcon
             SSH
         }
 
+        private const int MAX_HISTORY_ITEMS = 10;
+
         public DisplayMode displayMode = DisplayMode.NORMAL;
 
         private AboutForm aboutForm_;
-        private GraphForm graphFrom_;
+        private PlotForm graphFrom_;
+        private CommandLineForm cliForm_;
 
         Ssh ssh_;
 
@@ -308,7 +311,7 @@ namespace Falcon
                 if (textToSendCmBx.Text == "exit")
                 {
                     clearScreenBtn.PerformClick();
-                    WriteLnToTerminal("ssh session terminated");
+                    WriteLineToTerminal("ssh session terminated.");
                     ssh_ = null;
                     displayMode = DisplayMode.NORMAL;
                 }
@@ -316,7 +319,7 @@ namespace Falcon
                 return;
             }
 
-            // if no communication is open, handle text as a command 
+            // if no communication is open, handle text as a falcon command 
             // line. otherwise, send msg on opened communication  
             if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
@@ -368,7 +371,7 @@ namespace Falcon
                             break;
                     }
                 }
-                WriteLnToTerminal(cmdAnswer);
+                WriteLineToTerminal(cmdAnswer);
             }
             else
             {
@@ -380,14 +383,17 @@ namespace Falcon
 
         private void PassOutTxtToHistory()
         {
-            if (textToSendCmBx.Items.Count >= 10) //TODO: MAKE MAX HISTROY ITEMS A SETTING //////////////////////////////////
+            if (textToSendCmBx.Items.Count >= MAX_HISTORY_ITEMS) 
                 textToSendCmBx.Items.RemoveAt(textToSendCmBx.Items.Count-1); //remove last element
             textToSendCmBx.Items.Insert(0, textToSendCmBx.Text); //push back new element 
-            textToSendCmBx.Text = "";
+            textToSendCmBx.Text = ""; // clean combobox text
         }
 
        
-
+        /// <summary>
+        /// Send message bytes to all open connections
+        /// </summary>
+        /// <param name="msg">bytes array</param>
         private void SendMsg(byte [] msg)
         {
             bool send_success = false;
@@ -591,7 +597,7 @@ namespace Falcon
             });
         }
 
-        private void WriteLnToTerminal(string txt)
+        private void WriteLineToTerminal(string txt)
         {
             Invoke((MethodInvoker)delegate
             {
@@ -749,17 +755,7 @@ namespace Falcon
 
         private void graphToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (graphFrom_ == null || graphFrom_.IsDisposed)
-            {
-                ChartManager.Inst.Reset();
-                graphFrom_ = new GraphForm(ref displayTxt);
-                graphFrom_.Show();
-            }
-            else
-            {
-                graphFrom_.Show();
-                graphFrom_.Focus();
-            }
+           
         }
 
         private void bytesRateTimer_Tick(object sender, EventArgs e)
@@ -981,6 +977,36 @@ namespace Falcon
         private void serialPortsTimer_Tick(object sender, EventArgs e)
         {
            UpdateSerialPorts();
+        }
+
+        private void dataPlotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (graphFrom_ == null || graphFrom_.IsDisposed)
+            {
+                ChartManager.Inst.Reset();
+                graphFrom_ = new PlotForm();
+                graphFrom_.Show();
+            }
+            else
+            {
+                graphFrom_.Show();
+                graphFrom_.Focus();
+            }
+        }
+
+        private void commandLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cliForm_ == null || cliForm_.IsDisposed)
+            {
+                ChartManager.Inst.Reset();
+                cliForm_ = new CommandLineForm();
+                cliForm_.Show();
+            }
+            else
+            {
+                cliForm_.Show();
+                cliForm_.Focus();
+            }
         }
     }
 }

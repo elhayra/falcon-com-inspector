@@ -49,9 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Com\Ssh.cs" />
+    <Compile Include="CommandLine\Arguments\Argument.cs" />
+    <Compile Include="CommandLine\Arguments\AutoScrollArgument.cs" />
+    <Compile Include="CommandLine\Arguments\PingArgument.cs" />
+    <Compile Include="CommandLine\Arguments\SshArgument.cs" />
+    <Compile Include="Forms\CommandLineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CommandLineForm.Designer.cs">
+      <DependentUpon>CommandLineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />
-    <Compile Include="Utils\CommandParser.cs" />
+    <Compile Include="CommandLine\CommandParser.cs" />
     <Compile Include="Com\ConnectionsManager.cs" />
     <Compile Include="Com\NetworkAdderss.cs" />
     <Compile Include="Com\SerialCom.cs">
@@ -74,11 +84,11 @@
     <Compile Include="Forms\SeriesForm.Designer.cs">
       <DependentUpon>SeriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GraphForm.cs">
+    <Compile Include="Forms\PlotForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GraphForm.Designer.cs">
-      <DependentUpon>GraphForm.cs</DependentUpon>
+    <Compile Include="Forms\PlotForm.Designer.cs">
+      <DependentUpon>PlotForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -93,14 +103,18 @@
     <Compile Include="Utils\BytesCounter.cs" />
     <Compile Include="Utils\FileTools.cs" />
     <Compile Include="Utils\MsgBox.cs" />
+    <Compile Include="Utils\Pinger.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CommandLineForm.resx">
+      <DependentUpon>CommandLineForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SeriesForm.resx">
       <DependentUpon>SeriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GraphForm.resx">
-      <DependentUpon>GraphForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlotForm.resx">
+      <DependentUpon>PlotForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

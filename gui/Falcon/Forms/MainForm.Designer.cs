@@ -63,6 +63,7 @@
             this.serialDisconnectBtn = new System.Windows.Forms.Button();
             this.serialConnectionStateLbl = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.serialPortLbl = new System.Windows.Forms.Label();
             this.serialComRefreshBtn = new System.Windows.Forms.Button();
             this.serialParityCmBx = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -83,7 +84,9 @@
             this.clearScreenBtn = new System.Windows.Forms.Button();
             this.sendBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.graphToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.commandLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,7 +121,6 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
             this.serialPortsTimer = new System.Windows.Forms.Timer(this.components);
-            this.serialPortLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -149,7 +151,7 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 35);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(130, 492);
+            this.tabControl1.Size = new System.Drawing.Size(130, 523);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -159,7 +161,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(122, 466);
+            this.tabPage1.Size = new System.Drawing.Size(122, 497);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "TCP";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -320,7 +322,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(122, 466);
+            this.tabPage2.Size = new System.Drawing.Size(122, 497);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UDP";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -458,7 +460,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(122, 466);
+            this.tabPage3.Size = new System.Drawing.Size(122, 497);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Serial";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -531,6 +533,15 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // serialPortLbl
+            // 
+            this.serialPortLbl.AutoSize = true;
+            this.serialPortLbl.Location = new System.Drawing.Point(41, 17);
+            this.serialPortLbl.Name = "serialPortLbl";
+            this.serialPortLbl.Size = new System.Drawing.Size(10, 13);
+            this.serialPortLbl.TabIndex = 26;
+            this.serialPortLbl.Text = "-";
             // 
             // serialComRefreshBtn
             // 
@@ -731,7 +742,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(637, 420);
+            this.clearScreenBtn.Location = new System.Drawing.Point(691, 451);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -742,7 +753,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(579, 420);
+            this.sendBtn.Location = new System.Drawing.Point(633, 451);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -753,20 +764,37 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.graphToolStripMenuItem1,
+            this.toolStripMenuItem1,
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(760, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(814, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // graphToolStripMenuItem1
+            // toolStripMenuItem1
             // 
-            this.graphToolStripMenuItem1.Name = "graphToolStripMenuItem1";
-            this.graphToolStripMenuItem1.Size = new System.Drawing.Size(51, 20);
-            this.graphToolStripMenuItem1.Text = "Graph";
-            this.graphToolStripMenuItem1.Click += new System.EventHandler(this.graphToolStripMenuItem1_Click);
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.commandLineToolStripMenuItem,
+            this.dataPlotToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(47, 20);
+            this.toolStripMenuItem1.Text = "Tools";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.graphToolStripMenuItem1_Click);
+            // 
+            // dataPlotToolStripMenuItem
+            // 
+            this.dataPlotToolStripMenuItem.Name = "dataPlotToolStripMenuItem";
+            this.dataPlotToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.dataPlotToolStripMenuItem.Text = "Data Plot";
+            this.dataPlotToolStripMenuItem.Click += new System.EventHandler(this.dataPlotToolStripMenuItem_Click);
+            // 
+            // commandLineToolStripMenuItem
+            // 
+            this.commandLineToolStripMenuItem.Name = "commandLineToolStripMenuItem";
+            this.commandLineToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.commandLineToolStripMenuItem.Text = "Command Line";
+            this.commandLineToolStripMenuItem.Click += new System.EventHandler(this.commandLineToolStripMenuItem_Click);
             // 
             // aboutBtn
             // 
@@ -822,7 +850,7 @@
             this.displayTxt.Name = "displayTxt";
             this.displayTxt.ReadOnly = true;
             this.displayTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.displayTxt.Size = new System.Drawing.Size(601, 356);
+            this.displayTxt.Size = new System.Drawing.Size(656, 387);
             this.displayTxt.TabIndex = 29;
             this.displayTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
@@ -831,10 +859,10 @@
             this.textToSendCmBx.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textToSendCmBx.FormattingEnabled = true;
-            this.textToSendCmBx.Location = new System.Drawing.Point(146, 421);
+            this.textToSendCmBx.Location = new System.Drawing.Point(146, 452);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(427, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(481, 21);
             this.textToSendCmBx.TabIndex = 37;
             // 
             // groupBox4
@@ -854,7 +882,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(605, 25);
+            this.groupBox4.Size = new System.Drawing.Size(659, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -882,7 +910,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(570, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(624, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -894,7 +922,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(530, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(584, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -906,7 +934,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(492, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(546, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -931,7 +959,7 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetBtn.Location = new System.Drawing.Point(693, 420);
+            this.resetBtn.Location = new System.Drawing.Point(747, 451);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(54, 22);
             this.resetBtn.TabIndex = 42;
@@ -971,7 +999,7 @@
             // 
             this.stopSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.stopSendFile.Enabled = false;
-            this.stopSendFile.Location = new System.Drawing.Point(66, 47);
+            this.stopSendFile.Location = new System.Drawing.Point(120, 47);
             this.stopSendFile.Name = "stopSendFile";
             this.stopSendFile.Size = new System.Drawing.Size(51, 22);
             this.stopSendFile.TabIndex = 45;
@@ -985,9 +1013,9 @@
             this.groupBox8.Controls.Add(this.sendFileBtn);
             this.groupBox8.Controls.Add(this.sendFileLbl);
             this.groupBox8.Controls.Add(this.stopSendFile);
-            this.groupBox8.Location = new System.Drawing.Point(449, 452);
+            this.groupBox8.Location = new System.Drawing.Point(448, 479);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(124, 75);
+            this.groupBox8.Size = new System.Drawing.Size(177, 75);
             this.groupBox8.TabIndex = 46;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Send File";
@@ -1000,7 +1028,7 @@
             this.groupBox9.Controls.Add(this.bytesRdbtn);
             this.groupBox9.Controls.Add(this.asciiRdbtn);
             this.groupBox9.Controls.Add(this.autoScrollChkBx);
-            this.groupBox9.Location = new System.Drawing.Point(146, 452);
+            this.groupBox9.Location = new System.Drawing.Point(146, 479);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(297, 75);
             this.groupBox9.TabIndex = 47;
@@ -1067,16 +1095,16 @@
             this.groupBox10.Controls.Add(this.searchNextBtn);
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
-            this.groupBox10.Location = new System.Drawing.Point(579, 452);
+            this.groupBox10.Location = new System.Drawing.Point(633, 479);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(167, 75);
+            this.groupBox10.Size = new System.Drawing.Size(168, 75);
             this.groupBox10.TabIndex = 48;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Search";
             // 
             // searchNextBtn
             // 
-            this.searchNextBtn.Location = new System.Drawing.Point(134, 46);
+            this.searchNextBtn.Location = new System.Drawing.Point(128, 46);
             this.searchNextBtn.Name = "searchNextBtn";
             this.searchNextBtn.Size = new System.Drawing.Size(27, 23);
             this.searchNextBtn.TabIndex = 2;
@@ -1088,7 +1116,7 @@
             // 
             this.searchBtn.Location = new System.Drawing.Point(6, 46);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(122, 23);
+            this.searchBtn.Size = new System.Drawing.Size(116, 23);
             this.searchBtn.TabIndex = 1;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
@@ -1098,7 +1126,7 @@
             // 
             this.searchTxt.Location = new System.Drawing.Point(6, 19);
             this.searchTxt.Name = "searchTxt";
-            this.searchTxt.Size = new System.Drawing.Size(155, 20);
+            this.searchTxt.Size = new System.Drawing.Size(149, 20);
             this.searchTxt.TabIndex = 0;
             // 
             // bytesOutRateTimer
@@ -1113,21 +1141,12 @@
             this.serialPortsTimer.Interval = 1000;
             this.serialPortsTimer.Tick += new System.EventHandler(this.serialPortsTimer_Tick);
             // 
-            // serialPortLbl
-            // 
-            this.serialPortLbl.AutoSize = true;
-            this.serialPortLbl.Location = new System.Drawing.Point(41, 17);
-            this.serialPortLbl.Name = "serialPortLbl";
-            this.serialPortLbl.Size = new System.Drawing.Size(10, 13);
-            this.serialPortLbl.TabIndex = 26;
-            this.serialPortLbl.Text = "-";
-            // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 539);
+            this.ClientSize = new System.Drawing.Size(814, 570);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
@@ -1248,7 +1267,7 @@
         private System.Windows.Forms.Label udpIndicatorLbl;
         private System.Windows.Forms.Timer bytesInTimer;
         private System.Windows.Forms.Timer bytesOutTimer;
-        private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Timer bytesInRateTimer;
         private System.Windows.Forms.Button resetBtn;
         private System.Windows.Forms.Button sendFileBtn;
@@ -1271,6 +1290,8 @@
         private System.Windows.Forms.CheckBox newLineChkBx;
         private System.Windows.Forms.Timer serialPortsTimer;
         private System.Windows.Forms.Label serialPortLbl;
+        private System.Windows.Forms.ToolStripMenuItem dataPlotToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem commandLineToolStripMenuItem;
     }
 }
 
