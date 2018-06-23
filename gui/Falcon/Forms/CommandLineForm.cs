@@ -292,29 +292,29 @@ namespace Falcon.Forms
                 switch (cmdType)
                 {
                     case CommandParser.Type.PING:
-                        {
-                            string targetIp = ((PingArgument)argumentObj).GetIp();
-                            int timeout = ((PingArgument)argumentObj).GetTimeout();
+                        string targetIp = ((PingArgument)argumentObj).GetIp();
+                        int timeout = ((PingArgument)argumentObj).GetTimeout();
 
-                            if (timeout != -1) // use timeout
-                                Pinger.Ping(targetIp, timeout, ref reply);
-                            else // disable timeout
-                                Pinger.Ping(targetIp, 0, ref reply);
+                        if (timeout != -1) // use timeout
+                            Pinger.Ping(targetIp, timeout, ref reply);
+                        else // disable timeout
+                            Pinger.Ping(targetIp, 0, ref reply);
 
-                            break;
-                        }
+                        break;
 
                     case CommandParser.Type.SSH:
-                        {
-                            bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
-                                        ((SshArgument)argumentObj).GetUserName(),
-                                        ((SshArgument)argumentObj).GetPassword(),
-                                        ref reply,
-                                        ref ssh_);
-                            if (success)
-                                displayMode = DisplayMode.SSH;
-                            break;
-                        }
+                        bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
+                                    ((SshArgument)argumentObj).GetUserName(),
+                                    ((SshArgument)argumentObj).GetPassword(),
+                                    ref reply,
+                                    ref ssh_);
+                        if (success)
+                            displayMode = DisplayMode.SSH;
+                        break;
+
+                    case CommandParser.Type.CLEAR:
+                        cliDisplayTxtBx.Text = "";
+                        break;
 
                     case CommandParser.Type.NONE:
                         break;

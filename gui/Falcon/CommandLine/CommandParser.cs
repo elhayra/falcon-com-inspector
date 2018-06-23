@@ -54,8 +54,6 @@ namespace Falcon.CommandLine
         {
             NONE,
             CLEAR,
-            RESET,
-            AUTO_SCROLL,
             PING,
             SSH
         }
@@ -116,6 +114,13 @@ namespace Falcon.CommandLine
                         var pingArg = new PingArgument(rawArgs);
                         argumentObj = pingArg;
                         message = "got ping command";
+                        return true;
+                    }
+
+                case "clear":
+                    {
+                        type = Type.CLEAR;
+                        message = "";
                         return true;
                     }
 
