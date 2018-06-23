@@ -38,7 +38,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falcon.Com
+namespace Falcon.Utils
 {
     class Ssh
     {
@@ -132,7 +132,13 @@ namespace Falcon.Com
         {
             shellStream_.WriteLine(command);
             if (command == "exit")
-                cts_.Cancel();
+                Close();
+        }
+
+        public void Close()
+        {
+            cts_.Cancel();
+            shellStream_.Close();
         }
 
         void HandleKeyEvent(Object sender, AuthenticationPromptEventArgs e)

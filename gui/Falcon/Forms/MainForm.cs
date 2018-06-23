@@ -46,12 +46,22 @@ using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using Falcon.Graph;
+using Falcon.CommandLine;
 using System.Collections.Generic;
+using Falcon.CommandLine.Arguments;
 
 namespace Falcon
 {
     public partial class MainForm : Form
     {
+        public enum DisplayMode
+        {
+            NORMAL,
+            SSH
+        }
+
+        public DisplayMode displayMode = DisplayMode.NORMAL;
+
         private AboutForm aboutForm_;
         private GraphForm graphFrom_;
 
@@ -131,9 +141,6 @@ namespace Falcon
             if (serialComCmBx.Items.Count > 0)
                 serialComCmBx.SelectedIndex = 0;
         }
-
-
-     
 
         private void tcpConnectBtn_Click(object sender, EventArgs e)
         {
@@ -232,6 +239,14 @@ namespace Falcon
             SaveProperties();
         }
 
+        private void LoadSerialSettigns()
+        {
+            serialBaudCmBx.Text = Properties.Settings.Default.serialBaudRate;
+            serialDataBitsTxt.Value = (decimal)Properties.Settings.Default.serialDataBits;
+            serialParityCmBx.Text = Properties.Settings.Default.serialParity;
+            serialStopBitsCmBx.Text = Properties.Settings.Default.serialStopBits;
+        }
+
         private void LoadGlobalSettings()
         {
             asciiRdbtn.Checked = Properties.Settings.Default.displayASCII;
@@ -239,14 +254,6 @@ namespace Falcon
             detailedChkBx.Checked = Properties.Settings.Default.displayDetailed;
             autoScrollChkBx.Checked = Properties.Settings.Default.autoScroll;
             newLineChkBx.Checked = Properties.Settings.Default.newLine;
-        }
-
-        private void LoadSerialSettigns()
-        {
-            serialBaudCmBx.Text = Properties.Settings.Default.serialBaudRate;
-            serialDataBitsTxt.Value = (decimal)Properties.Settings.Default.serialDataBits;
-            serialParityCmBx.Text = Properties.Settings.Default.serialParity;
-            serialStopBitsCmBx.Text = Properties.Settings.Default.serialStopBits;
         }
 
         private void SaveProperties()
@@ -295,7 +302,7 @@ namespace Falcon
             if (textToSendCmBx.Text == "")
                 return;
 
-            if (ssh_ != null) /* terminal is in ssh mode (ssh connected) */
+            if (displayMode == DisplayMode.SSH) 
             {
                 ssh_.RunCommand(textToSendCmBx.Text);
                 if (textToSendCmBx.Text == "exit")
@@ -303,44 +310,59 @@ namespace Falcon
                     clearScreenBtn.PerformClick();
                     WriteLnToTerminal("ssh session terminated");
                     ssh_ = null;
+                    displayMode = DisplayMode.NORMAL;
                 }
                 PassOutTxtToHistory();
                 return;
             }
 
-            /* if no communication is open, handle text as a command */
-            /* line otherwise, send msg on opened communication line */
+            // if no communication is open, handle text as a command 
+            // line. otherwise, send msg on opened communication  
             if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                string [] cmdArgs = new string[5];
+                Argument argumentObj = null;
                 string cmdAnswer = "";
                 CommandParser.Type cmdType = CommandParser.Type.NONE;
                 bool validCmd;
-                validCmd = CommandParser.Parse(textToSendCmBx.Text, ref cmdAnswer, ref cmdType, ref cmdArgs);
+                validCmd = CommandParser.Parse(textToSendCmBx.Text, ref cmdAnswer, ref cmdType, ref argumentObj);
 
                 if (validCmd)
                 {
                     switch (cmdType)
                     {
                         case CommandParser.Type.AUTO_SCROLL:
-                            string flag = cmdArgs[AutoScrollArg.FLAG_INDX];
-                            bool value = flag == "on" ? true : false;
-                            autoScrollChkBx.Checked = value;
+                            autoScrollChkBx.Checked = ((AutoScrollArgument)argumentObj).IsAutoScroll();
                             break;
+
                         case CommandParser.Type.RESET:
                             resetBtn.PerformClick();
                             break;
+
                         case CommandParser.Type.CLEAR:
                             clearScreenBtn.PerformClick();
                             break;
+
                         case CommandParser.Type.PING:
+                            string targetIp = ((PingArgument)argumentObj).GetIp();
+                            int timeout = ((PingArgument)argumentObj).GetTimeout();
+                            string reply = "";
+
+                            if (timeout != -1) // use timeout
+                                Pinger.Ping(targetIp, timeout, ref reply);
+                            else // disable timeout
+                                Pinger.Ping(targetIp, 0, ref reply);
+
                             break;
+
                         case CommandParser.Type.SSH:
-                            bool a = ConnectSsh(cmdArgs[SshArg.HOSTADDR_INDX],
-                                                   cmdArgs[SshArg.USERNAME_INDX],
-                                                   cmdArgs[SshArg.PASS_INDX],
+                            
+                            bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
+                                                   ((SshArgument)argumentObj).GetUserName(),
+                                                   ((SshArgument)argumentObj).GetPassword(),
                                                    ref cmdAnswer,
                                                    ref ssh_);
+                            if (success)
+                                displayMode = DisplayMode.SSH;
                             break;
                         case CommandParser.Type.NONE:
                             break;
