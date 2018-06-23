@@ -47,6 +47,7 @@
             this.cliDisplayTxtBx.Text = "";
             this.cliDisplayTxtBx.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cliDisplayTxtBx_MouseClick);
             this.cliDisplayTxtBx.TextChanged += new System.EventHandler(this.cliDisplayTxtBx_TextChanged);
+            this.cliDisplayTxtBx.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cliDisplayTxtBx_KeyDown);
             this.cliDisplayTxtBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cliDisplayTxtBx_KeyPress);
             // 
             // CommandLineForm

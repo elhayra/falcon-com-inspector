@@ -8,8 +8,17 @@ namespace Falcon.Utils
 {
     class DoubleStackHistoryBuffer
     {
-        Stack<string> forwardStack = new Stack<string>();
-        Stack<string> backwardStack = new Stack<string>();
+        enum Direction
+        {
+            NONE,
+            FORWARD,
+            BACKWARD
+        }
+
+        Direction direction = Direction.NONE;
+
+        AccesibleStack<string> forwardStack = new AccesibleStack<string>();
+        AccesibleStack<string> backwardStack = new AccesibleStack<string>();
 
         private int maxSize = 0;
 
@@ -22,6 +31,7 @@ namespace Falcon.Utils
         {
             string s = "";
             while (GetHistoryForward(ref s)){ }
+            direction = Direction.NONE;
         }
 
         public void Clear()
@@ -34,13 +44,11 @@ namespace Falcon.Utils
         {
             if (CountItems() >= maxSize)
             {
-                if (backwardStack.Count == 1)
+                if (backwardStack.Count() == 1)
                     backwardStack.Pop();
-                if (backwardStack.Count >= 2)
+                if (backwardStack.Count() >= 2)
                 {
-                    backwardStack.Reverse();
-                    backwardStack.Pop();
-                    backwardStack.Reverse();
+                    backwardStack.RemoveBottom();
                 }
             }
             backwardStack.Push(item);
@@ -48,11 +56,26 @@ namespace Falcon.Utils
 
         public bool GetHistoryBackward(ref string historyItem)
         {
-            if (backwardStack.Count > 0)
+            if (backwardStack.Count() > 0)
             {
-                string bwItem = backwardStack.Pop();
+                string bwItem = "";
+                bwItem = backwardStack.Pop();
                 forwardStack.Push(bwItem);
+
+                // change in direction: pop again so that
+                // return will not be the last element the 
+                // user already got
+                if (direction == Direction.FORWARD)
+                {
+                    if (backwardStack.Count() > 0)
+                    {
+                        bwItem = backwardStack.Pop();
+                        forwardStack.Push(bwItem);
+                    }
+                }
+        
                 historyItem = bwItem;
+                direction = Direction.BACKWARD;
                 return true;
             }
             return false;
@@ -60,19 +83,37 @@ namespace Falcon.Utils
 
         public bool GetHistoryForward(ref string historyItem)
         {
-            if (forwardStack.Count > 0)
+            if (forwardStack.Count() > 0)
             {
-                string fwItem = forwardStack.Pop();
+                string fwItem = "";
+                fwItem = forwardStack.Pop();
                 backwardStack.Push(fwItem);
+
+                // change in direction: pop again so that
+                // return will not be the last element the 
+                // user already got
+                if (direction == Direction.BACKWARD)
+                {
+                    if (forwardStack.Count() > 0)
+                    {
+                        fwItem = forwardStack.Pop();
+                        backwardStack.Push(fwItem);
+
+                    }
+                }
+              
                 historyItem = fwItem;
+                direction = Direction.FORWARD;
+
                 return true;
+
             }
             return false;
         }
 
         public int CountItems()
         {
-            return backwardStack.Count + forwardStack.Count;
+            return backwardStack.Count() + forwardStack.Count();
         }
     }
 }

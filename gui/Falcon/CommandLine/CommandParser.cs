@@ -84,7 +84,7 @@ namespace Falcon.CommandLine
 
             bool noArgument = (rawArgs == null ? true : false);
 
-            // return values to caller according to cmd name */
+            // return values to caller according to cmd name
             switch (cmdName)
             {
                 case "ssh":

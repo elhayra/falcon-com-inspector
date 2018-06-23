@@ -58,6 +58,7 @@
     <Compile Include="Forms\CommandLineForm.Designer.cs">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\AccesibleStack.cs" />
     <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
     <Compile Include="Utils\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />

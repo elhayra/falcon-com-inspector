@@ -36,8 +36,6 @@ namespace Falcon.Forms
             InitializeComponent();
 
             PrintLinePrefix();
-
-            
         }
 
         private void CommandLineForm_Load(object sender, EventArgs e)
@@ -100,16 +98,15 @@ namespace Falcon.Forms
             return base.ProcessCmdKey(ref msg, keyData); 
         }
 
+        /// <summary>
+        /// Remove last line in CLI. This method of removing last line
+        /// keep RTF colors unchanged
+        /// </summary>
         private void RemoveLastCliLine()
         {
             List<string> physicalLines = GetPhysicalCliLines();
 
-            int c = cliDisplayTxtBx.Lines.Length;
-            int selectionIndex = cliDisplayTxtBx.SelectionStart;
-            int currCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex);
-            string currCarretLineStr = physicalLines[currCarretLineIndex];
             int lineStartIndex = cliDisplayTxtBx.GetFirstCharIndexOfCurrentLine();
-            int lineRelativeSelection = cliDisplayTxtBx.SelectionStart - lineStartIndex;
 
             cliDisplayTxtBx.SelectionStart = lineStartIndex;
             cliDisplayTxtBx.SelectionLength = physicalLines[physicalLines.Count - 1].Length;
@@ -131,8 +128,6 @@ namespace Falcon.Forms
                 cliDisplayTxtBx.Text = "";
                 RichTextBoxExtensions.AppendText(cliDisplayTxtBx, text, color);
             }
-
-            //ProtectCliPrefixText(false);
         }
 
         private void cliDisplayTxtBx_MouseClick(object sender, MouseEventArgs e)
@@ -263,10 +258,14 @@ namespace Falcon.Forms
             return "";
         }
 
+        /// <summary>
+        /// Parse and execute command line
+        /// </summary>
+        /// <param name="commandLine">Falcon command line string</param>
         private void ExecuteCli(string commandLine)
         {
-            historyBuff.AddItem(commandLine);
             historyBuff.ResetNavigation();
+            historyBuff.AddItem(commandLine);
 
             if (displayMode == DisplayMode.SSH)
             {
@@ -329,9 +328,18 @@ namespace Falcon.Forms
 
             PrintLinePrefix();
         }
+
+        private void cliDisplayTxtBx_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                PrintToScreen("^C\n", Color.White, true);
+                PrintLinePrefix();
+            }
+        }
     }
 
-   
+
 
     public static class RichTextBoxExtensions
     {
