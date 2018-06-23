@@ -54,21 +54,11 @@ namespace Falcon
 {
     public partial class MainForm : Form
     {
-        public enum DisplayMode
-        {
-            NORMAL,
-            SSH
-        }
-
         private const int MAX_HISTORY_ITEMS = 10;
-
-        public DisplayMode displayMode = DisplayMode.NORMAL;
 
         private AboutForm aboutForm_;
         private PlotForm graphFrom_;
         private CommandLineForm cliForm_;
-
-        Ssh ssh_;
 
         string fileToSendPath_ = "";
 
@@ -305,75 +295,7 @@ namespace Falcon
             if (textToSendCmBx.Text == "")
                 return;
 
-            if (displayMode == DisplayMode.SSH) 
-            {
-                ssh_.RunCommand(textToSendCmBx.Text);
-                if (textToSendCmBx.Text == "exit")
-                {
-                    clearScreenBtn.PerformClick();
-                    WriteLineToTerminal("ssh session terminated.");
-                    ssh_ = null;
-                    displayMode = DisplayMode.NORMAL;
-                }
-                PassOutTxtToHistory();
-                return;
-            }
-
-            // if no communication is open, handle text as a falcon command 
-            // line. otherwise, send msg on opened communication  
-            if (!ConnectionsManager.Inst.IsSomeConnectionInitiated())
-            {
-                Argument argumentObj = null;
-                string cmdAnswer = "";
-                CommandParser.Type cmdType = CommandParser.Type.NONE;
-                bool validCmd;
-                validCmd = CommandParser.Parse(textToSendCmBx.Text, ref cmdAnswer, ref cmdType, ref argumentObj);
-
-                if (validCmd)
-                {
-                    switch (cmdType)
-                    {
-                        case CommandParser.Type.AUTO_SCROLL:
-                            autoScrollChkBx.Checked = ((AutoScrollArgument)argumentObj).IsAutoScroll();
-                            break;
-
-                        case CommandParser.Type.RESET:
-                            resetBtn.PerformClick();
-                            break;
-
-                        case CommandParser.Type.CLEAR:
-                            clearScreenBtn.PerformClick();
-                            break;
-
-                        case CommandParser.Type.PING:
-                            string targetIp = ((PingArgument)argumentObj).GetIp();
-                            int timeout = ((PingArgument)argumentObj).GetTimeout();
-                            string reply = "";
-
-                            if (timeout != -1) // use timeout
-                                Pinger.Ping(targetIp, timeout, ref reply);
-                            else // disable timeout
-                                Pinger.Ping(targetIp, 0, ref reply);
-
-                            break;
-
-                        case CommandParser.Type.SSH:
-                            
-                            bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
-                                                   ((SshArgument)argumentObj).GetUserName(),
-                                                   ((SshArgument)argumentObj).GetPassword(),
-                                                   ref cmdAnswer,
-                                                   ref ssh_);
-                            if (success)
-                                displayMode = DisplayMode.SSH;
-                            break;
-                        case CommandParser.Type.NONE:
-                            break;
-                    }
-                }
-                WriteLineToTerminal(cmdAnswer);
-            }
-            else
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
                 var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
                 PassOutTxtToHistory();
@@ -787,29 +709,6 @@ namespace Falcon
             ConnectionsManager.Inst.BytesInCounter.Reset();
             ConnectionsManager.Inst.BytesOutCounter.Reset();
             ConnectionsManager.Inst.PrevBytesInCount = 0;
-        }
-
-        private bool ConnectSsh(string hostAddrs, string userName, string password, ref string reply, ref Ssh ssh)
-        {
-            ssh = new Ssh();
-            ssh.Subscribe(OnIncomingSsh);
-            if (ssh.Connect(hostAddrs, userName, password, ref reply))
-            {
-                ssh.CreateShellStream("terminal", 80, 24, 800, 600, 1024); //TODO: CHANGE THIS ACCORDING TO WINDOW SIZE, FOR LONG LINES PRINTING
-                return true;
-            }
-            return false;
-        }
-
-        private void OnIncomingSsh(string msg)
-        {
-            Invoke((MethodInvoker)delegate
-            {
-                if (autoScrollChkBx.Checked)
-                    displayTxt.AppendText(msg);
-                else
-                    displayTxt.Text += msg;
-            });
         }
 
         private void sendFileBtn_Click(object sender, EventArgs e)
