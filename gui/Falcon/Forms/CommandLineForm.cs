@@ -21,7 +21,11 @@ namespace Falcon.Forms
             SSH
         }
 
-        public DisplayMode displayMode = DisplayMode.NORMAL;
+        DisplayMode displayMode = DisplayMode.NORMAL;
+
+        const int MAX_HISTORY_NODES = 10;
+
+        DoubleStackHistoryBuffer historyBuff = new DoubleStackHistoryBuffer(MAX_HISTORY_NODES);
 
         Ssh ssh_;
 
@@ -32,6 +36,8 @@ namespace Falcon.Forms
             InitializeComponent();
 
             PrintLinePrefix();
+
+            
         }
 
         private void CommandLineForm_Load(object sender, EventArgs e)
@@ -62,13 +68,54 @@ namespace Falcon.Forms
                     if (keyData == Keys.Back ||
                         keyData == Keys.Left)
                     {
-                        return true;
+                        return true; //stop handling key here
                     }
+                }
+
+                if (keyData == Keys.Up)
+                {
+                    string command = "";
+                    if (historyBuff.GetHistoryBackward(ref command))
+                    {
+                        RemoveLastCliLine();
+                        PrintLinePrefix();
+                        PrintToScreen(command, Color.White, true);
+                    }
+                    return true; //stop handling key here
+                }
+
+                if (keyData == Keys.Down)
+                {
+                    string command = "";
+                    if (historyBuff.GetHistoryForward(ref command))
+                    {
+                        RemoveLastCliLine();
+                        PrintLinePrefix();
+                        PrintToScreen(command, Color.White, true);
+                    }
+                    return true; //stop handling key here
                 }
             }
 
             return base.ProcessCmdKey(ref msg, keyData); 
         }
+
+        private void RemoveLastCliLine()
+        {
+            List<string> physicalLines = GetPhysicalCliLines();
+
+            int c = cliDisplayTxtBx.Lines.Length;
+            int selectionIndex = cliDisplayTxtBx.SelectionStart;
+            int currCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex);
+            string currCarretLineStr = physicalLines[currCarretLineIndex];
+            int lineStartIndex = cliDisplayTxtBx.GetFirstCharIndexOfCurrentLine();
+            int lineRelativeSelection = cliDisplayTxtBx.SelectionStart - lineStartIndex;
+
+            cliDisplayTxtBx.SelectionStart = lineStartIndex;
+            cliDisplayTxtBx.SelectionLength = physicalLines[physicalLines.Count - 1].Length;
+            cliDisplayTxtBx.SelectedText = "";
+        }
+
 
         /// <summary>
         /// Print text to CLI display. All printings should be done throught this function
@@ -84,7 +131,8 @@ namespace Falcon.Forms
                 cliDisplayTxtBx.Text = "";
                 RichTextBoxExtensions.AppendText(cliDisplayTxtBx, text, color);
             }
-            ProtectCliPrefixText(false);
+
+            //ProtectCliPrefixText(false);
         }
 
         private void cliDisplayTxtBx_MouseClick(object sender, MouseEventArgs e)
@@ -105,9 +153,12 @@ namespace Falcon.Forms
             if (predict)
                 predictStep = 1;
 
-            int selectionIndex = cliDisplayTxtBx.SelectionStart + 1 - predictStep;
+            List<string> physicalLines = GetPhysicalCliLines();
+
+            int c = cliDisplayTxtBx.Lines.Length;
+            int selectionIndex = cliDisplayTxtBx.SelectionStart - predictStep;
             int currCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex);
-            string currCarretLineStr = cliDisplayTxtBx.Lines[currCarretLineIndex];
+            string currCarretLineStr = physicalLines[currCarretLineIndex];
             int lineStartIndex = cliDisplayTxtBx.GetFirstCharIndexOfCurrentLine();
             int lineRelativeSelection = cliDisplayTxtBx.SelectionStart - lineStartIndex;
             
@@ -122,11 +173,43 @@ namespace Falcon.Forms
             return false;
         }
 
+        /// <summary>
+        /// get physical lines. physical line is a new line 
+        /// as it apears in the textbox, and not necesseraly a new line 
+        /// that ends with \n
+        /// </summary>
+        /// <returns>List of physical line in display text box</returns>
+        private List<string> GetPhysicalCliLines()
+        {
+            bool continueProcess = true;
+            int i = 1; //Zero Based So Start from 1
+            int j = 0;
+            List<string> result = new List<string>();
+            while (continueProcess)
+            {
+                var index = cliDisplayTxtBx.GetFirstCharIndexFromLine(i);
+                if (index != -1)
+                {
+                    result.Add(cliDisplayTxtBx.Text.Substring(j, index - j));
+                    j = index;
+                    i++;
+                }
+                else
+                {
+                    result.Add(cliDisplayTxtBx.Text.Substring(j, cliDisplayTxtBx.Text.Length - j));
+                    continueProcess = false;
+                }
+            }
+
+            return result;
+        }
+
         private void cliDisplayTxtBx_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                ExecuteCli();
+                string command = GetCommandInCurrentLine();
+                ExecuteCli(command);
             }
 
          
@@ -149,36 +232,61 @@ namespace Falcon.Forms
         {
             Invoke((MethodInvoker)delegate
             {
-                if (autoScrollChkBx.Checked)
-                    displayTxt.AppendText(msg);
-                else
-                    displayTxt.Text += msg;
+                PrintToScreen(msg, Color.White, true);
             });
         }
 
-        private void ExecuteCli()
+        /// <summary>
+        /// Get the command in the current line (without CLI prefix)
+        /// </summary>
+        /// <returns>the command in current line, or empty string if the line is not command line</returns>
+        private string GetCommandInCurrentLine()
         {
-            // todo: extract only the command to excute without the prefix
+            List<string> physicalLines = GetPhysicalCliLines();
+
+            int selectionIndex = cliDisplayTxtBx.SelectionStart + 1;
+            // get line index before enter was pressed
+            int prevCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex) - 1;
+            string currCarretLineStr = physicalLines[prevCarretLineIndex];
+
+            if (currCarretLineStr.Contains(CLI_PREFIX_TEXT))
+            {
+                string [] splittedLine = currCarretLineStr.Split('>');
+                if (splittedLine.Length == 2)
+                {
+                    string command = splittedLine[1].TrimStart();
+                    command = command.TrimEnd('\r', '\n');
+                    return command;
+                }
+
+            }
+            return "";
+        }
+
+        private void ExecuteCli(string commandLine)
+        {
+            historyBuff.AddItem(commandLine);
+            historyBuff.ResetNavigation();
 
             if (displayMode == DisplayMode.SSH)
             {
-                ssh_.RunCommand(textToSendCmBx.Text);
-                if (textToSendCmBx.Text == "exit")
+                ssh_.RunCommand(commandLine);
+                if (commandLine == "exit")
                 {
-                    clearScreenBtn.PerformClick();
-                    WriteLineToTerminal("ssh session terminated.");
+                    ssh_.Close();
+                    PrintToScreen("ssh session terminated.", Color.White, true);
                     ssh_ = null;
                     displayMode = DisplayMode.NORMAL;
                 }
-                PassOutTxtToHistory();
                 return;
             }
 
             Argument argumentObj = null;
-            string cmdAnswer = "";
+            string reply = "";
+            string parserAnswer = "";
             CommandParser.Type cmdType = CommandParser.Type.NONE;
             bool validCmd;
-            validCmd = CommandParser.Parse(textToSendCmBx.Text, ref cmdAnswer, ref cmdType, ref argumentObj);
+            validCmd = CommandParser.Parse(commandLine, ref parserAnswer, ref cmdType, ref argumentObj);
 
             if (validCmd)
             {
@@ -188,7 +296,6 @@ namespace Falcon.Forms
                         {
                             string targetIp = ((PingArgument)argumentObj).GetIp();
                             int timeout = ((PingArgument)argumentObj).GetTimeout();
-                            string reply = "";
 
                             if (timeout != -1) // use timeout
                                 Pinger.Ping(targetIp, timeout, ref reply);
@@ -203,7 +310,7 @@ namespace Falcon.Forms
                             bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
                                         ((SshArgument)argumentObj).GetUserName(),
                                         ((SshArgument)argumentObj).GetPassword(),
-                                        ref cmdAnswer,
+                                        ref reply,
                                         ref ssh_);
                             if (success)
                                 displayMode = DisplayMode.SSH;
@@ -214,8 +321,11 @@ namespace Falcon.Forms
                         break;
                 }
             }
-            WriteLineToTerminal(cmdAnswer);
 
+            if (parserAnswer != "")
+                PrintToScreen(parserAnswer + "\n", Color.White, true);
+            if (reply != "")
+                PrintToScreen(reply + "\n", Color.White, true);
 
             PrintLinePrefix();
         }

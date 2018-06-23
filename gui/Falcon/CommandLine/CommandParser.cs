@@ -87,63 +87,44 @@ namespace Falcon.CommandLine
             // return values to caller according to cmd name */
             switch (cmdName)
             {
-                case "clear":
-                    type = Type.CLEAR;
-                    message = "got clear command";
-                    return true;
-
-                case "reset":
-                    type = Type.RESET;
-                    message = "got reset command";
-                    return true;
-
                 case "ssh":
-                    type = Type.SSH;
-                    if (noArgument)
                     {
-                        message = "ssh command must have an argument";
-                        return false;
+                        type = Type.SSH;
+                        if (noArgument)
+                        {
+                            message = "ssh command must have an argument";
+                            return false;
+                        }
+                        var sshArg = new SshArgument(rawArgs);
+                        if (!sshArg.IsValid())
+                        {
+                            message = "ssh argument '" + rawArgs + "' is invalid";
+                            return false;
+                        }
+                        argumentObj = sshArg;
+                        return true;
                     }
-                    var sshArg = new SshArgument(rawArgs);
-                    if (!sshArg.IsValid())
-                    {
-                        message = "ssh argument '" + rawArgs + "' is invalid";
-                        return false;
-                    }
-                    argumentObj = sshArg;
-                    return true;
 
                 case "ping":
-                    type = Type.PING;
-                    if (noArgument)
                     {
-                        message = "ping command must have an argument";
-                        return false;
+                        type = Type.PING;
+                        if (noArgument)
+                        {
+                            message = "ping command must have an argument";
+                            return false;
+                        }
+                        var pingArg = new PingArgument(rawArgs);
+                        argumentObj = pingArg;
+                        message = "got ping command";
+                        return true;
                     }
-                    var pingArg = new PingArgument(rawArgs);
-                    argumentObj = pingArg;
-                    message = "got ping command";
-                    return false;
 
-                case "autoscroll":
-                    type = Type.AUTO_SCROLL;
-                    if (noArgument)
+                default:
                     {
-                        message = "autoscroll command must have an argument";
-                        return false;
+                        type = Type.NONE;
+                        break;
                     }
-                    var autoScrollArg = new AutoScrollArgument(rawArgs);
-                    if (!autoScrollArg.IsValid())
-                    {
-                        message = "autoscroll argument '" + rawArgs + "' is invalid";
-                        return false;
-                    }
-                    string onoffTxt = (autoScrollArg.IsAutoScroll() ? "on" : "off");
-                    argumentObj = autoScrollArg;
-                    message = "auto scroll is " + onoffTxt;
-                    return true;
             }
-            type = Type.NONE;
             message = "'" + cmd + "'" + " is not recognized as a Falcon command";
             return false;
         }

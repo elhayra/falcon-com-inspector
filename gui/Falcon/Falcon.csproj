@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine\Arguments\Argument.cs" />
-    <Compile Include="CommandLine\Arguments\AutoScrollArgument.cs" />
     <Compile Include="CommandLine\Arguments\PingArgument.cs" />
     <Compile Include="CommandLine\Arguments\SshArgument.cs" />
     <Compile Include="Forms\CommandLineForm.cs">
@@ -59,6 +58,7 @@
     <Compile Include="Forms\CommandLineForm.Designer.cs">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
     <Compile Include="Utils\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />
     <Compile Include="CommandLine\CommandParser.cs" />
