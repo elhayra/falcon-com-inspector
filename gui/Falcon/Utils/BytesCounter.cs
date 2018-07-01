@@ -38,6 +38,8 @@ namespace Falcon.Utils
     {
         private ulong counter_ = 0;
 
+        public ulong PrevCount = 0;
+
         public enum MeasureUnit
         {
             B,

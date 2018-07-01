@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Utils\AccesibleStack.cs" />
     <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
+    <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />
     <Compile Include="CommandLine\CommandParser.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Utils\FileTools.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="Utils\Pinger.cs" />
+    <Compile Include="Utils\TxtBoxSearch.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

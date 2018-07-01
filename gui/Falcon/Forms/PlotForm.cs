@@ -37,6 +37,7 @@ using System.Windows.Forms;
 using Falcon.Graph;
 using Falcon.Com;
 using System.Diagnostics;
+using Falcon.Utils;
 
 namespace Falcon.Forms
 {
@@ -47,6 +48,9 @@ namespace Falcon.Forms
 
         bool gotData_ = false;
 
+        BytesCounter bytesInCounter = new BytesCounter();
+        BytesCounter bytesInRateCounter = new BytesCounter();
+
         public PlotForm()
         {
             InitializeComponent();
@@ -56,7 +60,20 @@ namespace Falcon.Forms
             stopwatch_ = new Stopwatch();
             stopwatch_.Start();
 
-            //Console.WriteLine("Elapsed={0}", sw.Elapsed);
+            // subscribe to open connection
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            {
+                if (ConnectionsManager.Inst.IsSerialInitiated())
+                    ConnectionsManager.Inst.Serial.Subscribe(OnIncomingBytes);
+                else if (ConnectionsManager.Inst.IsTcpClientInitiated())
+                    ConnectionsManager.Inst.TCPClient.Subscribe(OnIncomingBytes);
+                else if (ConnectionsManager.Inst.IsTcpServerInitiated())
+                    ConnectionsManager.Inst.TCPServer.Subscribe(OnIncomingBytes);
+                else if (ConnectionsManager.Inst.IsUdpClientInitiated())
+                    ConnectionsManager.Inst.UDPClient.Subscribe(OnIncomingBytes);
+                else if (ConnectionsManager.Inst.IsUdpServerInitiated())
+                    ConnectionsManager.Inst.UDPServer.Subscribe(OnIncomingBytes);
+            }
         }
 
         public void OnIncomingData(string data)
@@ -80,7 +97,13 @@ namespace Falcon.Forms
                         switch (series.DataType)
                         {
                             case SeriesManager.Type.BYTES_RATE:
-                                addPointToSeries("Bytes Rate", lastTime, ConnectionsManager.Inst.BytesInRateCounter.GetRawCounter());
+
+                                ulong newBytesCount = bytesInCounter.GetRawCounter();
+                                bytesInRateCounter.SetCounter(newBytesCount - bytesInRateCounter.PrevCount);
+                                bytesInRateCounter.PrevCount = newBytesCount;
+
+                                addPointToSeries("Bytes Rate", lastTime, bytesInRateCounter.GetRawCounter());
+
                                 break;
 
                             case SeriesManager.Type.SETPOINT:
@@ -88,10 +111,11 @@ namespace Falcon.Forms
                                 break;
 
                             case SeriesManager.Type.INCOMING_DATA:
-                                /* fill tree view node with series name and data value */
+                                // fill tree view node with series name and data value 
                                 root.Nodes[series.DataIndex].Nodes[0].Text = series.NameId;
                                 root.Nodes[series.DataIndex].Nodes[0].Nodes[0].Text = resultCsv[series.DataIndex].ToString();
 
+                                //TODO: GET DATA FROM PROTOCOL BEFORE ADDING TO SERIES/////////////////////////////////////////////////////////////////
                                 addPointToSeries(series.NameId, lastTime, resultCsv[series.DataIndex]);
                                 break;
                             default:
@@ -113,6 +137,11 @@ namespace Falcon.Forms
                 ToggleInvalidDataAlert("INVALID DATA", true);
             }
 
+        }
+
+        private void OnIncomingBytes(byte[] bytes)
+        {
+            bytesInCounter.Add((uint)bytes.Length);
         }
 
         private void chData_MouseWheel(object sender, MouseEventArgs e)

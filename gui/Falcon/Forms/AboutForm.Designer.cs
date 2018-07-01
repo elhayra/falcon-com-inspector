@@ -71,7 +71,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Version 1.0.0";
+            this.label3.Text = "Version 0.1.0";
             // 
             // groupBox1
             // 
@@ -91,6 +91,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(11, 110);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(340, 241);
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
@@ -152,7 +153,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(90, 13);
             this.label8.TabIndex = 2;
-            this.label8.Text = "Copyright © 2017";
+            this.label8.Text = "Copyright © 2018";
             // 
             // label7
             // 

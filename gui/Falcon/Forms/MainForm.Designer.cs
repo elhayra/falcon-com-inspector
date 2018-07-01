@@ -85,8 +85,8 @@
             this.sendBtn = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.commandLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -782,19 +782,19 @@
             this.toolStripMenuItem1.Text = "Tools";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.graphToolStripMenuItem1_Click);
             // 
-            // dataPlotToolStripMenuItem
-            // 
-            this.dataPlotToolStripMenuItem.Name = "dataPlotToolStripMenuItem";
-            this.dataPlotToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.dataPlotToolStripMenuItem.Text = "Data Plot";
-            this.dataPlotToolStripMenuItem.Click += new System.EventHandler(this.dataPlotToolStripMenuItem_Click);
-            // 
             // commandLineToolStripMenuItem
             // 
             this.commandLineToolStripMenuItem.Name = "commandLineToolStripMenuItem";
             this.commandLineToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.commandLineToolStripMenuItem.Text = "Command Line";
             this.commandLineToolStripMenuItem.Click += new System.EventHandler(this.commandLineToolStripMenuItem_Click);
+            // 
+            // dataPlotToolStripMenuItem
+            // 
+            this.dataPlotToolStripMenuItem.Name = "dataPlotToolStripMenuItem";
+            this.dataPlotToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.dataPlotToolStripMenuItem.Text = "Data Plot";
+            this.dataPlotToolStripMenuItem.Click += new System.EventHandler(this.dataPlotToolStripMenuItem_Click);
             // 
             // aboutBtn
             // 
@@ -842,9 +842,9 @@
             this.displayTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.displayTxt.BackColor = System.Drawing.Color.Black;
+            this.displayTxt.BackColor = System.Drawing.Color.White;
             this.displayTxt.Font = new System.Drawing.Font("Miriam Fixed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayTxt.ForeColor = System.Drawing.Color.LimeGreen;
+            this.displayTxt.ForeColor = System.Drawing.Color.Black;
             this.displayTxt.Location = new System.Drawing.Point(145, 58);
             this.displayTxt.Multiline = true;
             this.displayTxt.Name = "displayTxt";

@@ -52,14 +52,6 @@ namespace Falcon.Com
         protected static readonly object padlock = new object();
         private static ConnectionsManager instance = null;
 
-        public BytesCounter BytesCounter = new BytesCounter();
-        public BytesCounter BytesOutCounter = new BytesCounter();
-        public BytesCounter BytesInCounter = new BytesCounter();
-        public BytesCounter BytesInRateCounter = new BytesCounter();
-        public BytesCounter BytesOutRateCounter = new BytesCounter();
-        public ulong PrevBytesInCount;
-        public ulong PrevBytesOutCount;
-
         ConnectionsManager()
         {
         }

@@ -128,12 +128,12 @@ namespace Falcon.Com
             return false;
         }
 
-        public void SubscribeToMsgs(Action<byte[]> func)
+        public void Subscribe(Action<byte[]> func)
         {
             subsList_.Add(func);
         }
 
-        public void UnsubscribeToMsgs(Action<byte[]> func)
+        public void Unsubscribe(Action<byte[]> func)
         {
             subsList_.Remove(func);
         }

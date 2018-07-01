@@ -46,9 +46,7 @@ using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using Falcon.Graph;
-using Falcon.CommandLine;
 using System.Collections.Generic;
-using Falcon.CommandLine.Arguments;
 
 namespace Falcon
 {
@@ -64,9 +62,15 @@ namespace Falcon
 
         int prevLinesCount_ = 0;
 
-        int searchPos_ = 0;
+        TxtBoxSearch searcher;
 
         List<string> connectedSerialPorts;
+
+        BytesCounter bytesOutCounter = new BytesCounter();
+        BytesCounter bytesInCounter = new BytesCounter();
+        BytesCounter bytesInRateCounter = new BytesCounter();
+        BytesCounter bytesOutRateCounter = new BytesCounter();
+       
 
         public MainForm()
         {
@@ -88,6 +92,8 @@ namespace Falcon
             LoadTcpSettings();
             LoadUdpSettings();
             LoadGlobalSettings();
+
+            searcher = new TxtBoxSearch(ref displayTxt);
         }
 
         /// <summary>
@@ -137,6 +143,12 @@ namespace Falcon
 
         private void tcpConnectBtn_Click(object sender, EventArgs e)
         {
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            {
+                MsgBox.WarningMsg("Multiple Connections Are Not Allowed",
+                    "Some other connection type (UDP or Serial) is already open. Close it and try again");
+                return;
+            }
             ConnectTcp();
         }
 
@@ -154,7 +166,7 @@ namespace Falcon
                 }
                 else
                 {
-                    ConnectionsManager.Inst.TCPServer.SubscribeToMsgs(OnTcpByteIn);
+                    ConnectionsManager.Inst.TCPServer.Subscribe(OnIncomingBytes);
                     ConnectionsManager.Inst.TCPServer.SubscribeToClientsState(OnNewTcpClient);
                     tcpClientRdBtn.Enabled = false;
                     connected = true;
@@ -165,7 +177,7 @@ namespace Falcon
                 ConnectionsManager.Inst.InitTcpClient();
                 if (ConnectionsManager.Inst.TCPClient.ConnectTo(tcpIpTxt.Text, (int)tcpPortTxt.Value))
                 {
-                    ConnectionsManager.Inst.TCPClient.Subscribe(OnTcpByteIn);
+                    ConnectionsManager.Inst.TCPClient.Subscribe(OnIncomingBytes);
                     tcpServerRdBtn.Enabled = false;
                     connected = true;
                 }
@@ -263,9 +275,10 @@ namespace Falcon
             });
         }
 
-        private void OnTcpByteIn(byte[] bytes)
+        private void OnIncomingBytes(byte[] bytes)
         {
-            AppendBytesToTerminal(bytes);
+            if (this.Focused)
+                AppendBytesToTerminal(bytes);
         }
 
         private void tcpDisconnectBtn_Click(object sender, EventArgs e)
@@ -273,12 +286,14 @@ namespace Falcon
             stopSendFile.PerformClick();
             if (tcpServerRdBtn.Checked)
             {
+                ConnectionsManager.Inst.TCPServer.Unsubscribe(OnIncomingBytes);
                 ConnectionsManager.Inst.TCPServer.Close();
                 tcpClientRdBtn.Enabled = true;
                 incomingClientsCountLBl.Text = "0";
             }
             else
             {
+                ConnectionsManager.Inst.TCPClient.Unsubscribe(OnIncomingBytes);
                 ConnectionsManager.Inst.TCPClient.CloseMe();
                 tcpServerRdBtn.Enabled = true;
             }
@@ -313,16 +328,25 @@ namespace Falcon
 
        
         /// <summary>
-        /// Send message bytes to all open connections
+        /// Send message bytes to one of the open connections, and 
+        /// present bytes statistics
         /// </summary>
         /// <param name="msg">bytes array</param>
         private void SendMsg(byte [] msg)
         {
             bool send_success = false;
             if (ConnectionsManager.Inst.IsTcpServerInitiated())
+            {
                 send_success = ConnectionsManager.Inst.TCPServer.Send(msg);
-
-            if (ConnectionsManager.Inst.IsTcpClientInitiated())
+                if (!send_success)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        tcpDisconnectBtn.PerformClick();
+                    });
+                }
+            }
+            else if (ConnectionsManager.Inst.IsTcpClientInitiated())
             {
                 send_success = ConnectionsManager.Inst.TCPClient.Send(msg);
                 if (!send_success)
@@ -333,33 +357,48 @@ namespace Falcon
                     });
                 }
             }
-
-            if (ConnectionsManager.Inst.IsUdpServerInitiated())
+            else if (ConnectionsManager.Inst.IsUdpServerInitiated())
             {
                 send_success = ConnectionsManager.Inst.UDPServer.Send(msg);
-                    if (!send_success)
+                if (!send_success)
+                {
+                    Invoke((MethodInvoker)delegate
                     {
-                        Invoke((MethodInvoker)delegate
-                        {
-                            udpDisconnectBtn.PerformClick();
-                        });
-                    }
+                        udpDisconnectBtn.PerformClick();
+                    });
+                }
             }
-
-            if (ConnectionsManager.Inst.IsUdpClientInitiated())
+            else if(ConnectionsManager.Inst.IsUdpClientInitiated())
+            {
                 send_success = ConnectionsManager.Inst.UDPClient.Send(msg);
-
-            if (ConnectionsManager.Inst.IsSerialInitiated())
+                if (!send_success)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        udpDisconnectBtn.PerformClick();
+                    });
+                }
+            }
+            else if (ConnectionsManager.Inst.IsSerialInitiated())
+            {
                 send_success = ConnectionsManager.Inst.Serial.Send(msg);
+                if (!send_success)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        serialDisconnectBtn.PerformClick();
+                    });
+                }
+            }
 
             if (send_success && ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                ConnectionsManager.Inst.BytesOutCounter.Add((uint)msg.Length);
-                BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutCounter.RecomendedMeasureUnit();
+                bytesOutCounter.Add((uint)msg.Length);
+                BytesCounter.MeasureUnit mUnit = bytesOutCounter.RecomendedMeasureUnit();
                 var format = "{0:0}";
                 if (mUnit != BytesCounter.MeasureUnit.B)
                     format = "{0:0.00}";
-                var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesOutCounter.GetProcessedCounter(mUnit));
+                var processedCounter = String.Format(format, bytesOutCounter.GetProcessedCounter(mUnit));
                 Invoke((MethodInvoker)delegate
                 {
                     bytesOutLbl.BackColor = Color.LimeGreen;
@@ -381,6 +420,13 @@ namespace Falcon
 
         private void serialConnectBtn_Click(object sender, EventArgs e)
         {
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            {
+                MsgBox.WarningMsg("Multiple Connections Are Not Allowed", 
+                    "Some other connection type (TCP or UDP) is already open. Close it and try again");
+                return;
+            }
+
             // no port was selected
             if (serialComCmBx.Text == "")
             {
@@ -418,7 +464,7 @@ namespace Falcon
                 serialIndicatorLbl.BackColor = Color.LimeGreen;
                 serialDisconnectBtn.Enabled = true;
                 serialConnectBtn.Enabled = false;
-                ConnectionsManager.Inst.Serial.Subscribe(OnSerialByteIn);
+                ConnectionsManager.Inst.Serial.Subscribe(OnIncomingBytes);
             }
             else
             {
@@ -430,6 +476,7 @@ namespace Falcon
         private void serialDisconnectBtn_Click(object sender, EventArgs e)
         {
             stopSendFile.PerformClick();
+            ConnectionsManager.Inst.Serial.Unsubscribe(OnIncomingBytes);
             var t = Task.Run(delegate
             {
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
@@ -443,27 +490,18 @@ namespace Falcon
             serialConnectionStateLbl.BackColor = SystemColors.Control;
             serialIndicatorLbl.BackColor = SystemColors.Control;
         }
-
-        private void OnSerialByteIn(byte[] bytes)
-        {
-            AppendBytesToTerminal(bytes);            
-        }
-
-        public static string GetTime()
-        {
-            return DateTime.Now.ToString("hh-mm-ss.fff");
-        }
+        
 
         private void AppendBytesToTerminal(byte[] bytes)
         {
             if (bytes.Length == 0)
                 return;
-            ConnectionsManager.Inst.BytesInCounter.Add((uint)bytes.Length);
-            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInCounter.RecomendedMeasureUnit();
+            bytesInCounter.Add((uint)bytes.Length);
+            BytesCounter.MeasureUnit mUnit = bytesInCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesInCounter.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, bytesInCounter.GetProcessedCounter(mUnit));
 
             Invoke((MethodInvoker)delegate
             {
@@ -478,7 +516,7 @@ namespace Falcon
 
                     string displayStr = "";
                     if (detailedChkBx.Checked)
-                        displayStr = "[" + GetTime() + "]: ";
+                        displayStr = "[" + Logger.GetTime() + "]: ";
 
                     if (asciiRdbtn.Checked)
                         displayStr += Encoding.UTF8.GetString(bytes);
@@ -540,6 +578,12 @@ namespace Falcon
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
         {
+            if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
+            {
+                MsgBox.WarningMsg("Multiple Connections Are Not Allowed",
+                    "Some other connection type (TCP or Serial) is already open. Close it and try again");
+                return;
+            }
             ConnectUdp();
         }
 
@@ -560,7 +604,7 @@ namespace Falcon
                 }
                 if (connected)
                 {
-                    ConnectionsManager.Inst.UDPServer.Subscribe(OnUdpByteIn);
+                    ConnectionsManager.Inst.UDPServer.Subscribe(OnIncomingBytes);
                     udpClientRdBtn.Enabled = false;
                 }
             }
@@ -569,7 +613,7 @@ namespace Falcon
                 ConnectionsManager.Inst.InitUdpClient();
                 if (ConnectionsManager.Inst.UDPClient.ConnectTo(udpIpTxt.Text, (int)udpPortTxt.Value))
                 {
-                    ConnectionsManager.Inst.UDPClient.Subscribe(OnUdpByteIn);
+                    ConnectionsManager.Inst.UDPClient.Subscribe(OnIncomingBytes);
                     udpServerRdBtn.Enabled = false;
                     connected = true;
                 }
@@ -591,11 +635,6 @@ namespace Falcon
                 udpConnectionStateLbl.Text = "Failed";
                 udpConnectionStateLbl.BackColor = Color.DarkOrange;
             }
-        }
-
-        private void OnUdpByteIn(byte[] bytes)
-        {
-            AppendBytesToTerminal(bytes);
         }
 
         private void udpServerRdBtn_CheckedChanged(object sender, EventArgs e)
@@ -625,11 +664,13 @@ namespace Falcon
             stopSendFile.PerformClick();
             if (udpServerRdBtn.Checked)
             {
+                ConnectionsManager.Inst.UDPServer.Unsubscribe(OnIncomingBytes);
                 ConnectionsManager.Inst.UDPServer.Close();
                 udpClientRdBtn.Enabled = true;
             }
             else
             {
+                ConnectionsManager.Inst.UDPClient.Unsubscribe(OnIncomingBytes);
                 ConnectionsManager.Inst.UDPClient.CloseMe();
                 udpServerRdBtn.Enabled = true;
             }
@@ -682,15 +723,15 @@ namespace Falcon
 
         private void bytesRateTimer_Tick(object sender, EventArgs e)
         {
-            ulong newBytesCount = ConnectionsManager.Inst.BytesInCounter.GetRawCounter();
-            ConnectionsManager.Inst.BytesInRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesInCount);
-            ConnectionsManager.Inst.PrevBytesInCount = newBytesCount;
+            ulong newBytesCount = bytesInCounter.GetRawCounter();
+            bytesInRateCounter.SetCounter(newBytesCount - bytesInRateCounter.PrevCount);
+            bytesInRateCounter.PrevCount = newBytesCount;
 
-            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesInRateCounter.RecomendedMeasureUnit();
+            BytesCounter.MeasureUnit mUnit = bytesInRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesInRateCounter.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, bytesInRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
             {
                 receivingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
@@ -706,9 +747,9 @@ namespace Falcon
         {
             bytesInLbl.Text = "0 B";
             bytesOutLbl.Text = "0 B";
-            ConnectionsManager.Inst.BytesInCounter.Reset();
-            ConnectionsManager.Inst.BytesOutCounter.Reset();
-            ConnectionsManager.Inst.PrevBytesInCount = 0;
+            bytesInCounter.Reset();
+            bytesOutCounter.Reset();
+            bytesInRateCounter.PrevCount = 0;
         }
 
         private void sendFileBtn_Click(object sender, EventArgs e)
@@ -724,6 +765,7 @@ namespace Falcon
                 MsgBox.ErrorMsg("File Error", "No file was selected, cancelling send process");
         }
 
+        // send selected file to open connection
         private void sendFileWorker_DoWork(object sender, DoWorkEventArgs e)
         { 
             var lines = File.ReadAllLines(@fileToSendPath_);
@@ -732,7 +774,7 @@ namespace Falcon
 
             foreach (var line in lines)
             {
-                double progress = (double)iter_count / (double)lines.Length * 100;
+                double progress = iter_count / lines.Length * 100.0;
                 sendFileWorker.ReportProgress((int)progress);
 
                 SendMsg(Encoding.ASCII.GetBytes(line));
@@ -769,7 +811,7 @@ namespace Falcon
             sendFileWorker.CancelAsync();
         }
         
-        /* allow select all text in output txt box */
+        // enable "select all" in display
         private void dataInScreenTxt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
@@ -783,17 +825,18 @@ namespace Falcon
 
         }
 
+        // calculate and show sent bytes rate
         private void bytesOutRateTimer_Tick(object sender, EventArgs e)
         {
-            ulong newBytesCount = ConnectionsManager.Inst.BytesOutCounter.GetRawCounter();
-            ConnectionsManager.Inst.BytesOutRateCounter.SetCounter(newBytesCount - ConnectionsManager.Inst.PrevBytesOutCount);
-            ConnectionsManager.Inst.PrevBytesOutCount = newBytesCount;
+            ulong newBytesCount = bytesOutCounter.GetRawCounter();
+            bytesOutRateCounter.SetCounter(newBytesCount - bytesOutRateCounter.PrevCount);
+            bytesOutRateCounter.PrevCount = newBytesCount;
 
-            BytesCounter.MeasureUnit mUnit = ConnectionsManager.Inst.BytesOutRateCounter.RecomendedMeasureUnit();
+            BytesCounter.MeasureUnit mUnit = bytesOutRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
             if (mUnit != BytesCounter.MeasureUnit.B)
                 format = "{0:0.00}";
-            var processedCounter = String.Format(format, ConnectionsManager.Inst.BytesOutRateCounter.GetProcessedCounter(mUnit));
+            var processedCounter = String.Format(format, bytesOutRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
             {
                 sendingRateLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit) + "/s";
@@ -802,41 +845,15 @@ namespace Falcon
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            searchPos_ = displayTxt.Text.IndexOf(searchTxt.Text);
-            if (searchPos_ != -1)
-            {
+            if (searcher.Search(searchTxt.Text))
                 searchNextBtn.Enabled = true;
-                displayTxt.SelectionStart = searchPos_;
-                displayTxt.SelectionLength = searchTxt.Text.Length;
-                displayTxt.HideSelection = false;
-                searchPos_ += searchTxt.Text.Length;
-            }
-            else
-                searchPos_ = 0;
         }
 
         private void searchFwdBtn_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string subStr = displayTxt.Text.Substring(searchPos_, displayTxt.Text.Length - searchPos_);
-                int pos = subStr.IndexOf(searchTxt.Text);
-                if (searchPos_ != -1)
-                {
-                    displayTxt.SelectionStart = pos + searchPos_;
-                    displayTxt.SelectionLength = searchTxt.Text.Length;
-                    displayTxt.HideSelection = false;
-                    searchPos_ += pos + searchPos_ + searchTxt.Text.Length;
-                }
-                if (searchPos_ >= displayTxt.Text.Length)
-                {
-                    searchPos_ = 0;
-                }
-            }
-            catch (ArgumentOutOfRangeException exp) 
+            if (!searcher.SearchForward(searchTxt.Text))
             {
                 searchNextBtn.Enabled = false;
-                return;
             }
         }
 
