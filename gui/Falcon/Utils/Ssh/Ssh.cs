@@ -38,7 +38,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Falcon.Utils
+namespace Falcon.Utils.Ssh
 {
     class Ssh
     {
@@ -46,8 +46,7 @@ namespace Falcon.Utils
         public const int BUFF_SIZE = 1024;
         public const int LISTEN_INTERVAL = 50; //millis
 
-        public string UserName, Password;
-
+        private SshCredentials credentials_ = new SshCredentials();
         private SshClient client_;
         private ShellStream shellStream_;
         private List<Action<string>> subsFuncs_ = new List<Action<string>>();
@@ -70,9 +69,12 @@ namespace Falcon.Utils
         {
             try
             {
+                credentials_.Username = username;
+                credentials_.Password = password;
+                credentials_.Hostname = hostAddr;
+
                 bytesIn_ = new byte[BUFF_SIZE];
-                UserName = username;
-                Password = password;
+                
                 var PasswordConnection = new PasswordAuthenticationMethod(username, password);
                 var KeyboardInteractive = new KeyboardInteractiveAuthenticationMethod(username);
                 KeyboardInteractive.AuthenticationPrompt += new EventHandler<AuthenticationPromptEventArgs>(HandleKeyEvent);
@@ -147,7 +149,7 @@ namespace Falcon.Utils
             {
                 if (prompt.Request.IndexOf("Password:", StringComparison.InvariantCultureIgnoreCase) != -1)
                 {
-                    prompt.Response = Password;
+                    prompt.Response = credentials_.Password;
                 }
             }
         }

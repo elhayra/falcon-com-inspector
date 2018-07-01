@@ -32,6 +32,8 @@
 *******************************************************************************/
 
 using Falcon.CommandLine.Arguments;
+using Falcon.CommandLine.Commands;
+using Falcon.Forms;
 using System;
 using System.Net.NetworkInformation;
 
@@ -50,14 +52,6 @@ namespace Falcon.CommandLine
         private const int CMD_NAME_INDX = 0;
         private const int CMD_ARG_INDX = 1;
 
-        public enum Type
-        {
-            NONE,
-            CLEAR,
-            PING,
-            SSH
-        }
-
         /// <summary>
         /// Handle Falcom commands. Determine if command is valid, 
         /// what is the type of it, and execute (if valid).
@@ -65,7 +59,7 @@ namespace Falcon.CommandLine
         /// <param name="input">Falcon command (including cmd char)</param>
         /// <param name="output">Execution result</param>
         /// <returns>Is command valid, Command message, Command Type, On or Off flag</returns>
-        public static bool Parse(string cmd, ref string message, ref Type type, ref Argument argumentObj)
+        public static bool Parse(string cmd, ref string message, ref Command.Type type, ref Argument argumentObj)
         {
             // extract command name and arguments 
             string[] cmdArr = cmd.Split(CMD_SPLITTER);
@@ -80,65 +74,106 @@ namespace Falcon.CommandLine
                 rawArgs = null;
             }
 
-            bool noArgument = (rawArgs == null ? true : false);
+            bool noArgument = (rawArgs == null) ? true : false;
+
+            SshCommand sshCmd = new SshCommand();
+            PingCommand pingCmd = new PingCommand();
+            ClearCommand clearCmd = new ClearCommand();
+            HelpCommand helpCmd = new HelpCommand();
+            InvalidCommand invalidCmd = new InvalidCommand();
 
             // return values to caller according to cmd name
             switch (cmdName)
             {
                 case "ssh":
+                    SshForm sshForm = new SshForm();
+                    sshForm.Show();
+                    sshForm.Focus();
+
+
+                    //TODO: GET FORM SSH CREDENTIALS HERE WITH SshCredential Object///////////////////////////////////////////////////////////////
+
+                    if (noArgument)
                     {
-                        type = Type.SSH;
-                        if (noArgument)
-                        {
-                            message = "ssh command must have an argument";
-                            return false;
-                        }
-                        var sshArg = new SshArgument(rawArgs);
-                        if (!sshArg.IsValid())
-                        {
-                            message = "ssh argument '" + rawArgs + "' is invalid";
-                            return false;
-                        }
-                        argumentObj = sshArg;
-                        return true;
+                        message = sshCmd.GetNoArgumentMsg();
+                        return false;
                     }
+
+                    sshCmd.InitArgument(rawArgs);
+                    type = sshCmd.GetCommandType();
+
+                    if (!sshCmd.IsValidArgument())
+                    {
+                        message = sshCmd.GetInvalidArgumentMsg();
+                        return false;
+                    }
+                    argumentObj = sshCmd.GetArgumentObject();
+                    return true;
 
                 case "ping":
+                    
+                    if (noArgument)
                     {
-                        type = Type.PING;
-                        if (noArgument)
-                        {
-                            message = "ping command must have an argument";
-                            return false;
-                        }
-                        var pingArg = new PingArgument(rawArgs);
-                        argumentObj = pingArg;
-                        message = "got ping command";
-                        return true;
+                        message = pingCmd.GetNoArgumentMsg();
+                        return false;
                     }
 
+                    pingCmd.InitArgument(rawArgs);
+                    type = pingCmd.GetCommandType();
+
+                    argumentObj = pingCmd.GetArgumentObject();
+                    message = pingCmd.GetSuccessMsg();
+                    return true;
+
                 case "clear":
+                    type = clearCmd.GetCommandType();
+                    message = clearCmd.GetSuccessMsg();
+                    return true;
+                    
+                case "help":
+                    if (noArgument)
                     {
-                        type = Type.CLEAR;
-                        message = "";
-                        return true;
+                        message = helpCmd.GetNoArgumentMsg();
+                        return false;
                     }
+                    helpCmd.InitArgument(rawArgs);
+                    if (!helpCmd.IsValidArgument())
+                    {
+                        message = helpCmd.GetInvalidArgumentMsg();
+                        return false;
+                    }
+
+                    switch (rawArgs)
+                    {
+                        case "ssh":
+                            message = sshCmd.GetHelpMsg();
+                            break;
+
+                        case "ping":
+                            message = pingCmd.GetHelpMsg();
+                            break;
+
+                        case "clear":
+                            message = clearCmd.GetHelpMsg();
+                            break;
+
+                        case "help":
+                            message = helpCmd.GetHelpMsg();
+                            break;
+                    }
+                    break;
 
                 default:
                     {
-                        type = Type.NONE;
+                        type = invalidCmd.GetCommandType();
+                        message = invalidCmd.GetInvalidArgumentMsg();
                         break;
                     }
             }
-            message = "'" + cmd + "'" + " is not recognized as a Falcon command";
             return false;
         }
 
-      
-      
-        //TODO: ENABLE HELP FLAG, AND OTHER FLAGS WITH --
-        //ENABLE FLAGS WITH -
-        //PROTECT FROM ERRORS
+        //TODO: catch errors
 
     }
 }

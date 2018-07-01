@@ -50,18 +50,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine\Arguments\Argument.cs" />
+    <Compile Include="CommandLine\Arguments\HelpArgument.cs" />
     <Compile Include="CommandLine\Arguments\PingArgument.cs" />
     <Compile Include="CommandLine\Arguments\SshArgument.cs" />
+    <Compile Include="CommandLine\Commands\ClearCommand.cs" />
+    <Compile Include="CommandLine\Commands\Command.cs" />
+    <Compile Include="CommandLine\Commands\HelpCommand.cs" />
+    <Compile Include="CommandLine\Commands\InvalidCommand.cs" />
+    <Compile Include="CommandLine\Commands\PingCommand.cs" />
+    <Compile Include="CommandLine\Commands\SshCommand.cs" />
     <Compile Include="Forms\CommandLineForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CommandLineForm.Designer.cs">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SshForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SshForm.Designer.cs">
+      <DependentUpon>SshForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AccesibleStack.cs" />
     <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
     <Compile Include="Utils\Logger.cs" />
-    <Compile Include="Utils\Ssh.cs" />
+    <Compile Include="Utils\Ssh\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />
     <Compile Include="CommandLine\CommandParser.cs" />
     <Compile Include="Com\ConnectionsManager.cs" />
@@ -106,6 +119,7 @@
     <Compile Include="Utils\FileTools.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="Utils\Pinger.cs" />
+    <Compile Include="Utils\Ssh\SshCredentials.cs" />
     <Compile Include="Utils\TxtBoxSearch.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -121,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SshForm.resx">
+      <DependentUpon>SshForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

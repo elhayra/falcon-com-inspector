@@ -1,6 +1,8 @@
 ﻿using Falcon.CommandLine;
 using Falcon.CommandLine.Arguments;
+using Falcon.CommandLine.Commands;
 using Falcon.Utils;
+using Falcon.Utils.Ssh;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -290,7 +292,7 @@ namespace Falcon.Forms
             Argument argumentObj = null;
             string reply = "";
             string parserAnswer = "";
-            CommandParser.Type cmdType = CommandParser.Type.NONE;
+            Command.Type cmdType = Command.Type.INVALID;
             bool validCmd;
             validCmd = CommandParser.Parse(commandLine, ref parserAnswer, ref cmdType, ref argumentObj);
 
@@ -298,7 +300,7 @@ namespace Falcon.Forms
             {
                 switch (cmdType)
                 {
-                    case CommandParser.Type.PING:
+                    case Command.Type.PING:
                         string targetIp = ((PingArgument)argumentObj).GetIp();
                         int timeout = ((PingArgument)argumentObj).GetTimeout();
 
@@ -309,7 +311,7 @@ namespace Falcon.Forms
 
                         break;
 
-                    case CommandParser.Type.SSH:
+                    case Command.Type.SSH:
                         bool success = ConnectSsh(((SshArgument)argumentObj).GetHostAddress(),
                                     ((SshArgument)argumentObj).GetUserName(),
                                     ((SshArgument)argumentObj).GetPassword(),
@@ -319,11 +321,11 @@ namespace Falcon.Forms
                             displayMode = DisplayMode.SSH;
                         break;
 
-                    case CommandParser.Type.CLEAR:
+                    case Command.Type.CLEAR:
                         cliDisplayTxtBx.Text = "";
                         break;
 
-                    case CommandParser.Type.NONE:
+                    case Command.Type.INVALID:
                         break;
                 }
             }

@@ -26,7 +26,7 @@ namespace Falcon.CommandLine.Arguments
         public override void ExtractArguments(string args)
         {
             isValid = true;
-            string[] argsArr = args.Split('@');
+            string[] argsArr = args.Split(' ');
             if (argsArr.Length < NUM_OF_ARGS)
             {
                 isValid = false;
