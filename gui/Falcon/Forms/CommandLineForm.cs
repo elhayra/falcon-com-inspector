@@ -264,6 +264,13 @@ namespace Falcon.Forms
         /// <param name="commandLine">Falcon command line string</param>
         private void ExecuteCli(string commandLine)
         {
+            // ignore empty command line
+            if (commandLine == "")
+            {
+                PrintLinePrefix();
+                return;
+            }
+
             historyBuff.ResetNavigation();
             historyBuff.AddItem(commandLine);
 
