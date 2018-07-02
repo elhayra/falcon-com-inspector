@@ -159,6 +159,7 @@ namespace Falcon.CommandLine
 
                 default:
                     {
+                        invalidCmd.InitArgument(cmd);
                         type = invalidCmd.GetCommandType();
                         message = invalidCmd.GetInvalidArgumentMsg();
                         break;

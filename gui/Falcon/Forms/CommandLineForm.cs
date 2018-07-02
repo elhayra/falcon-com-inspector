@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -57,7 +58,10 @@ namespace Falcon.Forms
 
         /// <summary>
         /// override key processing before form does, so we can ignore
-        /// attempts to delete or navigate into CLI prefix
+        /// attempts to delete or navigate into CLI prefix. This also prevent 
+        /// form to execute copy and past commands twice (instead we handle them here)
+        /// return true means stop handle keys press here. The order in which things happend
+        /// in this function is important
         /// </summary>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -68,11 +72,45 @@ namespace Falcon.Forms
                     if (keyData == Keys.Back ||
                         keyData == Keys.Left)
                     {
-                        return true; //stop handling key here
+                        return true; 
                     }
                 }
 
-                if (keyData == Keys.Up)
+                // check if selection is behind last line falcon cli prefix
+                List<string> physicalLines = GetPhysicalCliLines();
+                bool selectionBehindLastCliPrefix = false;
+                int selectionIndex = cliDisplayTxtBx.SelectionStart;
+                int currCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex);
+                int lastLineStartIndex = cliDisplayTxtBx.GetFirstCharIndexFromLine(physicalLines.Count - 1);
+                if (selectionIndex < lastLineStartIndex + CLI_PREFIX_TEXT.Length)
+                    selectionBehindLastCliPrefix = true;
+
+                // don't block our ctrl combination commands
+                bool isCliCombinationKeys = (keyData == (Keys.Control | Keys.C)) ||
+                    (keyData == (Keys.Control | Keys.LShiftKey | Keys.C)) ||
+                    (keyData == (Keys.Control | Keys.LShiftKey | Keys.V));
+
+                // prevent the following if statements from being checked if 
+                // carret is behind last CLI prefix
+                if (!isCliCombinationKeys && selectionBehindLastCliPrefix)
+                    return true;
+
+                if (keyData == (Keys.Control | Keys.LShiftKey | Keys.C))
+                {
+                    cliDisplayTxtBx.Copy();
+                    return true;
+                }
+                else if (keyData == (Keys.Control | Keys.LShiftKey | Keys.V))
+                {
+                    cliDisplayTxtBx.Paste();
+                    return true;
+                }
+                else if (keyData == (Keys.Control | Keys.C))
+                {
+                    PrintToScreen("^C\n", Color.White, true);
+                    PrintLinePrefix();
+                }
+                else if (keyData == Keys.Up)
                 {
                     string command = "";
                     if (historyBuff.GetHistoryBackward(ref command))
@@ -83,8 +121,7 @@ namespace Falcon.Forms
                     }
                     return true; //stop handling key here
                 }
-
-                if (keyData == Keys.Down)
+                else if (keyData == Keys.Down)
                 {
                     string command = "";
                     if (historyBuff.GetHistoryForward(ref command))
@@ -95,9 +132,11 @@ namespace Falcon.Forms
                     }
                     return true; //stop handling key here
                 }
+
+
             }
 
-            return base.ProcessCmdKey(ref msg, keyData); 
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         /// <summary>
@@ -152,13 +191,12 @@ namespace Falcon.Forms
 
             List<string> physicalLines = GetPhysicalCliLines();
 
-            int c = cliDisplayTxtBx.Lines.Length;
             int selectionIndex = cliDisplayTxtBx.SelectionStart - predictStep;
             int currCarretLineIndex = cliDisplayTxtBx.GetLineFromCharIndex(selectionIndex);
             string currCarretLineStr = physicalLines[currCarretLineIndex];
             int lineStartIndex = cliDisplayTxtBx.GetFirstCharIndexOfCurrentLine();
             int lineRelativeSelection = cliDisplayTxtBx.SelectionStart - lineStartIndex;
-            
+
             if (currCarretLineStr.Contains(CLI_PREFIX_TEXT))
             {
                 if (lineRelativeSelection <= CLI_PREFIX_TEXT.Length)
@@ -208,8 +246,6 @@ namespace Falcon.Forms
                 string command = GetCommandInCurrentLine();
                 ExecuteCli(command);
             }
-
-         
         }
 
 
@@ -248,7 +284,7 @@ namespace Falcon.Forms
 
             if (currCarretLineStr.Contains(CLI_PREFIX_TEXT))
             {
-                string [] splittedLine = currCarretLineStr.Split('>');
+                string[] splittedLine = currCarretLineStr.Split('>');
                 if (splittedLine.Length == 2)
                 {
                     string command = splittedLine[1].TrimStart();
@@ -338,14 +374,6 @@ namespace Falcon.Forms
             PrintLinePrefix();
         }
 
-        private void cliDisplayTxtBx_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.C)
-            {
-                PrintToScreen("^C\n", Color.White, true);
-                PrintLinePrefix();
-            }
-        }
     }
 
 

@@ -35,7 +35,7 @@ namespace Falcon.CommandLine.Commands
 
         public override void InitArgument(string args)
         {
-
+            rawArgs = args;
         }
     }
 }
