@@ -16,9 +16,12 @@ namespace Falcon.CommandLine.Commands
 
         public override string GetHelpMsg()
         {
-            return "ping command enables you to Ping other hosts. The \n" +
-                "command takes as an argument host address in the following \n" +
-                "structure: ping <host address>. For example: ping 10.2.1.5";
+            return "ping <ip address> \n\n" + 
+                "ping <ip address> <timeout>" +
+                "ping command enables you to Ping other hosts. The \n" +
+                "command takes as an argument ip address (mandatory) \n" +
+                "and can also take additional argument for timeout in milliseconds. \n" + 
+                "For example: ping 10.2.1.5 100";
         }
 
         public override string GetInvalidArgumentMsg()

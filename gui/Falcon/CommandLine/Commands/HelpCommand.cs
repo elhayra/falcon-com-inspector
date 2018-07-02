@@ -16,11 +16,11 @@ namespace Falcon.CommandLine.Commands
 
         public override string GetHelpMsg()
         {
-            return "help command enables you to get a short explanation \n" +
+            return "help <falcon command> \n\n" +  
+                "help command enables you to get a short explanation \n" +
                 "of a chosen command, and instructions on how it is executed. \n" +
                 "help command takes as an argument other command you wish to get \n" +
-                "help for, in the following structure: help <other command>. for \n" +
-                "example: help ping.";
+                "help for. For example: help ping.";
         }
 
         public override string GetInvalidArgumentMsg()

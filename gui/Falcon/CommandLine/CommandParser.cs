@@ -86,13 +86,7 @@ namespace Falcon.CommandLine
             switch (cmdName)
             {
                 case "ssh":
-                    SshForm sshForm = new SshForm();
-                    sshForm.Show();
-                    sshForm.Focus();
-
-
-                    //TODO: GET FORM SSH CREDENTIALS HERE WITH SshCredential Object///////////////////////////////////////////////////////////////
-
+                  
                     if (noArgument)
                     {
                         message = sshCmd.GetNoArgumentMsg();

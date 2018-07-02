@@ -16,8 +16,10 @@ namespace Falcon.CommandLine.Commands
 
         public override string GetHelpMsg()
         {
-            return "'ssh' command allow you to establish SSH connection to a remote pc. \n" +
-                "The command itself takes no argument. However, when executed, a new SSH \n" +
+            return "ssh <username> <hostname> <password> \n\n" + 
+                "'ssh' command allow you to establish SSH connection to a remote pc. \n" +
+                "The command takes 3 arguments (in that order) : username, hostname, password. \n" + 
+                "For example: ssh david_linux 192.168.2.1 1rdc55 \n" +
                 "credentials form will open, and there you need to enter user name, host \n" +
                 "address and password. ";
         }
