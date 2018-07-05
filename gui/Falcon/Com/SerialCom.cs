@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO.Ports;
 using System.Management;
-
+using System.Threading;
 
 namespace Falcon.Com
 {

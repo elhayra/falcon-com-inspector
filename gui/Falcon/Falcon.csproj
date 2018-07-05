@@ -114,6 +114,7 @@
     <Compile Include="Utils\MsgBox.cs" />
     <Compile Include="Utils\Pinger.cs" />
     <Compile Include="Utils\Ssh\SshCredentials.cs" />
+    <Compile Include="Utils\TextFormatter.cs" />
     <Compile Include="Utils\TxtBoxSearch.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

@@ -40,7 +40,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.urlLbl = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -119,7 +118,6 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.urlLbl);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(-2, -6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(205, 410);
@@ -138,31 +136,22 @@
             // urlLbl
             // 
             this.urlLbl.AutoSize = true;
-            this.urlLbl.Location = new System.Drawing.Point(36, 66);
+            this.urlLbl.Location = new System.Drawing.Point(51, 44);
             this.urlLbl.Name = "urlLbl";
-            this.urlLbl.Size = new System.Drawing.Size(128, 13);
+            this.urlLbl.Size = new System.Drawing.Size(91, 13);
             this.urlLbl.TabIndex = 4;
             this.urlLbl.TabStop = true;
-            this.urlLbl.Text = "www.techandcoding.com";
+            this.urlLbl.Text = "www.elhayra.com";
             this.urlLbl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(52, 90);
+            this.label8.Location = new System.Drawing.Point(40, 68);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.Size = new System.Drawing.Size(117, 13);
             this.label8.TabIndex = 2;
-            this.label8.Text = "Copyright © 2018";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(57, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(79, 13);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Erobit Software";
+            this.label8.Text = "Copyright © 2017-2018";
             // 
             // contextMenuStrip1
             // 
@@ -204,7 +193,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel urlLbl;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

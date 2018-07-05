@@ -26,168 +26,168 @@ namespace Falcon.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool tcpServerChecked {
+        public bool TcpServerChecked {
             get {
-                return ((bool)(this["tcpServerChecked"]));
+                return ((bool)(this["TcpServerChecked"]));
             }
             set {
-                this["tcpServerChecked"] = value;
+                this["TcpServerChecked"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string tcpIp {
+        public string TcpIp {
             get {
-                return ((string)(this["tcpIp"]));
+                return ((string)(this["TcpIp"]));
             }
             set {
-                this["tcpIp"] = value;
+                this["TcpIp"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public uint tcpPort {
+        public uint TcpPort {
             get {
-                return ((uint)(this["tcpPort"]));
+                return ((uint)(this["TcpPort"]));
             }
             set {
-                this["tcpPort"] = value;
+                this["TcpPort"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool udpServerChecked {
+        public bool UdpServerChecked {
             get {
-                return ((bool)(this["udpServerChecked"]));
+                return ((bool)(this["UdpServerChecked"]));
             }
             set {
-                this["udpServerChecked"] = value;
+                this["UdpServerChecked"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string udpIp {
+        public string UdpIp {
             get {
-                return ((string)(this["udpIp"]));
+                return ((string)(this["UdpIp"]));
             }
             set {
-                this["udpIp"] = value;
+                this["UdpIp"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public uint udpPort {
+        public uint UdpPort {
             get {
-                return ((uint)(this["udpPort"]));
+                return ((uint)(this["UdpPort"]));
             }
             set {
-                this["udpPort"] = value;
+                this["UdpPort"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string serialBaudRate {
+        public string SerialBaudRate {
             get {
-                return ((string)(this["serialBaudRate"]));
+                return ((string)(this["SerialBaudRate"]));
             }
             set {
-                this["serialBaudRate"] = value;
+                this["SerialBaudRate"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public uint serialDataBits {
+        public uint SerialDataBits {
             get {
-                return ((uint)(this["serialDataBits"]));
+                return ((uint)(this["SerialDataBits"]));
             }
             set {
-                this["serialDataBits"] = value;
+                this["SerialDataBits"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string serialStopBits {
+        public string SerialStopBits {
             get {
-                return ((string)(this["serialStopBits"]));
+                return ((string)(this["SerialStopBits"]));
             }
             set {
-                this["serialStopBits"] = value;
+                this["SerialStopBits"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string serialParity {
+        public string SerialParity {
             get {
-                return ((string)(this["serialParity"]));
+                return ((string)(this["SerialParity"]));
             }
             set {
-                this["serialParity"] = value;
+                this["SerialParity"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool autoScroll {
+        public bool AutoScroll {
             get {
-                return ((bool)(this["autoScroll"]));
+                return ((bool)(this["AutoScroll"]));
             }
             set {
-                this["autoScroll"] = value;
+                this["AutoScroll"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASCII")]
+        public string TextFormat {
+            get {
+                return ((string)(this["TextFormat"]));
+            }
+            set {
+                this["TextFormat"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool displayASCII {
+        public bool DisplayDetailed {
             get {
-                return ((bool)(this["displayASCII"]));
+                return ((bool)(this["DisplayDetailed"]));
             }
             set {
-                this["displayASCII"] = value;
+                this["DisplayDetailed"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool displayDetailed {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public string LineEnding {
             get {
-                return ((bool)(this["displayDetailed"]));
+                return ((string)(this["LineEnding"]));
             }
             set {
-                this["displayDetailed"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool newLine {
-            get {
-                return ((bool)(this["newLine"]));
-            }
-            set {
-                this["newLine"] = value;
+                this["LineEnding"] = value;
             }
         }
     }

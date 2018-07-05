@@ -47,6 +47,7 @@ using System.IO;
 using System.Net.Sockets;
 using Falcon.Graph;
 using System.Collections.Generic;
+using static Falcon.Utils.TextFormatter;
 
 namespace Falcon
 {
@@ -70,6 +71,9 @@ namespace Falcon
         BytesCounter bytesInCounter = new BytesCounter();
         BytesCounter bytesInRateCounter = new BytesCounter();
         BytesCounter bytesOutRateCounter = new BytesCounter();
+
+        TextFormatType txtFormat;
+        LineEndingType lineEnding;
        
 
         public MainForm()
@@ -88,12 +92,21 @@ namespace Falcon
             serialBaudCmBx.SelectedIndex = 0;
             UpdateSerialPorts();
 
+            formatCmBx.SelectedIndex = 0;
+            lineEndingCmBx.SelectedIndex = 0;
+
             LoadSerialSettigns();
             LoadTcpSettings();
             LoadUdpSettings();
             LoadGlobalSettings();
 
             searcher = new TxtBoxSearch(ref displayTxt);
+
+            string selectedTxtFormat = formatCmBx.GetItemText(formatCmBx.SelectedItem);
+            txtFormat = StringToTextFormatType(selectedTxtFormat);
+
+            string selectedLineEnding = lineEndingCmBx.GetItemText(lineEndingCmBx.SelectedItem);
+            lineEnding = StringToLineEndingType(selectedLineEnding);
         }
 
         /// <summary>
@@ -203,62 +216,75 @@ namespace Falcon
 
         private void SaveTcpSettings()
         {
-            Properties.Settings.Default.tcpIp = tcpIpTxt.Text;
-            Properties.Settings.Default.tcpPort = (uint)tcpPortTxt.Value;
-            Properties.Settings.Default.tcpServerChecked = tcpServerRdBtn.Checked;
+            Properties.Settings.Default.TcpIp = tcpIpTxt.Text;
+            Properties.Settings.Default.TcpPort = (uint)tcpPortTxt.Value;
+            Properties.Settings.Default.TcpServerChecked = tcpServerRdBtn.Checked;
             SaveProperties();
         }
 
         private void LoadTcpSettings()
         {
-            tcpIpTxt.Text = Properties.Settings.Default.tcpIp;
-            tcpPortTxt.Value = (decimal)Properties.Settings.Default.tcpPort;
-            tcpServerRdBtn.Checked = Properties.Settings.Default.tcpServerChecked;
+            tcpIpTxt.Text = Properties.Settings.Default.TcpIp;
+            tcpPortTxt.Value = (decimal)Properties.Settings.Default.TcpPort;
+            tcpServerRdBtn.Checked = Properties.Settings.Default.TcpServerChecked;
             tcpClientRdBtn.Checked = !tcpServerRdBtn.Checked;
             tcpIpTxt.Enabled = tcpClientRdBtn.Checked;
+
+            if (tcpServerRdBtn.Checked)
+            {
+                tcpIpLbl.Visible = false;
+                tcpIpTxt.Visible = false;
+            }
         }
 
         private void SaveUdpSettings()
         {
-            Properties.Settings.Default.udpIp = udpIpTxt.Text;
-            Properties.Settings.Default.udpPort = (uint)udpPortTxt.Value;
-            Properties.Settings.Default.udpServerChecked = udpServerRdBtn.Checked;
+            Properties.Settings.Default.UdpIp = udpIpTxt.Text;
+            Properties.Settings.Default.UdpPort = (uint)udpPortTxt.Value;
+            Properties.Settings.Default.UdpServerChecked = udpServerRdBtn.Checked;
             SaveProperties();
         }
 
         private void LoadUdpSettings()
         {
-            udpIpTxt.Text = Properties.Settings.Default.udpIp;
-            udpPortTxt.Value = (decimal)Properties.Settings.Default.udpPort;
-            udpServerRdBtn.Checked = Properties.Settings.Default.udpServerChecked;
+            udpIpTxt.Text = Properties.Settings.Default.UdpIp;
+            udpPortTxt.Value = (decimal)Properties.Settings.Default.UdpPort;
+            udpServerRdBtn.Checked = Properties.Settings.Default.UdpServerChecked;
             udpClientRdBtn.Checked = !udpServerRdBtn.Checked;
             udpIpTxt.Enabled = udpClientRdBtn.Checked;
+
+            if (udpServerRdBtn.Checked)
+            {
+                udpIpTxt.Visible = false;
+                udpIpLbl.Visible = false;
+            }
         }
 
         private void SaveSerialSettings()
         {
-            Properties.Settings.Default.serialBaudRate = serialBaudCmBx.Text;
-            Properties.Settings.Default.serialDataBits = (uint)serialDataBitsTxt.Value;
-            Properties.Settings.Default.serialParity = serialParityCmBx.Text;
-            Properties.Settings.Default.serialStopBits = serialStopBitsCmBx.Text;
+            Properties.Settings.Default.SerialBaudRate = serialBaudCmBx.Text;
+            Properties.Settings.Default.SerialDataBits = (uint)serialDataBitsTxt.Value;
+            Properties.Settings.Default.SerialParity = serialParityCmBx.Text;
+            Properties.Settings.Default.SerialStopBits = serialStopBitsCmBx.Text;
+            Properties.Settings.Default.TextFormat = formatCmBx.Text;
+            Properties.Settings.Default.LineEnding = lineEndingCmBx.Text;
             SaveProperties();
         }
 
         private void LoadSerialSettigns()
         {
-            serialBaudCmBx.Text = Properties.Settings.Default.serialBaudRate;
-            serialDataBitsTxt.Value = (decimal)Properties.Settings.Default.serialDataBits;
-            serialParityCmBx.Text = Properties.Settings.Default.serialParity;
-            serialStopBitsCmBx.Text = Properties.Settings.Default.serialStopBits;
+            serialBaudCmBx.Text = Properties.Settings.Default.SerialBaudRate;
+            serialDataBitsTxt.Value = Properties.Settings.Default.SerialDataBits;
+            serialParityCmBx.Text = Properties.Settings.Default.SerialParity;
+            serialStopBitsCmBx.Text = Properties.Settings.Default.SerialStopBits;
+            formatCmBx.Text = Properties.Settings.Default.TextFormat;
+            lineEndingCmBx.Text = Properties.Settings.Default.LineEnding;
         }
 
         private void LoadGlobalSettings()
         {
-            asciiRdbtn.Checked = Properties.Settings.Default.displayASCII;
-            bytesRdbtn.Checked = !asciiRdbtn.Checked;
-            detailedChkBx.Checked = Properties.Settings.Default.displayDetailed;
-            autoScrollChkBx.Checked = Properties.Settings.Default.autoScroll;
-            newLineChkBx.Checked = Properties.Settings.Default.newLine;
+            detailedChkBx.Checked = Properties.Settings.Default.DisplayDetailed;
+            autoScrollChkBx.Checked = Properties.Settings.Default.AutoScroll;
         }
 
         private void SaveProperties()
@@ -277,8 +303,7 @@ namespace Falcon
 
         private void OnIncomingBytes(byte[] bytes)
         {
-            if (this.Focused)
-                AppendBytesToTerminal(bytes);
+            AppendBytesToTerminal(bytes);
         }
 
         private void tcpDisconnectBtn_Click(object sender, EventArgs e)
@@ -307,12 +332,30 @@ namespace Falcon
 
         private void sendBtn_Click(object sender, EventArgs e)
         {
-            if (textToSendCmBx.Text == "")
+            string messageStr = textToSendCmBx.Text;
+
+            if (messageStr == "")
                 return;
+
+            // handle line ending request
+            switch (lineEnding)
+            {
+                case LineEndingType.LF:
+                    messageStr += EndOfLineString();
+                    break;
+                case LineEndingType.LF_CR:
+                    messageStr += EndOfLineString() + CarriageReturnString();
+                    break;
+                case LineEndingType.NONE: //don't do anything
+                    break;
+                case LineEndingType.INVALID:
+                    messageStr += "INTERNAL ERROR: INVALID LINE ENDING" + Environment.NewLine;
+                    break;
+            }
 
             if (ConnectionsManager.Inst.IsSomeConnectionInitiated())
             {
-                var bytes = Encoding.ASCII.GetBytes(textToSendCmBx.Text);
+                var bytes = Encoding.ASCII.GetBytes(messageStr);
                 PassOutTxtToHistory();
                 SendMsg(bytes);
             }
@@ -334,6 +377,7 @@ namespace Falcon
         /// <param name="msg">bytes array</param>
         private void SendMsg(byte [] msg)
         {
+
             bool send_success = false;
             if (ConnectionsManager.Inst.IsTcpServerInitiated())
             {
@@ -396,7 +440,7 @@ namespace Falcon
                 bytesOutCounter.Add((uint)msg.Length);
                 BytesCounter.MeasureUnit mUnit = bytesOutCounter.RecomendedMeasureUnit();
                 var format = "{0:0}";
-                if (mUnit != BytesCounter.MeasureUnit.B)
+                if (mUnit != BytesCounter.MeasureUnit.Bytes)
                     format = "{0:0.00}";
                 var processedCounter = String.Format(format, bytesOutCounter.GetProcessedCounter(mUnit));
                 Invoke((MethodInvoker)delegate
@@ -499,7 +543,7 @@ namespace Falcon
             bytesInCounter.Add((uint)bytes.Length);
             BytesCounter.MeasureUnit mUnit = bytesInCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
-            if (mUnit != BytesCounter.MeasureUnit.B)
+            if (mUnit != BytesCounter.MeasureUnit.Bytes)
                 format = "{0:0.00}";
             var processedCounter = String.Format(format, bytesInCounter.GetProcessedCounter(mUnit));
 
@@ -514,29 +558,32 @@ namespace Falcon
 
                     bytesInLbl.Text = processedCounter + " " + BytesCounter.MeasureUnitToString(mUnit);
 
+                    // handle request for detailed text (timestamp)
                     string displayStr = "";
                     if (detailedChkBx.Checked)
-                        displayStr = "[" + Logger.GetTime() + "]: ";
+                        displayStr = TimestampString();
 
-                    if (asciiRdbtn.Checked)
-                        displayStr += Encoding.UTF8.GetString(bytes);
-                    else //bytesRdbtn.Checked
+                    // handle format request
+                    switch (txtFormat)
                     {
-                        displayStr += "|";
-                        foreach (byte b in bytes)
-                        {
-                            displayStr += b + "|";
-                        }
+                        case TextFormatType.ASCII:
+                            displayStr += BytesToAsciiString(bytes);
+                            break;
+                        case TextFormatType.BINARY:
+                            displayStr += BytesToString(bytes, "{", "}", "|") + Environment.NewLine;
+                            break;
+                        case TextFormatType.HEX:
+                            displayStr += BytesToHexString(bytes) + EndOfLineString();
+                            break;
+                        case TextFormatType.INVALID:
+                            displayStr += "INTERNAL ERROR: INVALID FORMAT TYPE" + Environment.NewLine;
+                            break;
                     }
-
 
                     if (autoScrollChkBx.Checked)
                         displayTxt.AppendText(displayStr);
                     else
                         displayTxt.Text += displayStr;
-
-                    if (newLineChkBx.Checked)
-                        displayTxt.AppendText(Environment.NewLine);
 
                     /* if new line arrived, pass it to graph form */
                     if (graphFrom_ != null &&
@@ -572,8 +619,8 @@ namespace Falcon
             tcpIpLbl.Enabled = tcpClientRdBtn.Checked;
             incomingClientsLBl.Enabled = tcpServerRdBtn.Checked;
 
-            if (tcpServerRdBtn.Checked)
-                tcpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
+            tcpIpLbl.Visible = false;
+            tcpIpTxt.Visible = false;
         }
 
         private void udpConnectBtn_Click(object sender, EventArgs e)
@@ -584,6 +631,7 @@ namespace Falcon
                     "Some other connection type (TCP or Serial) is already open. Close it and try again");
                 return;
             }
+
             ConnectUdp();
         }
 
@@ -640,9 +688,8 @@ namespace Falcon
         private void udpServerRdBtn_CheckedChanged(object sender, EventArgs e)
         {
             udpIpTxt.Enabled = !udpServerRdBtn.Checked;
-            if (udpServerRdBtn.Checked)
-                udpIpTxt.Text = NetworkAdderss.GetLocalIPAddress();
-
+            udpIpTxt.Visible = false;
+            udpIpLbl.Visible = false;
         }
 
         private void aboutBtn_Click(object sender, EventArgs e)
@@ -729,7 +776,7 @@ namespace Falcon
 
             BytesCounter.MeasureUnit mUnit = bytesInRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
-            if (mUnit != BytesCounter.MeasureUnit.B)
+            if (mUnit != BytesCounter.MeasureUnit.Bytes)
                 format = "{0:0.00}";
             var processedCounter = String.Format(format, bytesInRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
@@ -834,7 +881,7 @@ namespace Falcon
 
             BytesCounter.MeasureUnit mUnit = bytesOutRateCounter.RecomendedMeasureUnit();
             var format = "{0:0}";
-            if (mUnit != BytesCounter.MeasureUnit.B)
+            if (mUnit != BytesCounter.MeasureUnit.Bytes)
                 format = "{0:0.00}";
             var processedCounter = String.Format(format, bytesOutRateCounter.GetProcessedCounter(mUnit));
             Invoke((MethodInvoker)delegate
@@ -845,45 +892,19 @@ namespace Falcon
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            if (searcher.Search(searchTxt.Text))
-                searchNextBtn.Enabled = true;
+            searcher.SearchForward(searchTxt.Text);
         }
 
-        private void searchFwdBtn_Click(object sender, EventArgs e)
-        {
-            if (!searcher.SearchForward(searchTxt.Text))
-            {
-                searchNextBtn.Enabled = false;
-            }
-        }
-
-        private void asciiRdbtn_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.displayASCII = true;
-            SaveProperties();
-        }
-
-        private void bytesRdbtn_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.displayASCII = false;
-            SaveProperties();
-        }
-
+     
         private void autoScrollChkBx_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.autoScroll = autoScrollChkBx.Checked;
+            Properties.Settings.Default.AutoScroll = autoScrollChkBx.Checked;
             SaveProperties();
         }
 
         private void detailedChkBx_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.displayDetailed = detailedChkBx.Checked;
-            SaveProperties();
-        }
-
-        private void newLineChkBx_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.newLine = newLineChkBx.Checked;
+            Properties.Settings.Default.DisplayDetailed = detailedChkBx.Checked;
             SaveProperties();
         }
 
@@ -923,6 +944,30 @@ namespace Falcon
                 cliForm_.Show();
                 cliForm_.Focus();
             }
+        }
+
+        private void formatCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedTxtFormat = formatCmBx.GetItemText(formatCmBx.SelectedItem);
+            txtFormat = StringToTextFormatType(selectedTxtFormat);
+        }
+
+        private void lineEndingCmBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedLineEnding = lineEndingCmBx.GetItemText(lineEndingCmBx.SelectedItem);
+            lineEnding = StringToLineEndingType(selectedLineEnding);
+        }
+
+        private void udpClientRdBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            udpIpTxt.Visible = true;
+            udpIpLbl.Visible = true;
+        }
+
+        private void tcpClientRdBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            tcpIpLbl.Visible = true;
+            tcpIpTxt.Visible = true;
         }
     }
 }

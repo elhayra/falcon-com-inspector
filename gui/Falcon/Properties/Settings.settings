@@ -2,47 +2,47 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Falcon.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="tcpServerChecked" Type="System.Boolean" Scope="User">
+    <Setting Name="TcpServerChecked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="tcpIp" Type="System.String" Scope="User">
+    <Setting Name="TcpIp" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="tcpPort" Type="System.UInt32" Scope="User">
+    <Setting Name="TcpPort" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="udpServerChecked" Type="System.Boolean" Scope="User">
+    <Setting Name="UdpServerChecked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="udpIp" Type="System.String" Scope="User">
+    <Setting Name="UdpIp" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="udpPort" Type="System.UInt32" Scope="User">
+    <Setting Name="UdpPort" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="serialBaudRate" Type="System.String" Scope="User">
+    <Setting Name="SerialBaudRate" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="serialDataBits" Type="System.UInt32" Scope="User">
+    <Setting Name="SerialDataBits" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
-    <Setting Name="serialStopBits" Type="System.String" Scope="User">
+    <Setting Name="SerialStopBits" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="serialParity" Type="System.String" Scope="User">
+    <Setting Name="SerialParity" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="autoScroll" Type="System.Boolean" Scope="User">
+    <Setting Name="AutoScroll" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="displayASCII" Type="System.Boolean" Scope="User">
+    <Setting Name="TextFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASCII</Value>
+    </Setting>
+    <Setting Name="DisplayDetailed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="displayDetailed" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="newLine" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="LineEnding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
   </Settings>
 </SettingsFile>

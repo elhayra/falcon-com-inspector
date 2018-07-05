@@ -15,7 +15,7 @@ namespace Falcon.Utils
         }
 
         /// <summary>
-        /// Search text in TextBox and forward search position
+        /// Search the first occurence of text in TextBox and forward search position
         /// </summary>
         /// <param name="text">text to search</param>
         /// <returns>true if text found</returns>
@@ -35,7 +35,8 @@ namespace Falcon.Utils
         }
 
         /// <summary>
-        /// Search text in TextBox from last searched position,
+        /// Search next occurence of text in TextBox 
+        /// (relative to last searched position),
         /// and forward search position
         /// </summary>
         /// <param name="text">text to search</param>

@@ -42,7 +42,7 @@ namespace Falcon.Utils
 
         public enum MeasureUnit
         {
-            B,
+            Bytes,
             KB,
             MB,
             GB,
@@ -90,7 +90,7 @@ namespace Falcon.Utils
         {
             switch (mUnit)
             {
-                case MeasureUnit.B:
+                case MeasureUnit.Bytes:
                     return counter_;
                 case MeasureUnit.KB:
                     return CounterKB();
@@ -116,14 +116,14 @@ namespace Falcon.Utils
                     return MeasureUnit.GB;
                 return MeasureUnit.TB;
             }
-            else return MeasureUnit.B;
+            else return MeasureUnit.Bytes;
         }
 
         public static string MeasureUnitToString(MeasureUnit mUnit)
         {
             switch (mUnit)
             {
-                case MeasureUnit.B:
+                case MeasureUnit.Bytes:
                     return "B";
                 case MeasureUnit.KB:
                     return "KB";
