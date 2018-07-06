@@ -10,7 +10,17 @@ namespace Falcon.Utils
     {
         public static string GetTime()
         {
-            return DateTime.Now.ToString("hh-mm-ss.fff");
+            return DateTime.Now.ToString("h-mm-ss.fff");
+        }
+
+        public static string GetDate()
+        {
+            return DateTime.Now.ToString("dd.MM.yyyy");
+        }
+
+        public static string GetTimeMinimal()
+        {
+            return DateTime.Now.ToString("h-mm-ss");
         }
     }
 

@@ -110,6 +110,10 @@
             this.stopSendFile = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lineEndingCmBx = new System.Windows.Forms.ComboBox();
+            this.formatCmBx = new System.Windows.Forms.ComboBox();
             this.detailedChkBx = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.searchBtn = new System.Windows.Forms.Button();
@@ -117,22 +121,17 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
             this.serialPortsTimer = new System.Windows.Forms.Timer(this.components);
-            this.formatCmBx = new System.Windows.Forms.ComboBox();
-            this.lineEndingCmBx = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.logPathBtn = new System.Windows.Forms.Button();
             this.logStartBtn = new System.Windows.Forms.Button();
             this.logStopBtn = new System.Windows.Forms.Button();
-            this.logPathTxtBx = new System.Windows.Forms.TextBox();
-            this.logPathBtn = new System.Windows.Forms.Button();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.pkgBuildBtn = new System.Windows.Forms.Button();
-            this.pkgSendBtn = new System.Windows.Forms.Button();
-            this.pkgParseChkBx = new System.Windows.Forms.CheckBox();
-            this.pkgHeaderLbl = new System.Windows.Forms.Label();
             this.pkgSizeLbl = new System.Windows.Forms.Label();
-            this.pkgChecksumLbl = new System.Windows.Forms.Label();
+            this.pkgHeaderLbl = new System.Windows.Forms.Label();
+            this.pkgParseChkBx = new System.Windows.Forms.CheckBox();
+            this.pkgSendBtn = new System.Windows.Forms.Button();
+            this.pkgLoadBtn = new System.Windows.Forms.Button();
+            this.logPathLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -758,7 +757,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(893, 451);
+            this.clearScreenBtn.Location = new System.Drawing.Point(845, 451);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -769,7 +768,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(835, 451);
+            this.sendBtn.Location = new System.Drawing.Point(787, 451);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -784,7 +783,7 @@
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1016, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(968, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -843,7 +842,7 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(205, 49);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(175, 49);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
@@ -866,7 +865,7 @@
             this.displayTxt.Name = "displayTxt";
             this.displayTxt.ReadOnly = true;
             this.displayTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.displayTxt.Size = new System.Drawing.Size(858, 387);
+            this.displayTxt.Size = new System.Drawing.Size(810, 387);
             this.displayTxt.TabIndex = 29;
             this.displayTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
@@ -878,7 +877,7 @@
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 452);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(683, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(635, 21);
             this.textToSendCmBx.TabIndex = 37;
             // 
             // groupBox4
@@ -898,7 +897,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(861, 25);
+            this.groupBox4.Size = new System.Drawing.Size(813, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -926,7 +925,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(826, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(778, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -938,7 +937,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(786, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(738, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -950,7 +949,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(748, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(700, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -975,7 +974,7 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetBtn.Location = new System.Drawing.Point(949, 451);
+            this.resetBtn.Location = new System.Drawing.Point(901, 451);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(54, 22);
             this.resetBtn.TabIndex = 42;
@@ -1029,7 +1028,7 @@
             this.groupBox8.Controls.Add(this.sendFileBtn);
             this.groupBox8.Controls.Add(this.sendFileLbl);
             this.groupBox8.Controls.Add(this.stopSendFile);
-            this.groupBox8.Location = new System.Drawing.Point(437, 479);
+            this.groupBox8.Location = new System.Drawing.Point(410, 479);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(100, 75);
             this.groupBox8.TabIndex = 46;
@@ -1047,15 +1046,59 @@
             this.groupBox9.Controls.Add(this.autoScrollChkBx);
             this.groupBox9.Location = new System.Drawing.Point(146, 479);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(285, 75);
+            this.groupBox9.Size = new System.Drawing.Size(258, 75);
             this.groupBox9.TabIndex = 47;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Display";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 51);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 33;
+            this.label5.Text = "Line Ending:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 13);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "Format:";
+            // 
+            // lineEndingCmBx
+            // 
+            this.lineEndingCmBx.FormattingEnabled = true;
+            this.lineEndingCmBx.Items.AddRange(new object[] {
+            "None",
+            "LF",
+            "LF CR"});
+            this.lineEndingCmBx.Location = new System.Drawing.Point(78, 47);
+            this.lineEndingCmBx.Name = "lineEndingCmBx";
+            this.lineEndingCmBx.Size = new System.Drawing.Size(92, 21);
+            this.lineEndingCmBx.TabIndex = 31;
+            this.lineEndingCmBx.SelectedIndexChanged += new System.EventHandler(this.lineEndingCmBx_SelectedIndexChanged);
+            // 
+            // formatCmBx
+            // 
+            this.formatCmBx.FormattingEnabled = true;
+            this.formatCmBx.Items.AddRange(new object[] {
+            "ASCII",
+            "Binary",
+            "Hex"});
+            this.formatCmBx.Location = new System.Drawing.Point(78, 20);
+            this.formatCmBx.Name = "formatCmBx";
+            this.formatCmBx.Size = new System.Drawing.Size(92, 21);
+            this.formatCmBx.TabIndex = 30;
+            this.formatCmBx.SelectedIndexChanged += new System.EventHandler(this.formatCmBx_SelectedIndexChanged);
+            // 
             // detailedChkBx
             // 
             this.detailedChkBx.AutoSize = true;
-            this.detailedChkBx.Location = new System.Drawing.Point(205, 22);
+            this.detailedChkBx.Location = new System.Drawing.Point(176, 22);
             this.detailedChkBx.Name = "detailedChkBx";
             this.detailedChkBx.Size = new System.Drawing.Size(65, 17);
             this.detailedChkBx.TabIndex = 28;
@@ -1066,10 +1109,10 @@
             // 
             // groupBox10
             // 
-            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
-            this.groupBox10.Location = new System.Drawing.Point(692, 479);
+            this.groupBox10.Location = new System.Drawing.Point(664, 479);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(110, 75);
             this.groupBox10.TabIndex = 48;
@@ -1080,7 +1123,7 @@
             // 
             this.searchBtn.Location = new System.Drawing.Point(6, 46);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(53, 23);
+            this.searchBtn.Size = new System.Drawing.Size(97, 23);
             this.searchBtn.TabIndex = 1;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
@@ -1105,73 +1148,41 @@
             this.serialPortsTimer.Interval = 1000;
             this.serialPortsTimer.Tick += new System.EventHandler(this.serialPortsTimer_Tick);
             // 
-            // formatCmBx
-            // 
-            this.formatCmBx.FormattingEnabled = true;
-            this.formatCmBx.Items.AddRange(new object[] {
-            "ASCII",
-            "Binary",
-            "Hex"});
-            this.formatCmBx.Location = new System.Drawing.Point(78, 20);
-            this.formatCmBx.Name = "formatCmBx";
-            this.formatCmBx.Size = new System.Drawing.Size(111, 21);
-            this.formatCmBx.TabIndex = 30;
-            this.formatCmBx.SelectedIndexChanged += new System.EventHandler(this.formatCmBx_SelectedIndexChanged);
-            // 
-            // lineEndingCmBx
-            // 
-            this.lineEndingCmBx.FormattingEnabled = true;
-            this.lineEndingCmBx.Items.AddRange(new object[] {
-            "None",
-            "LF",
-            "LF CR"});
-            this.lineEndingCmBx.Location = new System.Drawing.Point(78, 47);
-            this.lineEndingCmBx.Name = "lineEndingCmBx";
-            this.lineEndingCmBx.Size = new System.Drawing.Size(111, 21);
-            this.lineEndingCmBx.TabIndex = 31;
-            this.lineEndingCmBx.SelectedIndexChanged += new System.EventHandler(this.lineEndingCmBx_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Format:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "Line Ending:";
-            // 
             // groupBox11
             // 
             this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox11.Controls.Add(this.logPathLbl);
             this.groupBox11.Controls.Add(this.logPathBtn);
-            this.groupBox11.Controls.Add(this.logPathTxtBx);
             this.groupBox11.Controls.Add(this.logStartBtn);
             this.groupBox11.Controls.Add(this.logStopBtn);
-            this.groupBox11.Location = new System.Drawing.Point(543, 479);
+            this.groupBox11.Location = new System.Drawing.Point(516, 479);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(142, 75);
             this.groupBox11.TabIndex = 49;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Log To File";
             // 
+            // logPathBtn
+            // 
+            this.logPathBtn.Location = new System.Drawing.Point(109, 18);
+            this.logPathBtn.Name = "logPathBtn";
+            this.logPathBtn.Size = new System.Drawing.Size(27, 22);
+            this.logPathBtn.TabIndex = 47;
+            this.logPathBtn.Text = "...";
+            this.logPathBtn.UseVisualStyleBackColor = true;
+            this.logPathBtn.Click += new System.EventHandler(this.logPathBtn_Click);
+            // 
             // logStartBtn
             // 
             this.logStartBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.logStartBtn.Enabled = false;
             this.logStartBtn.Location = new System.Drawing.Point(6, 47);
             this.logStartBtn.Name = "logStartBtn";
             this.logStartBtn.Size = new System.Drawing.Size(51, 22);
             this.logStartBtn.TabIndex = 43;
             this.logStartBtn.Text = "Start";
             this.logStartBtn.UseVisualStyleBackColor = true;
+            this.logStartBtn.Click += new System.EventHandler(this.logStartBtn_Click);
             // 
             // logStopBtn
             // 
@@ -1183,113 +1194,95 @@
             this.logStopBtn.TabIndex = 45;
             this.logStopBtn.Text = "Stop";
             this.logStopBtn.UseVisualStyleBackColor = true;
-            // 
-            // logPathTxtBx
-            // 
-            this.logPathTxtBx.Location = new System.Drawing.Point(6, 18);
-            this.logPathTxtBx.Name = "logPathTxtBx";
-            this.logPathTxtBx.Size = new System.Drawing.Size(96, 20);
-            this.logPathTxtBx.TabIndex = 46;
-            // 
-            // logPathBtn
-            // 
-            this.logPathBtn.Location = new System.Drawing.Point(109, 17);
-            this.logPathBtn.Name = "logPathBtn";
-            this.logPathBtn.Size = new System.Drawing.Size(27, 23);
-            this.logPathBtn.TabIndex = 47;
-            this.logPathBtn.Text = "...";
-            this.logPathBtn.UseVisualStyleBackColor = true;
+            this.logStopBtn.Click += new System.EventHandler(this.logStopBtn_Click);
             // 
             // groupBox12
             // 
-            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox12.Controls.Add(this.pkgChecksumLbl);
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox12.Controls.Add(this.pkgSizeLbl);
             this.groupBox12.Controls.Add(this.pkgHeaderLbl);
             this.groupBox12.Controls.Add(this.pkgParseChkBx);
             this.groupBox12.Controls.Add(this.pkgSendBtn);
-            this.groupBox12.Controls.Add(this.pkgBuildBtn);
-            this.groupBox12.Location = new System.Drawing.Point(808, 479);
+            this.groupBox12.Controls.Add(this.pkgLoadBtn);
+            this.groupBox12.Location = new System.Drawing.Point(780, 479);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(195, 75);
+            this.groupBox12.Size = new System.Drawing.Size(174, 75);
             this.groupBox12.TabIndex = 50;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Package Wizard";
-            // 
-            // pkgBuildBtn
-            // 
-            this.pkgBuildBtn.Location = new System.Drawing.Point(6, 17);
-            this.pkgBuildBtn.Name = "pkgBuildBtn";
-            this.pkgBuildBtn.Size = new System.Drawing.Size(53, 23);
-            this.pkgBuildBtn.TabIndex = 1;
-            this.pkgBuildBtn.Text = "Build";
-            this.pkgBuildBtn.UseVisualStyleBackColor = true;
-            // 
-            // pkgSendBtn
-            // 
-            this.pkgSendBtn.Location = new System.Drawing.Point(6, 47);
-            this.pkgSendBtn.Name = "pkgSendBtn";
-            this.pkgSendBtn.Size = new System.Drawing.Size(53, 23);
-            this.pkgSendBtn.TabIndex = 3;
-            this.pkgSendBtn.Text = "Send";
-            this.pkgSendBtn.UseVisualStyleBackColor = true;
-            // 
-            // pkgParseChkBx
-            // 
-            this.pkgParseChkBx.AutoSize = true;
-            this.pkgParseChkBx.Location = new System.Drawing.Point(68, 18);
-            this.pkgParseChkBx.Name = "pkgParseChkBx";
-            this.pkgParseChkBx.Size = new System.Drawing.Size(53, 17);
-            this.pkgParseChkBx.TabIndex = 4;
-            this.pkgParseChkBx.Text = "Parse";
-            this.pkgParseChkBx.UseVisualStyleBackColor = true;
-            // 
-            // pkgHeaderLbl
-            // 
-            this.pkgHeaderLbl.AutoSize = true;
-            this.pkgHeaderLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pkgHeaderLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pkgHeaderLbl.Location = new System.Drawing.Point(127, 35);
-            this.pkgHeaderLbl.MaximumSize = new System.Drawing.Size(59, 15);
-            this.pkgHeaderLbl.MinimumSize = new System.Drawing.Size(59, 15);
-            this.pkgHeaderLbl.Name = "pkgHeaderLbl";
-            this.pkgHeaderLbl.Size = new System.Drawing.Size(59, 15);
-            this.pkgHeaderLbl.TabIndex = 5;
-            this.pkgHeaderLbl.Text = "Header";
-            this.pkgHeaderLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pkgSizeLbl
             // 
             this.pkgSizeLbl.AutoSize = true;
             this.pkgSizeLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.pkgSizeLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pkgSizeLbl.Location = new System.Drawing.Point(127, 16);
+            this.pkgSizeLbl.Location = new System.Drawing.Point(122, 19);
             this.pkgSizeLbl.MaximumSize = new System.Drawing.Size(59, 15);
-            this.pkgSizeLbl.MinimumSize = new System.Drawing.Size(59, 15);
+            this.pkgSizeLbl.MinimumSize = new System.Drawing.Size(44, 15);
             this.pkgSizeLbl.Name = "pkgSizeLbl";
-            this.pkgSizeLbl.Size = new System.Drawing.Size(59, 15);
+            this.pkgSizeLbl.Size = new System.Drawing.Size(44, 15);
             this.pkgSizeLbl.TabIndex = 6;
             this.pkgSizeLbl.Text = "Size";
             this.pkgSizeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pkgChecksumLbl
+            // pkgHeaderLbl
             // 
-            this.pkgChecksumLbl.AutoSize = true;
-            this.pkgChecksumLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pkgChecksumLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pkgChecksumLbl.Location = new System.Drawing.Point(127, 54);
-            this.pkgChecksumLbl.Name = "pkgChecksumLbl";
-            this.pkgChecksumLbl.Size = new System.Drawing.Size(59, 15);
-            this.pkgChecksumLbl.TabIndex = 7;
-            this.pkgChecksumLbl.Text = "Checksum";
-            this.pkgChecksumLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pkgHeaderLbl.AutoSize = true;
+            this.pkgHeaderLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pkgHeaderLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pkgHeaderLbl.Location = new System.Drawing.Point(122, 49);
+            this.pkgHeaderLbl.MaximumSize = new System.Drawing.Size(59, 15);
+            this.pkgHeaderLbl.Name = "pkgHeaderLbl";
+            this.pkgHeaderLbl.Size = new System.Drawing.Size(44, 15);
+            this.pkgHeaderLbl.TabIndex = 5;
+            this.pkgHeaderLbl.Text = "Header";
+            this.pkgHeaderLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pkgParseChkBx
+            // 
+            this.pkgParseChkBx.AutoSize = true;
+            this.pkgParseChkBx.Location = new System.Drawing.Point(66, 19);
+            this.pkgParseChkBx.Name = "pkgParseChkBx";
+            this.pkgParseChkBx.Size = new System.Drawing.Size(53, 17);
+            this.pkgParseChkBx.TabIndex = 4;
+            this.pkgParseChkBx.Text = "Parse";
+            this.pkgParseChkBx.UseVisualStyleBackColor = true;
+            // 
+            // pkgSendBtn
+            // 
+            this.pkgSendBtn.Location = new System.Drawing.Point(6, 45);
+            this.pkgSendBtn.Name = "pkgSendBtn";
+            this.pkgSendBtn.Size = new System.Drawing.Size(53, 23);
+            this.pkgSendBtn.TabIndex = 3;
+            this.pkgSendBtn.Text = "Send";
+            this.pkgSendBtn.UseVisualStyleBackColor = true;
+            // 
+            // pkgLoadBtn
+            // 
+            this.pkgLoadBtn.Location = new System.Drawing.Point(6, 17);
+            this.pkgLoadBtn.Name = "pkgLoadBtn";
+            this.pkgLoadBtn.Size = new System.Drawing.Size(53, 23);
+            this.pkgLoadBtn.TabIndex = 1;
+            this.pkgLoadBtn.Text = "Load";
+            this.pkgLoadBtn.UseVisualStyleBackColor = true;
+            // 
+            // logPathLbl
+            // 
+            this.logPathLbl.AutoSize = true;
+            this.logPathLbl.Location = new System.Drawing.Point(7, 22);
+            this.logPathLbl.MaximumSize = new System.Drawing.Size(90, 13);
+            this.logPathLbl.MinimumSize = new System.Drawing.Size(90, 13);
+            this.logPathLbl.Name = "logPathLbl";
+            this.logPathLbl.Size = new System.Drawing.Size(90, 13);
+            this.logPathLbl.TabIndex = 48;
+            this.logPathLbl.Text = "N/A";
             // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 570);
+            this.ClientSize = new System.Drawing.Size(968, 570);
             this.Controls.Add(this.groupBox12);
             this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox10);
@@ -1443,16 +1436,15 @@
         private System.Windows.Forms.ComboBox formatCmBx;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Button logPathBtn;
-        private System.Windows.Forms.TextBox logPathTxtBx;
         private System.Windows.Forms.Button logStartBtn;
         private System.Windows.Forms.Button logStopBtn;
         private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.Label pkgChecksumLbl;
         private System.Windows.Forms.Label pkgSizeLbl;
         private System.Windows.Forms.Label pkgHeaderLbl;
         private System.Windows.Forms.CheckBox pkgParseChkBx;
         private System.Windows.Forms.Button pkgSendBtn;
-        private System.Windows.Forms.Button pkgBuildBtn;
+        private System.Windows.Forms.Button pkgLoadBtn;
+        private System.Windows.Forms.Label logPathLbl;
     }
 }
 

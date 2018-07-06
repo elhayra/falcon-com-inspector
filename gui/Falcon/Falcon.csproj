@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Utils\AccesibleStack.cs" />
     <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
+    <Compile Include="Utils\FileLogger.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Ssh\Ssh.cs" />
     <Compile Include="Graph\DataStream.cs" />

@@ -59,9 +59,10 @@ namespace Falcon
         private PlotForm graphFrom_;
         private CommandLineForm cliForm_;
 
-        string fileToSendPath_ = "";
+        string fileToSendPath = "";
+        string logFolderPath;
 
-        int prevLinesCount_ = 0;
+        int prevLinesCount = 0;
 
         TxtBoxSearch searcher;
 
@@ -74,6 +75,8 @@ namespace Falcon
 
         TextFormatType txtFormat;
         LineEndingType lineEnding;
+
+        FileLogger fileLog;
        
 
         public MainForm()
@@ -459,7 +462,7 @@ namespace Falcon
             displayTxt.Clear();
             textToSendCmBx.Items.Clear();
             textToSendCmBx.Text = "";
-            prevLinesCount_ = 0;
+            prevLinesCount = 0;
         }
 
         private void serialConnectBtn_Click(object sender, EventArgs e)
@@ -564,20 +567,31 @@ namespace Falcon
                         displayStr = TimestampString();
 
                     // handle format request
+                    string formattedBytes = "";
                     switch (txtFormat)
                     {
                         case TextFormatType.ASCII:
-                            displayStr += BytesToAsciiString(bytes);
+                            formattedBytes = BytesToAsciiString(bytes);
                             break;
                         case TextFormatType.BINARY:
-                            displayStr += BytesToString(bytes, "{", "}", "|") + Environment.NewLine;
+                            formattedBytes  = BytesToString(bytes, "{", "}", "|") + Environment.NewLine;
                             break;
                         case TextFormatType.HEX:
-                            displayStr += BytesToHexString(bytes) + EndOfLineString();
+                            formattedBytes  = BytesToHexString(bytes) + EndOfLineString();
                             break;
                         case TextFormatType.INVALID:
-                            displayStr += "INTERNAL ERROR: INVALID FORMAT TYPE" + Environment.NewLine;
+                            formattedBytes  = "INTERNAL ERROR: INVALID FORMAT TYPE" + Environment.NewLine;
                             break;
+                    }
+                    displayStr += formattedBytes;
+                    
+                    // if log file is started, log formatted bytes
+                    if (fileLog != null)
+                    {
+                        if (detailedChkBx.Checked)
+                            fileLog.Write(formattedBytes);
+                        else
+                            fileLog.WriteWithTimestamp(formattedBytes);
                     }
 
                     if (autoScrollChkBx.Checked)
@@ -589,9 +603,9 @@ namespace Falcon
                     if (graphFrom_ != null &&
                         displayTxt.Lines.Any() &&
                         displayTxt.Lines.Length >= 2 &&
-                        displayTxt.Lines.Length != prevLinesCount_)
+                        displayTxt.Lines.Length != prevLinesCount)
                     {
-                        prevLinesCount_ = displayTxt.Lines.Length;
+                        prevLinesCount = displayTxt.Lines.Length;
                         string newLine = displayTxt.Lines[displayTxt.Lines.Length - 2];
                         graphFrom_.OnIncomingData(newLine);
                     }
@@ -801,8 +815,8 @@ namespace Falcon
 
         private void sendFileBtn_Click(object sender, EventArgs e)
         {
-            fileToSendPath_ = FileTools.ChooseFilePath("txt(*.*) | *.*");
-            if (fileToSendPath_ != "")
+            fileToSendPath = FileTools.ChooseFilePath("txt(*.*) | *.*");
+            if (fileToSendPath != "")
             {
                 sendFileBtn.Enabled = false;
                 stopSendFile.Enabled = true;
@@ -815,8 +829,8 @@ namespace Falcon
         // send selected file to open connection
         private void sendFileWorker_DoWork(object sender, DoWorkEventArgs e)
         { 
-            var lines = File.ReadAllLines(@fileToSendPath_);
-            fileToSendPath_ = ""; 
+            var lines = File.ReadAllLines(fileToSendPath);
+            fileToSendPath = ""; 
             int iter_count = 1;
 
             foreach (var line in lines)
@@ -968,6 +982,44 @@ namespace Falcon
         {
             tcpIpLbl.Visible = true;
             tcpIpTxt.Visible = true;
+        }
+
+        private void logPathBtn_Click(object sender, EventArgs e)
+        {
+            string folder = FileTools.ChooseFolderPath();
+            if (folder != null)
+            {
+                logFolderPath = folder;
+                logPathLbl.Text = folder;
+                logStartBtn.Enabled = true;
+            }
+            else
+            {
+                MsgBox.ErrorMsg("Path Error", "No path was selected");
+                logPathLbl.Text = "N/A";
+                logStartBtn.Enabled = false;
+                logStopBtn.Enabled = false;
+            }
+        }
+
+        private void logStartBtn_Click(object sender, EventArgs e)
+        {
+            string fileName = "falcon_log_" + Logger.GetTimeMinimal();
+            fileLog = new FileLogger(logFolderPath, fileName, false);
+
+            logStartBtn.BackColor = Color.Red;
+            logStartBtn.Enabled = false;
+            logStopBtn.Enabled = true;
+        }
+
+        private void logStopBtn_Click(object sender, EventArgs e)
+        {
+            fileLog.Close();
+            fileLog = null;
+
+            logStartBtn.BackColor = SystemColors.Control;
+            logStartBtn.Enabled = true;
+            logStopBtn.Enabled = false;
         }
     }
 }

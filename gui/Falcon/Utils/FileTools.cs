@@ -41,10 +41,6 @@ namespace Falcon.Utils
     public class FileTools
     {
 
-        // public static Properties.Settings GetSettings()
-        //{
-        //   return Properties.Settings.Default;
-        //}
         public static string ChooseFolderPath()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();

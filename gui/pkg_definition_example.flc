@@ -1,0 +1,39 @@
+# Falcon package definition file #
+
+# This file is an example of package definition
+# Lines that starts with '#' will be ignored
+# All values in this file are decimals.
+# Each package property is marked with 3 astricks 
+# on each side like so: ***property***
+# the properties are not order-dependent
+
+# specify endianess. Options are:
+# big-endian or small-endian
+***endianess***
+big-endian
+
+# If package include header, specify it here. 
+# (Otherwise comment this out). The format 
+# is 'header_data_type header_valid_value' (see
+# below list of data types)
+***header***
+uint8 250
+
+# Each raw should contain field name ,data structure and value
+# in the following format: 'field_name data_structure value'.
+# Data structures can be of the following types:
+# uint8, int8, uint16, int16, uint32, int32, uint64, int64, float32
+# float64, string(size)
+
+***fields***
+some_name1 uint8 50
+some_name2 int8 -50
+some_name3 uint16 500
+some_name4 int16 -500
+some_name5 uint32 500000
+some_name6 int32 -500000
+some_name7 uint64 600000
+some_name8 int64 -600000
+some_name9 float32 1.23456
+some_name10 float64 1.23456
+some_name11 string(11) "hello world"
