@@ -50,10 +50,10 @@ namespace Falcon.Utils
             return null;
         }
 
-        public static string ChooseFilePath(string file_filter)
+        public static string ChooseFilePath(string fileFilter)
         {
             OpenFileDialog choofdlog = new OpenFileDialog();
-            choofdlog.Filter = file_filter;//"All Files (*.*)|*.*";
+            choofdlog.Filter = fileFilter;//"All Files (*.*)|*.*";
             choofdlog.FilterIndex = 1;
             choofdlog.Multiselect = false;
 
@@ -62,7 +62,7 @@ namespace Falcon.Utils
                 //string[] arrAllFiles = choofdlog.FileNames; //used when Multiselect = true      
                 return choofdlog.FileName;
             }
-            else return "";
+            return null;
         }
 
         public static int CreateFolder(string path)

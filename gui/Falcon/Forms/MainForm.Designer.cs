@@ -122,6 +122,7 @@
             this.bytesOutRateTimer = new System.Windows.Forms.Timer(this.components);
             this.serialPortsTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.logPathLbl = new System.Windows.Forms.Label();
             this.logPathBtn = new System.Windows.Forms.Button();
             this.logStartBtn = new System.Windows.Forms.Button();
             this.logStopBtn = new System.Windows.Forms.Button();
@@ -131,7 +132,6 @@
             this.pkgParseChkBx = new System.Windows.Forms.CheckBox();
             this.pkgSendBtn = new System.Windows.Forms.Button();
             this.pkgLoadBtn = new System.Windows.Forms.Button();
-            this.logPathLbl = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -1162,6 +1162,17 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Log To File";
             // 
+            // logPathLbl
+            // 
+            this.logPathLbl.AutoSize = true;
+            this.logPathLbl.Location = new System.Drawing.Point(7, 22);
+            this.logPathLbl.MaximumSize = new System.Drawing.Size(90, 13);
+            this.logPathLbl.MinimumSize = new System.Drawing.Size(90, 13);
+            this.logPathLbl.Name = "logPathLbl";
+            this.logPathLbl.Size = new System.Drawing.Size(90, 13);
+            this.logPathLbl.TabIndex = 48;
+            this.logPathLbl.Text = "N/A";
+            // 
             // logPathBtn
             // 
             this.logPathBtn.Location = new System.Drawing.Point(109, 18);
@@ -1265,17 +1276,7 @@
             this.pkgLoadBtn.TabIndex = 1;
             this.pkgLoadBtn.Text = "Load";
             this.pkgLoadBtn.UseVisualStyleBackColor = true;
-            // 
-            // logPathLbl
-            // 
-            this.logPathLbl.AutoSize = true;
-            this.logPathLbl.Location = new System.Drawing.Point(7, 22);
-            this.logPathLbl.MaximumSize = new System.Drawing.Size(90, 13);
-            this.logPathLbl.MinimumSize = new System.Drawing.Size(90, 13);
-            this.logPathLbl.Name = "logPathLbl";
-            this.logPathLbl.Size = new System.Drawing.Size(90, 13);
-            this.logPathLbl.TabIndex = 48;
-            this.logPathLbl.Text = "N/A";
+            this.pkgLoadBtn.Click += new System.EventHandler(this.pkgLoadBtn_Click);
             // 
             // MainForm
             // 

@@ -65,6 +65,8 @@
     <Compile Include="Forms\CommandLineForm.Designer.cs">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PackageWizard\Package.cs" />
+    <Compile Include="PackageWizard\PackageWizard.cs" />
     <Compile Include="Utils\AccesibleStack.cs" />
     <Compile Include="Utils\DoubleStackHistoryBuffer.cs" />
     <Compile Include="Utils\FileLogger.cs" />

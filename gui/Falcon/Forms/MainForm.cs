@@ -1021,5 +1021,11 @@ namespace Falcon
             logStartBtn.Enabled = true;
             logStopBtn.Enabled = false;
         }
+
+        private void pkgLoadBtn_Click(object sender, EventArgs e)
+        {
+            FileTools.ChooseFilePath("Falcon Pacakge File (*.flc)|*.flc");
+
+        }
     }
 }
