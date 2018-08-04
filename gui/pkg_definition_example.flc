@@ -2,10 +2,9 @@
 
 # This file is an example of package definition
 # Lines that starts with '#' will be ignored
-# All values in this file are decimals.
-# Each package property is marked with 3 astricks 
-# on each side like so: ***property***
-# the properties are not order-dependent
+# Each package section is marked with 3 astricks 
+# on each side like so: ***section***
+# the sections are not order-dependent
 
 # specify endianess. Options are:
 # big-endian or small-endian
@@ -26,14 +25,14 @@ uint8 250
 # float64, string(size)
 
 ***fields***
-some_name1 uint8 50
-some_name2 int8 -50
-some_name3 uint16 500
-some_name4 int16 -500
-some_name5 uint32 500000
-some_name6 int32 -500000
-some_name7 uint64 600000
-some_name8 int64 -600000
-some_name9 float32 1.23456
-some_name10 float64 1.23456
-some_name11 string(11) "hello world"
+some_name1 uint8
+some_name2 int8
+some_name3 uint16 
+some_name4 int16 
+some_name5 uint32 
+some_name6 int32
+some_name7 uint64
+some_name8 int64
+some_name9 float32
+some_name10 float64
+some_name11 string(11)
