@@ -120,10 +120,18 @@ namespace Falcon.Com
                 int bytesRead = Read(buff, 0, numBytes);
                 if (bytesRead != numBytes)
                     return;
-                foreach (var func in subsList_)
+                try
                 {
-                    func(buff);
+                    foreach (var func in subsList_)
+                    {
+                        func(buff);
+                    }
                 }
+                catch (InvalidOperationException exp) // connection closed
+                {
+
+                }
+                
             }
         }
 

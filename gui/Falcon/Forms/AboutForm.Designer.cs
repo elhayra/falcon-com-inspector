@@ -136,12 +136,12 @@
             // urlLbl
             // 
             this.urlLbl.AutoSize = true;
-            this.urlLbl.Location = new System.Drawing.Point(51, 50);
+            this.urlLbl.Location = new System.Drawing.Point(48, 50);
             this.urlLbl.Name = "urlLbl";
-            this.urlLbl.Size = new System.Drawing.Size(91, 13);
+            this.urlLbl.Size = new System.Drawing.Size(95, 13);
             this.urlLbl.TabIndex = 4;
             this.urlLbl.TabStop = true;
-            this.urlLbl.Text = "www.elhayra.com";
+            this.urlLbl.Text = "www.probotics.net";
             this.urlLbl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label8

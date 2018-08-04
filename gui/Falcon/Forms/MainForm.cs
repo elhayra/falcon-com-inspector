@@ -64,6 +64,8 @@ namespace Falcon
 
         int prevLinesCount = 0;
 
+        bool firstFormatIndxChange = true;
+
         TxtBoxSearch searcher;
 
         List<string> connectedSerialPorts;
@@ -964,6 +966,13 @@ namespace Falcon
         {
             string selectedTxtFormat = formatCmBx.GetItemText(formatCmBx.SelectedItem);
             txtFormat = StringToTextFormatType(selectedTxtFormat);
+            if (!firstFormatIndxChange)
+            {
+                Properties.Settings.Default.TextFormat = selectedTxtFormat;
+                SaveProperties();
+            }
+            if (firstFormatIndxChange)
+                firstFormatIndxChange = false;
         }
 
         private void lineEndingCmBx_SelectedIndexChanged(object sender, EventArgs e)
