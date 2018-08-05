@@ -48,12 +48,13 @@ namespace Falcon.Utils
             {
                 string subStr = textBox.Text.Substring(searchPos, textBox.Text.Length - searchPos);
                 int pos = subStr.IndexOf(text);
-                if (searchPos != -1)
+                if (pos != -1)
                 {
                     textBox.SelectionStart = pos + searchPos;
                     textBox.SelectionLength = text.Length;
                     textBox.HideSelection = false;
                     searchPos += pos + searchPos + text.Length;
+                    textBox.ScrollToCaret();
                     found = true;
                 }
                 else
