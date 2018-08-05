@@ -110,11 +110,11 @@
             this.stopSendFile = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lineEndingCmBx = new System.Windows.Forms.ComboBox();
             this.formatCmBx = new System.Windows.Forms.ComboBox();
             this.detailedChkBx = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lineEndingCmBx = new System.Windows.Forms.ComboBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.searchBtn = new System.Windows.Forms.Button();
             this.searchTxt = new System.Windows.Forms.TextBox();
@@ -132,6 +132,7 @@
             this.pkgParseChkBx = new System.Windows.Forms.CheckBox();
             this.pkgSendBtn = new System.Windows.Forms.Button();
             this.pkgLoadBtn = new System.Windows.Forms.Button();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -152,6 +153,7 @@
             this.groupBox10.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -757,7 +759,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(845, 451);
+            this.clearScreenBtn.Location = new System.Drawing.Point(878, 451);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -768,7 +770,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(787, 451);
+            this.sendBtn.Location = new System.Drawing.Point(820, 451);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -783,7 +785,7 @@
             this.aboutBtn});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(968, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1001, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -842,7 +844,7 @@
             this.autoScrollChkBx.AutoSize = true;
             this.autoScrollChkBx.Checked = true;
             this.autoScrollChkBx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoScrollChkBx.Location = new System.Drawing.Point(175, 49);
+            this.autoScrollChkBx.Location = new System.Drawing.Point(9, 52);
             this.autoScrollChkBx.Name = "autoScrollChkBx";
             this.autoScrollChkBx.Size = new System.Drawing.Size(77, 17);
             this.autoScrollChkBx.TabIndex = 27;
@@ -865,7 +867,7 @@
             this.displayTxt.Name = "displayTxt";
             this.displayTxt.ReadOnly = true;
             this.displayTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.displayTxt.Size = new System.Drawing.Size(810, 387);
+            this.displayTxt.Size = new System.Drawing.Size(843, 387);
             this.displayTxt.TabIndex = 29;
             this.displayTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
@@ -877,7 +879,7 @@
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 452);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(635, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(668, 21);
             this.textToSendCmBx.TabIndex = 37;
             // 
             // groupBox4
@@ -897,7 +899,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(813, 25);
+            this.groupBox4.Size = new System.Drawing.Size(846, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -925,7 +927,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(778, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(811, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -937,7 +939,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(738, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(771, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -949,7 +951,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(700, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(733, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -974,7 +976,7 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetBtn.Location = new System.Drawing.Point(901, 451);
+            this.resetBtn.Location = new System.Drawing.Point(934, 451);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(54, 22);
             this.resetBtn.TabIndex = 42;
@@ -1028,7 +1030,7 @@
             this.groupBox8.Controls.Add(this.sendFileBtn);
             this.groupBox8.Controls.Add(this.sendFileLbl);
             this.groupBox8.Controls.Add(this.stopSendFile);
-            this.groupBox8.Location = new System.Drawing.Point(410, 479);
+            this.groupBox8.Location = new System.Drawing.Point(442, 479);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(100, 75);
             this.groupBox8.TabIndex = 46;
@@ -1038,27 +1040,16 @@
             // groupBox9
             // 
             this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox9.Controls.Add(this.label5);
             this.groupBox9.Controls.Add(this.label2);
-            this.groupBox9.Controls.Add(this.lineEndingCmBx);
             this.groupBox9.Controls.Add(this.formatCmBx);
             this.groupBox9.Controls.Add(this.detailedChkBx);
             this.groupBox9.Controls.Add(this.autoScrollChkBx);
             this.groupBox9.Location = new System.Drawing.Point(146, 479);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(258, 75);
+            this.groupBox9.Size = new System.Drawing.Size(182, 75);
             this.groupBox9.TabIndex = 47;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Display";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 13);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "Line Ending:";
             // 
             // label2
             // 
@@ -1068,19 +1059,6 @@
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 32;
             this.label2.Text = "Format:";
-            // 
-            // lineEndingCmBx
-            // 
-            this.lineEndingCmBx.FormattingEnabled = true;
-            this.lineEndingCmBx.Items.AddRange(new object[] {
-            "None",
-            "LF",
-            "LF CR"});
-            this.lineEndingCmBx.Location = new System.Drawing.Point(78, 47);
-            this.lineEndingCmBx.Name = "lineEndingCmBx";
-            this.lineEndingCmBx.Size = new System.Drawing.Size(92, 21);
-            this.lineEndingCmBx.TabIndex = 31;
-            this.lineEndingCmBx.SelectedIndexChanged += new System.EventHandler(this.lineEndingCmBx_SelectedIndexChanged);
             // 
             // formatCmBx
             // 
@@ -1098,7 +1076,7 @@
             // detailedChkBx
             // 
             this.detailedChkBx.AutoSize = true;
-            this.detailedChkBx.Location = new System.Drawing.Point(176, 22);
+            this.detailedChkBx.Location = new System.Drawing.Point(105, 52);
             this.detailedChkBx.Name = "detailedChkBx";
             this.detailedChkBx.Size = new System.Drawing.Size(65, 17);
             this.detailedChkBx.TabIndex = 28;
@@ -1107,12 +1085,34 @@
             this.detailedChkBx.UseVisualStyleBackColor = true;
             this.detailedChkBx.CheckedChanged += new System.EventHandler(this.detailedChkBx_CheckedChanged);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 33;
+            this.label5.Text = "Line Ending:";
+            // 
+            // lineEndingCmBx
+            // 
+            this.lineEndingCmBx.FormattingEnabled = true;
+            this.lineEndingCmBx.Items.AddRange(new object[] {
+            "None",
+            "LF",
+            "LF CR"});
+            this.lineEndingCmBx.Location = new System.Drawing.Point(8, 47);
+            this.lineEndingCmBx.Name = "lineEndingCmBx";
+            this.lineEndingCmBx.Size = new System.Drawing.Size(90, 21);
+            this.lineEndingCmBx.TabIndex = 31;
+            this.lineEndingCmBx.SelectedIndexChanged += new System.EventHandler(this.lineEndingCmBx_SelectedIndexChanged);
+            // 
             // groupBox10
             // 
             this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox10.Controls.Add(this.searchBtn);
             this.groupBox10.Controls.Add(this.searchTxt);
-            this.groupBox10.Location = new System.Drawing.Point(664, 479);
+            this.groupBox10.Location = new System.Drawing.Point(696, 479);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(110, 75);
             this.groupBox10.TabIndex = 48;
@@ -1155,7 +1155,7 @@
             this.groupBox11.Controls.Add(this.logPathBtn);
             this.groupBox11.Controls.Add(this.logStartBtn);
             this.groupBox11.Controls.Add(this.logStopBtn);
-            this.groupBox11.Location = new System.Drawing.Point(516, 479);
+            this.groupBox11.Location = new System.Drawing.Point(548, 479);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(142, 75);
             this.groupBox11.TabIndex = 49;
@@ -1215,7 +1215,8 @@
             this.groupBox12.Controls.Add(this.pkgParseChkBx);
             this.groupBox12.Controls.Add(this.pkgSendBtn);
             this.groupBox12.Controls.Add(this.pkgLoadBtn);
-            this.groupBox12.Location = new System.Drawing.Point(780, 479);
+            this.groupBox12.Enabled = false;
+            this.groupBox12.Location = new System.Drawing.Point(812, 479);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(174, 75);
             this.groupBox12.TabIndex = 50;
@@ -1278,12 +1279,24 @@
             this.pkgLoadBtn.UseVisualStyleBackColor = true;
             this.pkgLoadBtn.Click += new System.EventHandler(this.pkgLoadBtn_Click);
             // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.lineEndingCmBx);
+            this.groupBox13.Controls.Add(this.label5);
+            this.groupBox13.Location = new System.Drawing.Point(332, 479);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(104, 75);
+            this.groupBox13.TabIndex = 51;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Sender Settings";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(968, 570);
+            this.ClientSize = new System.Drawing.Size(1001, 570);
+            this.Controls.Add(this.groupBox13);
             this.Controls.Add(this.groupBox12);
             this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.groupBox10);
@@ -1337,6 +1350,8 @@
             this.groupBox11.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1446,6 +1461,7 @@
         private System.Windows.Forms.Button pkgSendBtn;
         private System.Windows.Forms.Button pkgLoadBtn;
         private System.Windows.Forms.Label logPathLbl;
+        private System.Windows.Forms.GroupBox groupBox13;
     }
 }
 

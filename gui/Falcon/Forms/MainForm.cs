@@ -591,9 +591,9 @@ namespace Falcon
                     if (fileLog != null)
                     {
                         if (detailedChkBx.Checked)
-                            fileLog.Write(formattedBytes);
-                        else
                             fileLog.WriteWithTimestamp(formattedBytes);
+                        else
+                            fileLog.Write(formattedBytes);
                     }
 
                     if (autoScrollChkBx.Checked)
