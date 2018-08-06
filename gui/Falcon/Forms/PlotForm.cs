@@ -86,8 +86,7 @@ namespace Falcon.Forms
             if (resultCsv != null && resultCsv.Length > 0)
             {
                 TreeNode root = treeView.Nodes[0];
-                // stop timer for measurment
-                stopwatch_.Stop();
+
                 double lastTime = stopwatch_.ElapsedMilliseconds / 1000.0;
 
                 foreach (var series in ChartManager.Inst.GetSeriesManagersList())
@@ -114,8 +113,6 @@ namespace Falcon.Forms
                                 // fill tree view node with series name and data value 
                                 root.Nodes[series.DataIndex].Nodes[0].Text = series.NameId;
                                 root.Nodes[series.DataIndex].Nodes[0].Nodes[0].Text = resultCsv[series.DataIndex].ToString();
-
-                                //TODO: GET DATA FROM PROTOCOL BEFORE ADDING TO SERIES/////////////////////////////////////////////////////////////////
                                 addPointToSeries(series.NameId, lastTime, resultCsv[series.DataIndex]);
                                 break;
                             default:
@@ -125,12 +122,10 @@ namespace Falcon.Forms
                     }
                     catch (ObjectDisposedException exp)
                     {
+                        ToggleInvalidDataAlert("Error: " + exp.Data.ToString(), true);
                         return;
                     }
                 }
-
-                // resume timer
-                stopwatch_.Start();
             }
             else
             {
@@ -242,7 +237,6 @@ namespace Falcon.Forms
         {
             tailTxt.BackColor = Color.LightGreen;
             ChartManager.Inst.TailLength = (int)tailTxt.Value;
-            //TODO: UPDATE TIME AXIS ACCORDINGLY
         }
 
         private void resetBtn_Click(object sender, EventArgs e)

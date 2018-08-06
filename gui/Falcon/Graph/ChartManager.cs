@@ -120,7 +120,7 @@ namespace Falcon.Graph
             if (type == SeriesManager.Type.SETPOINT)
                 newSeries.ChartType = SeriesChartType.Line;
             else if (type == SeriesManager.Type.INCOMING_DATA || type == SeriesManager.Type.BYTES_RATE)
-                newSeries.ChartType = SeriesChartType.Spline;
+                newSeries.ChartType = SeriesChartType.Line;
             chart_.Series.Add(newSeries);
             return true;
         }
