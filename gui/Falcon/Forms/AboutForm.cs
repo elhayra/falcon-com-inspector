@@ -32,12 +32,6 @@
 *******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Falcon.Forms
@@ -50,14 +44,20 @@ namespace Falcon.Forms
 
         }
 
-        private void okButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(urlLbl.Text);
+        }
+
+        private void donateBtn_Click(object sender, EventArgs e)
+        {
+            string url = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N6J4G4F26RXC6";
+            System.Diagnostics.Process.Start(url);
+        }
+
+        private void okBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

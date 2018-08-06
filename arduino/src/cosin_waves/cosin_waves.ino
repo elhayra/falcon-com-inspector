@@ -56,5 +56,5 @@ void loop()
 	i += 0.1;
 
 	/* use delay to control data publishing rate */
-	delay(100);
+	delay(10);
 }

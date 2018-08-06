@@ -48,6 +48,7 @@ using System.Net.Sockets;
 using Falcon.Graph;
 using System.Collections.Generic;
 using static Falcon.Utils.TextFormatter;
+using System.Runtime.InteropServices;
 
 namespace Falcon
 {
@@ -786,6 +787,7 @@ namespace Falcon
 
         private void bytesRateTimer_Tick(object sender, EventArgs e)
         {
+
             ulong newBytesCount = bytesInCounter.GetRawCounter();
             bytesInRateCounter.SetCounter(newBytesCount - bytesInRateCounter.PrevCount);
             bytesInRateCounter.PrevCount = newBytesCount;
@@ -1035,6 +1037,12 @@ namespace Falcon
         {
             FileTools.ChooseFilePath("Falcon Pacakge File (*.flc)|*.flc");
 
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = "https://github.com/elhayra/falcon-com-inspector/blob/master/README.md";
+            System.Diagnostics.Process.Start(url);
         }
     }
 }

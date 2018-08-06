@@ -34,8 +34,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.donateBtn = new System.Windows.Forms.Button();
+            this.okBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.urlLbl = new System.Windows.Forms.LinkLabel();
@@ -75,8 +75,8 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.richTextBox1);
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.donateBtn);
+            this.groupBox1.Controls.Add(this.okBtn);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label3);
@@ -95,23 +95,25 @@
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
-            // button3
+            // donateBtn
             // 
-            this.button3.Location = new System.Drawing.Point(8, 371);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(55, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Donate";
-            this.button3.UseVisualStyleBackColor = true;
+            this.donateBtn.Location = new System.Drawing.Point(8, 371);
+            this.donateBtn.Name = "donateBtn";
+            this.donateBtn.Size = new System.Drawing.Size(55, 23);
+            this.donateBtn.TabIndex = 9;
+            this.donateBtn.Text = "Donate";
+            this.donateBtn.UseVisualStyleBackColor = true;
+            this.donateBtn.Click += new System.EventHandler(this.donateBtn_Click);
             // 
-            // button1
+            // okBtn
             // 
-            this.button1.Location = new System.Drawing.Point(296, 371);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
+            this.okBtn.Location = new System.Drawing.Point(296, 371);
+            this.okBtn.Name = "okBtn";
+            this.okBtn.Size = new System.Drawing.Size(55, 23);
+            this.okBtn.TabIndex = 7;
+            this.okBtn.Text = "OK";
+            this.okBtn.UseVisualStyleBackColor = true;
+            this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
             // 
             // groupBox2
             // 
@@ -173,7 +175,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AboutForm";
+            this.Text = "About";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -189,8 +191,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button donateBtn;
+        private System.Windows.Forms.Button okBtn;
         private System.Windows.Forms.LinkLabel urlLbl;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.RichTextBox richTextBox1;

@@ -133,6 +133,7 @@
             this.pkgSendBtn = new System.Windows.Forms.Button();
             this.pkgLoadBtn = new System.Windows.Forms.Button();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -782,7 +783,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.aboutBtn});
+            this.aboutBtn,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1001, 24);
@@ -1290,6 +1292,13 @@
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Sender Settings";
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
@@ -1462,6 +1471,7 @@
         private System.Windows.Forms.Button pkgLoadBtn;
         private System.Windows.Forms.Label logPathLbl;
         private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 
