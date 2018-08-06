@@ -191,7 +191,7 @@
             this.MinimizeBox = false;
             this.Name = "SeriesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SeriesForm";
+            this.Text = "Series Manager";
             ((System.ComponentModel.ISupportInitialize)(this.setpointTxt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataIndexTxt)).EndInit();
             this.ResumeLayout(false);

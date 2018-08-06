@@ -88,6 +88,7 @@
             this.commandLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,10 +131,8 @@
             this.pkgSizeLbl = new System.Windows.Forms.Label();
             this.pkgHeaderLbl = new System.Windows.Forms.Label();
             this.pkgParseChkBx = new System.Windows.Forms.CheckBox();
-            this.pkgSendBtn = new System.Windows.Forms.Button();
             this.pkgLoadBtn = new System.Windows.Forms.Button();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -760,7 +759,7 @@
             // clearScreenBtn
             // 
             this.clearScreenBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.clearScreenBtn.Location = new System.Drawing.Point(878, 451);
+            this.clearScreenBtn.Location = new System.Drawing.Point(819, 451);
             this.clearScreenBtn.Name = "clearScreenBtn";
             this.clearScreenBtn.Size = new System.Drawing.Size(51, 22);
             this.clearScreenBtn.TabIndex = 23;
@@ -771,7 +770,7 @@
             // sendBtn
             // 
             this.sendBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendBtn.Location = new System.Drawing.Point(820, 451);
+            this.sendBtn.Location = new System.Drawing.Point(761, 451);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(54, 22);
             this.sendBtn.TabIndex = 25;
@@ -787,7 +786,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1001, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(941, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -821,6 +820,13 @@
             this.aboutBtn.Size = new System.Drawing.Size(52, 20);
             this.aboutBtn.Text = "About";
             this.aboutBtn.Click += new System.EventHandler(this.aboutBtn_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // preferencesToolStripMenuItem
             // 
@@ -869,7 +875,7 @@
             this.displayTxt.Name = "displayTxt";
             this.displayTxt.ReadOnly = true;
             this.displayTxt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.displayTxt.Size = new System.Drawing.Size(843, 387);
+            this.displayTxt.Size = new System.Drawing.Size(784, 387);
             this.displayTxt.TabIndex = 29;
             this.displayTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataInScreenTxt_KeyDown);
             // 
@@ -881,7 +887,7 @@
             this.textToSendCmBx.Location = new System.Drawing.Point(146, 452);
             this.textToSendCmBx.MaxLength = 70;
             this.textToSendCmBx.Name = "textToSendCmBx";
-            this.textToSendCmBx.Size = new System.Drawing.Size(668, 21);
+            this.textToSendCmBx.Size = new System.Drawing.Size(609, 21);
             this.textToSendCmBx.TabIndex = 37;
             // 
             // groupBox4
@@ -901,7 +907,7 @@
             this.groupBox4.Controls.Add(this.lbl);
             this.groupBox4.Location = new System.Drawing.Point(146, 30);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(846, 25);
+            this.groupBox4.Size = new System.Drawing.Size(783, 25);
             this.groupBox4.TabIndex = 40;
             this.groupBox4.TabStop = false;
             // 
@@ -929,7 +935,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serialIndicatorLbl.AutoSize = true;
             this.serialIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.serialIndicatorLbl.Location = new System.Drawing.Point(811, 8);
+            this.serialIndicatorLbl.Location = new System.Drawing.Point(748, 8);
             this.serialIndicatorLbl.Name = "serialIndicatorLbl";
             this.serialIndicatorLbl.Size = new System.Drawing.Size(31, 15);
             this.serialIndicatorLbl.TabIndex = 44;
@@ -941,7 +947,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.udpIndicatorLbl.AutoSize = true;
             this.udpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.udpIndicatorLbl.Location = new System.Drawing.Point(771, 8);
+            this.udpIndicatorLbl.Location = new System.Drawing.Point(708, 8);
             this.udpIndicatorLbl.Name = "udpIndicatorLbl";
             this.udpIndicatorLbl.Size = new System.Drawing.Size(32, 15);
             this.udpIndicatorLbl.TabIndex = 43;
@@ -953,7 +959,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcpIndicatorLbl.AutoSize = true;
             this.tcpIndicatorLbl.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tcpIndicatorLbl.Location = new System.Drawing.Point(733, 8);
+            this.tcpIndicatorLbl.Location = new System.Drawing.Point(670, 8);
             this.tcpIndicatorLbl.Name = "tcpIndicatorLbl";
             this.tcpIndicatorLbl.Size = new System.Drawing.Size(30, 15);
             this.tcpIndicatorLbl.TabIndex = 42;
@@ -978,7 +984,7 @@
             // resetBtn
             // 
             this.resetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetBtn.Location = new System.Drawing.Point(934, 451);
+            this.resetBtn.Location = new System.Drawing.Point(875, 451);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(54, 22);
             this.resetBtn.TabIndex = 42;
@@ -1215,12 +1221,11 @@
             this.groupBox12.Controls.Add(this.pkgSizeLbl);
             this.groupBox12.Controls.Add(this.pkgHeaderLbl);
             this.groupBox12.Controls.Add(this.pkgParseChkBx);
-            this.groupBox12.Controls.Add(this.pkgSendBtn);
             this.groupBox12.Controls.Add(this.pkgLoadBtn);
             this.groupBox12.Enabled = false;
             this.groupBox12.Location = new System.Drawing.Point(812, 479);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(174, 75);
+            this.groupBox12.Size = new System.Drawing.Size(117, 75);
             this.groupBox12.TabIndex = 50;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Package Wizard";
@@ -1230,7 +1235,7 @@
             this.pkgSizeLbl.AutoSize = true;
             this.pkgSizeLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.pkgSizeLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pkgSizeLbl.Location = new System.Drawing.Point(122, 19);
+            this.pkgSizeLbl.Location = new System.Drawing.Point(67, 19);
             this.pkgSizeLbl.MaximumSize = new System.Drawing.Size(59, 15);
             this.pkgSizeLbl.MinimumSize = new System.Drawing.Size(44, 15);
             this.pkgSizeLbl.Name = "pkgSizeLbl";
@@ -1244,7 +1249,7 @@
             this.pkgHeaderLbl.AutoSize = true;
             this.pkgHeaderLbl.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.pkgHeaderLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pkgHeaderLbl.Location = new System.Drawing.Point(122, 49);
+            this.pkgHeaderLbl.Location = new System.Drawing.Point(67, 49);
             this.pkgHeaderLbl.MaximumSize = new System.Drawing.Size(59, 15);
             this.pkgHeaderLbl.Name = "pkgHeaderLbl";
             this.pkgHeaderLbl.Size = new System.Drawing.Size(44, 15);
@@ -1255,21 +1260,12 @@
             // pkgParseChkBx
             // 
             this.pkgParseChkBx.AutoSize = true;
-            this.pkgParseChkBx.Location = new System.Drawing.Point(66, 19);
+            this.pkgParseChkBx.Location = new System.Drawing.Point(6, 51);
             this.pkgParseChkBx.Name = "pkgParseChkBx";
             this.pkgParseChkBx.Size = new System.Drawing.Size(53, 17);
             this.pkgParseChkBx.TabIndex = 4;
             this.pkgParseChkBx.Text = "Parse";
             this.pkgParseChkBx.UseVisualStyleBackColor = true;
-            // 
-            // pkgSendBtn
-            // 
-            this.pkgSendBtn.Location = new System.Drawing.Point(6, 45);
-            this.pkgSendBtn.Name = "pkgSendBtn";
-            this.pkgSendBtn.Size = new System.Drawing.Size(53, 23);
-            this.pkgSendBtn.TabIndex = 3;
-            this.pkgSendBtn.Text = "Send";
-            this.pkgSendBtn.UseVisualStyleBackColor = true;
             // 
             // pkgLoadBtn
             // 
@@ -1292,19 +1288,12 @@
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Sender Settings";
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.sendBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 570);
+            this.ClientSize = new System.Drawing.Size(941, 570);
             this.Controls.Add(this.groupBox13);
             this.Controls.Add(this.groupBox12);
             this.Controls.Add(this.groupBox11);
@@ -1467,7 +1456,6 @@
         private System.Windows.Forms.Label pkgSizeLbl;
         private System.Windows.Forms.Label pkgHeaderLbl;
         private System.Windows.Forms.CheckBox pkgParseChkBx;
-        private System.Windows.Forms.Button pkgSendBtn;
         private System.Windows.Forms.Button pkgLoadBtn;
         private System.Windows.Forms.Label logPathLbl;
         private System.Windows.Forms.GroupBox groupBox13;
