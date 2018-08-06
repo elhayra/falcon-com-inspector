@@ -1260,7 +1260,7 @@
             // pkgParseChkBx
             // 
             this.pkgParseChkBx.AutoSize = true;
-            this.pkgParseChkBx.Location = new System.Drawing.Point(6, 51);
+            this.pkgParseChkBx.Location = new System.Drawing.Point(6, 49);
             this.pkgParseChkBx.Name = "pkgParseChkBx";
             this.pkgParseChkBx.Size = new System.Drawing.Size(53, 17);
             this.pkgParseChkBx.TabIndex = 4;

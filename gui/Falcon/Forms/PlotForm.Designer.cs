@@ -92,6 +92,7 @@
             treeNode24,
             treeNode27,
             treeNode30});
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlotForm));
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graphTimer = new System.Windows.Forms.Timer(this.components);
             this.applyBtn = new System.Windows.Forms.Button();
@@ -330,7 +331,7 @@
             this.panel1.Size = new System.Drawing.Size(981, 45);
             this.panel1.TabIndex = 9;
             // 
-            // GraphForm
+            // PlotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -340,10 +341,11 @@
             this.Controls.Add(this.invalidDataLbl);
             this.Controls.Add(this.chart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "GraphForm";
+            this.Name = "PlotForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Graph";
+            this.Text = "Plot";
             this.Activated += new System.EventHandler(this.GraphForm_Activated);
             this.Deactivate += new System.EventHandler(this.GraphForm_Deactivate);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GraphForm_KeyPress);

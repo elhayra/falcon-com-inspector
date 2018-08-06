@@ -65,6 +65,12 @@
     <Compile Include="Forms\CommandLineForm.Designer.cs">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PackageWizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PackageWizardForm.Designer.cs">
+      <DependentUpon>PackageWizardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PackageWizard\Package.cs" />
     <Compile Include="PackageWizard\PackageWizard.cs" />
     <Compile Include="Utils\AccesibleStack.cs" />
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CommandLineForm.resx">
       <DependentUpon>CommandLineForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PackageWizardForm.resx">
+      <DependentUpon>PackageWizardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SeriesForm.resx">
       <DependentUpon>SeriesForm.cs</DependentUpon>

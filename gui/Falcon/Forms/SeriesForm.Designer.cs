@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeriesForm));
             this.dataIndexLbl = new System.Windows.Forms.Label();
             this.setpointTxt = new System.Windows.Forms.NumericUpDown();
             this.seriesLstBx = new System.Windows.Forms.ListBox();
@@ -55,7 +56,7 @@
             // 
             // setpointTxt
             // 
-            this.setpointTxt.Location = new System.Drawing.Point(83, 86);
+            this.setpointTxt.Location = new System.Drawing.Point(82, 86);
             this.setpointTxt.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -187,6 +188,7 @@
             this.Controls.Add(this.removeBtn);
             this.Controls.Add(this.seriesLstBx);
             this.Controls.Add(this.dataIndexLbl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SeriesForm";
