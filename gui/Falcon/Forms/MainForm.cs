@@ -49,6 +49,8 @@ using Falcon.Graph;
 using System.Collections.Generic;
 using static Falcon.Utils.TextFormatter;
 using System.Runtime.InteropServices;
+using Falcon.PackageWizard;
+using Kaveret.Cells;
 
 namespace Falcon
 {
@@ -59,6 +61,7 @@ namespace Falcon
         private AboutForm aboutForm_;
         private PlotForm graphFrom_;
         private CommandLineForm cliForm_;
+        private PackageWizardForm pkgWizForm_;
 
         string fileToSendPath = "";
         string logFolderPath;
@@ -515,6 +518,9 @@ namespace Falcon
                 serialDisconnectBtn.Enabled = true;
                 serialConnectBtn.Enabled = false;
                 ConnectionsManager.Inst.Serial.Subscribe(OnIncomingBytes);
+                // disable pkg parsing on serial
+                pkgParseChkBx.Checked = false;
+                pkgParseChkBx.Enabled = false;
             }
             else
             {
@@ -539,6 +545,64 @@ namespace Falcon
             serialConnectionStateLbl.Text = "Disconnected";
             serialConnectionStateLbl.BackColor = SystemColors.Control;
             serialIndicatorLbl.BackColor = SystemColors.Control;
+
+            pkgParseChkBx.Enabled = true;
+        }
+
+        private string ParseIncomingPackage(byte [] bytes)
+        {
+            string packageOutput = "";
+            if (Package.Inst.FromBytes(bytes))
+            {
+                List<Cell> cellsList = Package.Inst.GetCells();
+                packageOutput = Environment.NewLine + 
+                    "******************" + 
+                    Environment.NewLine + 
+                    Environment.NewLine;
+                foreach (Cell cell in cellsList)
+                {
+                    string cellInfo = cell.GetTypeString() + "\t" + cell.GetName() + ":\t";
+                    switch (cell.GetTypeString())
+                    {
+                        case "uint8":
+                            packageOutput += cellInfo + ((UInt8Cell)cell).GetValue() + "\n";
+                            break;
+                        case "int8":
+                            packageOutput += cellInfo + ((Int8Cell)cell).GetValue() + "\n";
+                            break;
+                        case "uint16":
+                            packageOutput += cellInfo + ((UInt16Cell)cell).GetValue() + "\n";
+                            break;
+                        case "int16":
+                            packageOutput += cellInfo + ((Int16Cell)cell).GetValue() + "\n";
+                            break;
+                        case "uint32":
+                            packageOutput += cellInfo + ((UInt32Cell)cell).GetValue() + "\n";
+                            break;
+                        case "int32":
+                            packageOutput += cellInfo + ((Int32Cell)cell).GetValue() + "\n";
+                            break;
+                        case "uint64":
+                            packageOutput += cellInfo + ((UInt64Cell)cell).GetValue() + "\n";
+                            break;
+                        case "int64":
+                            packageOutput += cellInfo + ((Int64Cell)cell).GetValue() + "\n";
+                            break;
+                        case "float32":
+                            packageOutput += cellInfo + ((Float32Cell)cell).GetValue() + "\n";
+                            break;
+                        case "float64":
+                            packageOutput += cellInfo + ((Float64Cell)cell).GetValue() + "\n";
+                            break;
+                        case "string":
+                            packageOutput += cellInfo + ((StringCell)cell).GetValue() + "\n";
+                            break;
+                    }
+                    packageOutput += Environment.NewLine;
+                }
+                packageOutput += Environment.NewLine + "******************" + Environment.NewLine;
+            }
+            return packageOutput;
         }
         
 
@@ -569,32 +633,46 @@ namespace Falcon
                     if (detailedChkBx.Checked)
                         displayStr = TimestampString();
 
-                    // handle format request
-                    string formattedBytes = "";
-                    switch (txtFormat)
+                    if (pkgParseChkBx.Checked)
                     {
-                        case TextFormatType.ASCII:
-                            formattedBytes = BytesToAsciiString(bytes);
-                            break;
-                        case TextFormatType.BINARY:
-                            formattedBytes  = BytesToString(bytes, "{", "}", "|") + Environment.NewLine;
-                            break;
-                        case TextFormatType.HEX:
-                            formattedBytes  = BytesToHexString(bytes) + EndOfLineString();
-                            break;
-                        case TextFormatType.INVALID:
-                            formattedBytes  = "INTERNAL ERROR: INVALID FORMAT TYPE" + Environment.NewLine;
-                            break;
+                        string parsedPackage = ParseIncomingPackage(bytes);
+                        displayStr += Environment.NewLine + parsedPackage;
+
+                        // if log file is started, log formatted bytes
+                        if (fileLog != null)
+                        {
+                           fileLog.Write(parsedPackage);
+                        }
                     }
-                    displayStr += formattedBytes;
-                    
-                    // if log file is started, log formatted bytes
-                    if (fileLog != null)
+                    else
                     {
-                        if (detailedChkBx.Checked)
-                            fileLog.WriteWithTimestamp(formattedBytes);
-                        else
-                            fileLog.Write(formattedBytes);
+                        // handle format request
+                        string formattedBytes = "";
+                        switch (txtFormat)
+                        {
+                            case TextFormatType.ASCII:
+                                formattedBytes = BytesToAsciiString(bytes);
+                                break;
+                            case TextFormatType.BINARY:
+                                formattedBytes = BytesToString(bytes, "{", "}", "|") + Environment.NewLine;
+                                break;
+                            case TextFormatType.HEX:
+                                formattedBytes = BytesToHexString(bytes) + EndOfLineString();
+                                break;
+                            case TextFormatType.INVALID:
+                                formattedBytes = "INTERNAL ERROR: INVALID FORMAT TYPE" + Environment.NewLine;
+                                break;
+                        }
+                        displayStr += formattedBytes;
+
+                        // if log file is started, log formatted bytes
+                        if (fileLog != null)
+                        {
+                            if (detailedChkBx.Checked)
+                                fileLog.WriteWithTimestamp(formattedBytes);
+                            else
+                                fileLog.Write(formattedBytes);
+                        }
                     }
 
                     if (autoScrollChkBx.Checked)
@@ -1035,7 +1113,16 @@ namespace Falcon
 
         private void pkgLoadBtn_Click(object sender, EventArgs e)
         {
-            FileTools.ChooseFilePath("Falcon Pacakge File (*.flc)|*.flc");
+            if (pkgWizForm_ == null || pkgWizForm_.IsDisposed)
+            {
+                pkgWizForm_ = new PackageWizardForm();
+                pkgWizForm_.Show();
+            }
+            else
+            {
+                cliForm_.Show();
+                cliForm_.Focus();
+            }
 
         }
 
@@ -1043,6 +1130,11 @@ namespace Falcon
         {
             string url = "https://github.com/elhayra/falcon-com-inspector/blob/master/README.md";
             System.Diagnostics.Process.Start(url);
+        }
+
+        private void pkgParseChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

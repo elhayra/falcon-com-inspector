@@ -70,7 +70,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Version 0.1.0";
+            this.label3.Text = "Version 0.2.0";
             // 
             // groupBox1
             // 
