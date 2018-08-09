@@ -98,6 +98,25 @@ Note: PKG WIZ parsing can only work with TCP or UDP connections for now.
 ### 4. Plot
 ![alt text](https://github.com/elhayra/falcon-com-inspector/blob/master/doc_images/plot_no_data.JPG "Plot When No Incoming Data Arrives")
 
+Navigate to Plot:
+Tools -> Plot
+
+Before openning plot window, connect and make sure you are getting data inside the display. When opening the plot window, it listens on the open connection. If no incoming data, a "NO DATA" red flag will apear. Otherwise, if there is data but it is unvalid, a "INVALID DATA" red flag will apear. A valid data is a string which contains 10 doubles by "," . The string should start and end with "|" . So for example:
+
+```
+|-0.87,0.50,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00|
+```
+
+In the above string the 2 first values are -0.87 in index 0, and 0.5 in index 1. The rest of the values are 0. While getting data, we need to add it to the plot in order to get a visual representation of it. Click on "Add/Remove Series" button at the bottom left corner of the plot window. Then, Select a series type:
+1. Data - double value from one of the 10 indexes of the incoming data.
+2. Setpoint - will draw a vertical line at the selected y value
+3. Bytes Rate - draw plot of incoming bytes rate.
+
+For this example, add Data type, name it "some double" and select index 0. Then press add, and "X" to close the series manager. Now the values in index 0 of the incoming string should appear on the plot. In top left side there is a tree of values. Expand it to see the numeric valud of index 0.
+In the bottom right corner, you can define how long will be the tail of the line on the graph. In other words: how many values since last one arrived to show on the plot. If you change this, click "Apply".
+If you are using arduino and want to see some values on the plot, look at the plot example of arduino [here](https://github.com/elhayra/falcon-com-inspector/tree/master/arduino/src/cosin_waves). Flash this example to your board, open Falcon and connect to it throught Serial. Then open plot and add the desired data index. It should look something like that:
+![alt text](https://github.com/elhayra/falcon-com-inspector/blob/master/doc_images/plot_with_data.JPG "Plot Arduino Example")
+
 
 
 
