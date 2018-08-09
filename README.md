@@ -15,7 +15,7 @@ Falcon was desinged with ease of use in mind, and I hope you will find it helpfu
 Use the [issues section](https://github.com/elhayra/falcon-com-inspector/issues). Please describe in details what is the issue, and I will try to answer as soon as possible.
 
 ## Installation
-No installation is needed for running Falcon. Just download it and run.
+No installation is needed for running Falcon. Just [download it](https://github.com/elhayra/falcon-com-inspector/releases/download/V0.2.0/Falcon.zip) and run.
 
 ## Usage
 
