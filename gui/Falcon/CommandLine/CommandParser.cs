@@ -64,17 +64,8 @@ namespace Falcon.CommandLine
             // extract command name and arguments 
             string[] cmdArr = cmd.Split(CMD_SPLITTER);
             string cmdName = cmdArr[CMD_NAME_INDX];
-            string rawArgs = null;
-            try
-            {
-                rawArgs = cmdArr[CMD_ARG_INDX];
-            }
-            catch (IndexOutOfRangeException exp)
-            {
-                rawArgs = null;
-            }
 
-            bool noArgument = (rawArgs == null) ? true : false;
+            bool noArgument = (cmdArr[CMD_ARG_INDX] == null) ? true : false;
 
             SshCommand sshCmd = new SshCommand();
             PingCommand pingCmd = new PingCommand();
@@ -93,7 +84,17 @@ namespace Falcon.CommandLine
                         return false;
                     }
 
-                    sshCmd.InitArgument(rawArgs);
+                    if (cmdArr.Length < 4)
+                    {
+                        message = sshCmd.GetInvalidArgumentMsg();
+                        return false;
+                    }
+
+                    string sshArgs = cmdArr[CMD_ARG_INDX] + " " + 
+                        cmdArr[CMD_ARG_INDX + 1] + " " + 
+                        cmdArr[CMD_ARG_INDX + 2];
+
+                    sshCmd.InitArgument(sshArgs);
                     type = sshCmd.GetCommandType();
 
                     if (!sshCmd.IsValidArgument())
@@ -112,7 +113,7 @@ namespace Falcon.CommandLine
                         return false;
                     }
 
-                    pingCmd.InitArgument(rawArgs);
+                    pingCmd.InitArgument(cmdArr[CMD_ARG_INDX]);
                     type = pingCmd.GetCommandType();
 
                     argumentObj = pingCmd.GetArgumentObject();
@@ -130,14 +131,14 @@ namespace Falcon.CommandLine
                         message = helpCmd.GetNoArgumentMsg();
                         return false;
                     }
-                    helpCmd.InitArgument(rawArgs);
+                    helpCmd.InitArgument(cmdArr[CMD_ARG_INDX]);
                     if (!helpCmd.IsValidArgument())
                     {
                         message = helpCmd.GetInvalidArgumentMsg();
                         return false;
                     }
 
-                    switch (rawArgs)
+                    switch (cmdArr[CMD_ARG_INDX])
                     {
                         case "ssh":
                             message = sshCmd.GetHelpMsg();
