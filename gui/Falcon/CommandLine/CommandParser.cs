@@ -65,7 +65,8 @@ namespace Falcon.CommandLine
             string[] cmdArr = cmd.Split(CMD_SPLITTER);
             string cmdName = cmdArr[CMD_NAME_INDX];
 
-            bool noArgument = (cmdArr[CMD_ARG_INDX] == null) ? true : false;
+
+            bool noArgument = (cmdArr.Length <= 1) ? true : false;
 
             SshCommand sshCmd = new SshCommand();
             PingCommand pingCmd = new PingCommand();
